@@ -1060,15 +1060,16 @@ const resPlan = {
   }
 };
 
-// Rodent scale factor: $550 / $199 = 2.7638...
-// All initials scale from the same $550 base regardless of property type
-// home essential $199→$550, advanced $299→$826, complete tiers $699→$1932 $799→$2208 $899→$2484 $999→$2760
-// townhouse essential $185→$550 (flat base), advanced $229→$633, complete $500→$1382
+// Rodent pricing logic:
+// Essential: flat $550 (replaces standard initial)
+// Advanced: flat $650
+// Complete: standard complete initial + $351 (the $550-$199 rodent premium)
+// Townhouse follows same structure
 const resRodentScale = 550 / 199;
-const resRodentSqft = [[1500, 1932],[2500, 2208],[3500, 2484],[Infinity, 2760]];
+const resRodentSqft = [[1500, 1050],[2500, 1150],[3500, 1250],[Infinity, 1350]];
 const resRodentInitials = {
-  home:      { essential: 550, advanced: 826 },
-  townhouse: { essential: 550, advanced: 633, complete: 1382 }
+  home:      { essential: 550, advanced: 650 },
+  townhouse: { essential: 550, advanced: 650, complete: 851 }
 };
 
 let resProp = 'home', resTier = 'essential', resRodent = 'no';
