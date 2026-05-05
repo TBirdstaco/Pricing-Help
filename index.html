@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Getem Pricing">
+<title>Getem Services — Full Pricing Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1C3A61; --blue: #2A4F7C; --gold: #FFC72C; --gold-dark: #E6B000;
+    --light: #E6EEF8; --muted: #5A6B82; --white: #FFFFFF; --bg: #F0F4FA;
+    --green: #1a6e3c; --green-bg: #f0faf4; --green-border: rgba(26,110,60,0.2);
+    --danger: #c0392b; --danger-bg: #fdf3f2; --danger-border: rgba(192,57,43,0.2);
+    --warn: #b7600a; --warn-bg: #fffbf0; --warn-border: rgba(183,96,10,0.25);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--navy); -webkit-text-size-adjust: 100%; }
+
+  /* HEADER */
+  .app-header { background: var(--navy); position: sticky; top: 0; z-index: 200; border-bottom: 3px solid var(--gold); }
+  .header-inner { padding: 14px 16px 12px; display: flex; align-items: center; gap: 12px; }
+  .header-badge { background: var(--gold); color: var(--navy); font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+  .header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: 0.5px; line-height: 1.1; }
+  .header-title span { color: var(--gold); }
+  .header-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+  /* TAB NAV */
+  .tab-nav { background: var(--blue); display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { flex-shrink: 0; padding: 11px 15px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; text-transform: uppercase; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.15s; -webkit-appearance: none; touch-action: manipulation; }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* MAIN */
+  .main { padding: 16px 12px 48px; max-width: 640px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--white); border-radius: 12px; border: 1px solid #C8D8EC; margin-bottom: 12px; overflow: hidden; }
+  .card-head { background: var(--blue); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .card-icon { font-size: 16px; flex-shrink: 0; }
+  .card-head-label { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: #fff; letter-spacing: 0.5px; text-transform: uppercase; }
+  .card-head-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+  .card-body { padding: 14px; }
+
+  /* PILLS */
+  .pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { flex: 1; min-width: 70px; padding: 11px 8px; text-align: center; border: 2px solid #C8D8EC; border-radius: 10px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--muted); background: #FAFCFF; transition: all 0.15s; -webkit-appearance: none; appearance: none; outline: none; line-height: 1.2; touch-action: manipulation; }
+  .pill:active { transform: scale(0.97); }
+  .pill.active { border-color: var(--navy); background: var(--light); color: var(--navy); box-shadow: 0 0 0 2px var(--navy); }
+  .pill.active-gold { border-color: var(--gold-dark); background: #FFF8E1; color: var(--navy); box-shadow: 0 0 0 2px var(--gold-dark); }
+
+  /* MOISTURE TOGGLE PILLS (multi-select) */
+  .toggle-pill { flex: 1; min-width: 100px; padding: 11px 8px; text-align: center; border: 2px solid #C8D8EC; border-radius: 10px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--muted); background: #FAFCFF; transition: all 0.15s; -webkit-appearance: none; appearance: none; outline: none; line-height: 1.3; touch-action: manipulation; position: relative; }
+  .toggle-pill:active { transform: scale(0.97); }
+  .toggle-pill.selected { border-color: var(--navy); background: var(--light); color: var(--navy); box-shadow: 0 0 0 2px var(--navy); }
+  .toggle-pill .pill-rate { display: block; font-size: 11px; font-family: 'Barlow', sans-serif; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .toggle-pill.selected .pill-rate { color: var(--blue); }
+  .toggle-pill .pill-check { display: none; position: absolute; top: 6px; right: 6px; width: 16px; height: 16px; background: var(--navy); border-radius: 50%; align-items: center; justify-content: center; }
+  .toggle-pill .pill-check::after { content: '✓'; color: var(--gold); font-size: 10px; font-weight: 900; }
+  .toggle-pill.selected .pill-check { display: flex; }
+
+  /* INPUTS */
+  .field-wrap { position: relative; }
+  .field-input { width: 100%; border: 2px solid var(--blue); border-radius: 10px; padding: 13px 56px 13px 16px; font-family: 'Barlow', sans-serif; font-size: 17px; font-weight: 600; color: var(--navy); background: var(--light); outline: none; -webkit-appearance: none; transition: border-color 0.15s; }
+  .field-input:focus { border-color: var(--gold); background: #fff; }
+  .field-input::placeholder { color: #a0b0c4; font-weight: 400; font-size: 15px; }
+  .field-unit { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--muted); font-weight: 600; pointer-events: none; }
+  .field-hint { font-size: 12px; color: var(--muted); margin-top: 6px; min-height: 16px; }
+  .field-hint.has-val { color: var(--blue); font-weight: 600; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid #D8E6F4; margin: 12px 0; }
+
+  /* RESULT BOX */
+  .result-box { background: var(--navy); border-radius: 12px; overflow: hidden; border: 2px solid var(--navy); margin-bottom: 12px; }
+  .result-head { background: var(--navy); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .result-head-label { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: rgba(255,199,44,0.7); text-transform: uppercase; letter-spacing: 0.8px; }
+  .result-head-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--gold); background: rgba(255,199,44,0.12); border: 1px solid rgba(255,199,44,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; white-space: nowrap; }
+  .result-grid { display: grid; gap: 0; }
+  .result-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .result-grid.cols-1 { grid-template-columns: 1fr; }
+  .result-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .result-cell { padding: 14px 14px; background: var(--white); border-top: 3px solid var(--gold); }
+  .result-cell.secondary { background: var(--light); border-top-color: var(--navy); }
+  .result-cell.tertiary { background: #f5f9ff; border-top-color: var(--blue); }
+  .result-cell:not(:last-child) { border-right: 1px solid #D8E6F4; }
+  .result-cell-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 3px; }
+  .result-cell-type { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; }
+  .result-val { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .result-val.lg { font-size: 38px; }
+  .result-val .dollar { font-size: 18px; vertical-align: top; margin-top: 5px; display: inline-block; }
+  .result-val-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* MOISTURE LINE ITEMS */
+  .moisture-breakdown { background: #f8fafd; border: 1px solid #C8D8EC; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+  .moisture-line { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #EEF3FA; font-size: 13px; }
+  .moisture-line:last-child { border-bottom: none; }
+  .moisture-line-label { color: #2C3E50; }
+  .moisture-line-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--navy); font-size: 14px; }
+  .moisture-total-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--navy); border-radius: 8px; margin-top: 8px; }
+  .moisture-total-label { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: rgba(255,199,44,0.8); text-transform: uppercase; letter-spacing: 0.5px; }
+  .moisture-total-val { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; color: var(--gold); }
+
+  /* DIFFICULTY SLIDERS */
+  .slider-block { background: #f8fafd; border: 1px solid #C8D8EC; border-radius: 10px; padding: 12px 14px; margin-top: 8px; display: none; }
+  .slider-block.visible { display: block; }
+  .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .slider-title { font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.6px; }
+  .slider-val-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color: var(--navy); background: var(--light); border: 1px solid #C8D8EC; padding: 2px 12px; border-radius: 6px; }
+  .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .difficulty-label { font-size: 11px; color: var(--muted); margin-top: 6px; text-align: center; font-style: italic; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--navy) 0%, var(--navy) 50%, #C8D8EC 50%, #C8D8EC 100%); outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--navy); border: 3px solid var(--gold); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+  input[type=range]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); border: 3px solid var(--gold); cursor: pointer; }
+
+  /* INFO ROWS */
+  .info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #EEF3FA; gap: 12px; }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-label { font-size: 13px; color: #2C3E50; flex: 1; line-height: 1.5; }
+  .info-label small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .info-price { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--navy); white-space: nowrap; text-align: right; flex-shrink: 0; }
+
+  /* NOTE BOXES */
+  .note-box { border-radius: 8px; padding: 11px 13px; display: flex; gap: 9px; align-items: flex-start; margin-top: 10px; }
+  .note-box.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+  .note-box.info { background: var(--light); border: 1px solid #C8D8EC; }
+  .note-box.mgmt { background: var(--danger-bg); border: 1px solid var(--danger-border); }
+  .note-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .note-text { font-size: 12px; line-height: 1.6; }
+  .note-box.warn .note-text { color: #5a3d10; }
+  .note-box.info .note-text { color: var(--muted); }
+  .note-box.mgmt .note-text { color: #5a1a14; }
+
+  /* TIER TABLE */
+  .tier-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  .tier-table th { background: var(--blue); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 7px 12px; text-align: left; }
+  .tier-table td { padding: 8px 12px; border-bottom: 1px solid #EEF3FA; color: var(--navy); }
+  .tier-table tr:last-child td { border-bottom: none; }
+  .tier-table tr.active-tier td { background: #FFF8E1; font-weight: 700; }
+  .tier-table tr.active-tier td:first-child { border-left: 3px solid var(--gold); }
+
+  /* PRICE TABLE */
+  .price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .price-table th { background: var(--blue); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 7px 12px; text-align: left; }
+  .price-table td { padding: 8px 12px; border-bottom: 1px solid #EEF3FA; color: var(--navy); }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr.highlight td { background: #FFF8E1; font-weight: 700; }
+  .price-table tr.highlight td:first-child { border-left: 3px solid var(--gold); }
+  .price-table td.price { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; white-space: nowrap; }
+
+  .safe-bottom { height: env(safe-area-inset-bottom, 20px); }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-inner">
+    <div class="header-badge">Since 1922</div>
+    <div>
+      <div class="header-title">Getem <span>Pricing Tool</span></div>
+      <div class="header-sub">CSR / Tech — Internal use only</div>
+    </div>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('residential', this)">🏠 Residential</button>
+    <button class="tab-btn" onclick="showTab('commercial', this)">🏢 Commercial</button>
+    <button class="tab-btn" onclick="showTab('termite', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px;"><path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-1 5c-1.66 0-3 1.34-3 3v1H6.5C5.67 11 5 11.67 5 12.5S5.67 14 6.5 14H8v1c0 .55.45 1 1 1h.27l-2.18 4.37A1 1 0 0 0 8 22h1.2l2.8-5.6 2.8 5.6H16a1 1 0 0 0 .91-1.42L14.73 16H15c.55 0 1-.45 1-1v-1h1.5c.83 0 1.5-.67 1.5-1.5S18.33 11 17.5 11H16v-1c0-1.66-1.34-3-3-3h-2z"/></svg>Termite</button>
+    <button class="tab-btn" onclick="showTab('moisture', this)">💧 Moisture</button>
+    <button class="tab-btn" onclick="showTab('ancillary', this)">➕ Ancillary</button>
+  </nav>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════════
+     RESIDENTIAL
+══════════════════════════════════ -->
+<div class="tab-panel active" id="tab-residential">
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">1️⃣</div><div><div class="card-head-label">Property Type</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="res-prop-pills">
+        <button class="pill active" data-val="home" onclick="resSelectProp(this)">Home</button>
+        <button class="pill" data-val="townhouse" onclick="resSelectProp(this)">Townhouse / Condo</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label">Plan Tier</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="res-tier-pills">
+        <button class="pill active" data-val="essential" onclick="resSelectTier(this)">Essential</button>
+        <button class="pill" data-val="advanced" onclick="resSelectTier(this)">Advanced</button>
+        <button class="pill" data-val="complete" onclick="resSelectTier(this)">Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">3️⃣</div><div><div class="card-head-label">Rodents Main Issue?</div><div class="card-head-sub">Changes the initial price</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="res-rodent-pills">
+        <button class="pill active" data-val="no" onclick="resSelectRodent(this)">No — Standard Pricing</button>
+        <button class="pill" data-val="yes" onclick="resSelectRodent(this)">Yes — Rodents Main Issue</button>
+      </div>
+      <div class="note-box info" id="res-rodent-note" style="display:none;margin-top:10px;">
+        <div class="note-icon">🐀</div>
+        <div class="note-text">Initial price reflects rodents as the primary issue. Monthly billing remains the same. Includes inspection + 3 follow-up visits.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="res-sqft-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">4️⃣</div><div><div class="card-head-label">Square Footage</div><div class="card-head-sub">Required for Complete pricing</div></div></div>
+    <div class="card-body">
+      <div class="field-wrap">
+        <input class="field-input" type="number" id="res-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2,200" oninput="resCalc()" />
+        <span class="field-unit">sq ft</span>
+      </div>
+      <div class="field-hint" id="res-sqft-hint">Enter sq ft to calculate Complete pricing</div>
+      <table class="tier-table">
+        <thead><tr><th>Sq Footage</th><th>Initial Price</th></tr></thead>
+        <tbody>
+          <tr id="res-t1"><td>Up to 1,500 sq ft</td><td>$699</td></tr>
+          <tr id="res-t2"><td>1,501 – 2,500 sq ft</td><td>$799</td></tr>
+          <tr id="res-t3"><td>2,501 – 3,500 sq ft</td><td>$899</td></tr>
+          <tr id="res-t4"><td>3,501+ sq ft</td><td>$999</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="result-box">
+    <div class="result-head">
+      <div class="result-head-label">Quote Summary</div>
+      <div class="result-head-badge" id="res-badge">Essential — Home</div>
+    </div>
+    <div class="result-grid cols-2">
+      <div class="result-cell">
+        <div class="result-cell-label">Initial Fee</div>
+        <div class="result-cell-type">One-Time</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="res-initial">199</span></div>
+        <div class="result-val-sub">Due at first service</div>
+      </div>
+      <div class="result-cell secondary">
+        <div class="result-cell-label">Recurring</div>
+        <div class="result-cell-type">Monthly</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="res-monthly">48</span></div>
+        <div class="result-val-sub">Per month, auto-billed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">📋</div><div><div class="card-head-label">Plan Includes</div></div></div>
+    <div class="card-body">
+      <div id="res-inclusions" style="font-size:13px;color:#2C3E50;line-height:1.65;">Quarterly exterior pest treatments, exterior barrier, interior service as needed, web removal, 2 exterior rodent bait stations, free re-service.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🔧</div><div><div class="card-head-label">One-Time Services</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">One-Time Service — Home</div><div class="info-price">$300</div></div>
+      <div class="info-row"><div class="info-label">One-Time Service — Townhouse / Condo</div><div class="info-price">$285</div></div>
+      <div class="info-row"><div class="info-label">One-Time Rodent <small>Includes 3 follow-ups</small></div><div class="info-price">$550</div></div>
+      <div class="info-row"><div class="info-label">One-Time German Roaches</div><div class="info-price">$750</div></div>
+      <div class="info-row"><div class="info-label">Carpenter Ants — Initial</div><div class="info-price">$350</div></div>
+      <div class="info-row"><div class="info-label">Carpenter Bees — Initial <small>Add $150 if ladder & 2 people needed</small></div><div class="info-price">$350</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🏠</div><div><div class="card-head-label">Exclusion &amp; Vents</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">HVAC Screening / Rock Filler</div><div class="info-price">$185</div></div>
+      <div class="info-row"><div class="info-label">Screening Vents</div><div class="info-price">$55/vent</div></div>
+      <div class="info-row"><div class="info-label">Temp Vent Replacement</div><div class="info-price">$95/vent</div></div>
+      <div class="info-row"><div class="info-label">Manual Vent</div><div class="info-price">$75/vent</div></div>
+      <div class="info-row"><div class="info-label">Solid / Metal Vent Covers</div><div class="info-price">$75/vent</div></div>
+      <div class="info-row"><div class="info-label">Crawlspace Door</div><div class="info-price">$375/door</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🐀</div><div><div class="card-head-label">Rodents</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Rodent Inspection</div><div class="info-price">$100</div></div>
+      <div class="info-row"><div class="info-label">Rodent Initial <small>Includes 3 follow-ups</small></div><div class="info-price">$550</div></div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     COMMERCIAL
+══════════════════════════════════ -->
+<div class="tab-panel" id="tab-commercial">
+
+  <!-- STEP 1: Property Type -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">1️⃣</div><div><div class="card-head-label">Property Type</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="comm-type-pills">
+        <button class="pill active" data-val="warehouse" onclick="commSelect('type',this)">Warehouse</button>
+        <button class="pill" data-val="restaurant" onclick="commSelect('type',this)">Restaurant</button>
+        <button class="pill" data-val="apartment" onclick="commSelect('type',this)">Apartment</button>
+        <button class="pill" data-val="office" onclick="commSelect('type',this)">Office</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Frequency -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label">Service Frequency</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="comm-freq-pills">
+        <button class="pill active" data-val="monthly" onclick="commSelect('freq',this)">Monthly</button>
+        <button class="pill" data-val="quarterly" onclick="commSelect('freq',this)">Quarterly</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Management approval warnings -->
+  <div id="comm-mgmt-warn" style="display:none;">
+    <div class="note-box mgmt"><div class="note-icon">⚠️</div><div class="note-text"><strong>Management approval required before quoting this service type.</strong> Do not provide a price until confirmed.</div></div>
+  </div>
+
+  <!-- APARTMENT SPECIFIC: Unit count + door rate -->
+  <div class="card" id="comm-apt-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">🚪</div><div><div class="card-head-label">Apartment Units</div><div class="card-head-sub">Interior door pricing</div></div></div>
+    <div class="card-body">
+
+      <div style="margin-bottom:14px;">
+        <span class="section-label">Number of units to service</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="comm-apt-units" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 24" min="1" oninput="commCalc()" />
+          <span class="field-unit">units</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <div class="slider-header" style="margin-bottom:6px;">
+          <div class="slider-title">Per-Door Rate — Severity / Size</div>
+          <div class="slider-val-badge" id="comm-door-rate-disp">$15/door</div>
+        </div>
+        <div class="slider-labels"><span>Light ($13)</span><span>Severe ($17)</span></div>
+        <input type="range" id="comm-door-slider" min="13" max="17" step="1" value="15" oninput="commDoorSlider()" />
+        <div class="difficulty-label" id="comm-door-diff-label">Moderate — average size units</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="margin-bottom:6px;">
+        <span class="section-label">Also includes exterior / common areas?</span>
+        <div class="pill-row">
+          <button class="pill active" data-val="no" id="comm-exterior-no" onclick="commExterior('no')">Interior only</button>
+          <button class="pill" data-val="yes" id="comm-exterior-yes" onclick="commExterior('yes')">+ Exterior / Common Areas</button>
+        </div>
+      </div>
+
+      <!-- Exterior hours (shown if exterior selected) -->
+      <div id="comm-exterior-hours-wrap" style="display:none;margin-top:12px;">
+        <span class="section-label">Estimated exterior / common area time</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="comm-exterior-hours" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 30" min="0" step="15" oninput="commCalc()" />
+          <span class="field-unit">mins</span>
+        </div>
+        <div class="field-hint">Billed at $175/hr ($2.92/min)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOURLY TYPES: Warehouse, Restaurant, Office -->
+  <div class="card" id="comm-hourly-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">⏱️</div><div><div class="card-head-label">Estimated Time</div><div class="card-head-sub">How long will this service take?</div></div></div>
+    <div class="card-body">
+
+      <div style="margin-bottom:6px;">
+        <span class="section-label">Service duration</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="comm-hours" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 45" min="0" step="15" oninput="commCalc()" />
+          <span class="field-unit">mins</span>
+        </div>
+        <div class="field-hint" id="comm-hours-hint">Enter time — minimum charge applies if under threshold</div>
+      </div>
+
+      <!-- Office only: multi-unit toggle -->
+      <div id="comm-office-multiunit" style="display:none;">
+        <div class="divider"></div>
+        <span class="section-label">Number of units</span>
+        <div class="pill-row">
+          <button class="pill active" data-val="single" id="comm-office-single" onclick="commOfficeUnit('single')">Single unit</button>
+          <button class="pill" data-val="multi" id="comm-office-multi" onclick="commOfficeUnit('multi')">2+ units</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RODENT ADD-ON -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🐀</div><div><div class="card-head-label">Rodent Program</div><div class="card-head-sub">Add to any commercial service</div></div></div>
+    <div class="card-body">
+
+      <span class="section-label">Include rodent service?</span>
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="none" id="comm-rodent-none" onclick="commRodentType('none')">None</button>
+        <button class="pill" data-val="both" id="comm-rodent-both" onclick="commRodentType('both')">Initial + Recurring</button>
+      </div>
+
+      <!-- Initial fields -->
+      <div id="comm-rodent-initial-fields" style="display:none;">
+        <div class="divider"></div>
+        <div class="note-box info" style="margin-bottom:12px;"><div class="note-icon">ℹ️</div><div class="note-text">Initial setup is <strong>$550</strong> and includes inspection + 3 follow-up visits. Bait stations beyond the first 2 are <strong>$20/each</strong>.</div></div>
+
+        <span class="section-label">Number of bait stations</span>
+        <div class="field-wrap" style="margin-bottom:6px;">
+          <input class="field-input" type="number" id="comm-rodent-stations" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 6" min="1" oninput="commCalc()" />
+          <span class="field-unit">stations</span>
+        </div>
+        <div class="field-hint" id="comm-rodent-stations-hint">First 2 included in initial. Each additional = $20.</div>
+      </div>
+
+      <!-- Recurring fields -->
+      <div id="comm-rodent-recurring-fields" style="display:none;">
+        <div class="divider"></div>
+        <span class="section-label">Recurring service frequency</span>
+        <div class="pill-row" style="margin-bottom:6px;">
+          <button class="pill active" data-val="monthly" id="comm-rodent-freq-monthly" onclick="commRodentFreq('monthly')">Monthly — $90</button>
+          <button class="pill" data-val="quarterly" id="comm-rodent-freq-quarterly" onclick="commRodentFreq('quarterly')">Quarterly — $150</button>
+        </div>
+        <div class="field-hint">Includes checking all traps &amp; bait stations each visit.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GERMAN ROACH ADD-ON -->
+  <div class="card" id="comm-roach-card">
+    <div class="card-head"><div class="card-icon">🪳</div><div><div class="card-head-label">German Roach Program</div><div class="card-head-sub">One-time initial — folds into regular service after</div></div></div>
+    <div class="card-body">
+
+      <span class="section-label">Include German roach treatment?</span>
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="none" id="comm-roach-none" onclick="commRoachType('none')">None</button>
+        <button class="pill" data-val="yes" id="comm-roach-yes" onclick="commRoachType('yes')">Yes — Add Roach Initial</button>
+      </div>
+
+      <div id="comm-roach-fields" style="display:none;">
+        <div class="divider"></div>
+
+        <!-- APARTMENT: unit count input -->
+        <div id="comm-roach-apt-fields">
+          <span class="section-label">How many units have German roaches?</span>
+          <div class="field-wrap" style="margin-bottom:8px;">
+            <input class="field-input" type="number" id="comm-roach-unit-count" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 3" min="1" oninput="commRoachUnitInput()" />
+            <span class="field-unit">units</span>
+          </div>
+          <div class="field-hint" id="comm-roach-band-hint">Enter count — pricing band auto-detects</div>
+          <div id="comm-roach-mini-result" style="display:none;margin-top:12px;">
+            <div class="result-box">
+              <div class="result-head">
+                <div class="result-head-label">🪳 Roach Initial</div>
+                <div class="result-head-badge" id="comm-roach-badge">—</div>
+              </div>
+              <div class="result-grid cols-2">
+                <div class="result-cell">
+                  <div class="result-cell-label">One-Time Initial</div>
+                  <div class="result-cell-type">Includes 3 follow-ups</div>
+                  <div class="result-val" style="font-size:28px;"><span class="dollar">$</span><span id="comm-roach-initial-disp">—</span></div>
+                  <div class="result-val-sub" id="comm-roach-initial-sub">—</div>
+                </div>
+                <div class="result-cell secondary">
+                  <div class="result-cell-label">After Initial</div>
+                  <div class="result-cell-type">Recurring</div>
+                  <div class="result-val" style="font-size:18px;font-weight:700;color:var(--green,#1a6e3c);padding-top:6px;">Folds into<br>regular service</div>
+                  <div class="result-val-sub">No change to monthly rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESTAURANT / WAREHOUSE / OFFICE: flat $550 -->
+        <div id="comm-roach-flat-fields" style="display:none;">
+          <div class="result-box">
+            <div class="result-head">
+              <div class="result-head-label">🪳 Roach Initial</div>
+              <div class="result-head-badge">Flat Rate</div>
+            </div>
+            <div class="result-grid cols-2">
+              <div class="result-cell">
+                <div class="result-cell-label">One-Time Initial</div>
+                <div class="result-cell-type">Includes 3 follow-ups</div>
+                <div class="result-val lg"><span class="dollar">$</span>550</div>
+                <div class="result-val-sub">Entire location</div>
+              </div>
+              <div class="result-cell secondary">
+                <div class="result-cell-label">After Initial</div>
+                <div class="result-cell-type">Recurring</div>
+                <div class="result-val" style="font-size:18px;font-weight:700;color:var(--green,#1a6e3c);padding-top:6px;">Folds into<br>regular service</div>
+                <div class="result-val-sub">No change to monthly rate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box warn" style="margin-top:12px;">
+          <div class="note-icon">⚠️</div>
+          <div class="note-text"><strong>Additional follow-ups ($150/visit)</strong> are only charged if issues persist due to customer non-compliance — not for service-related callbacks. Do not quote this as a guaranteed recurring charge.</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="divider"></div>
+
+  <div class="result-box" id="comm-result" style="display:none;">
+    <div class="result-head">
+      <div class="result-head-label">Commercial Quote</div>
+      <div class="result-head-badge" id="comm-result-badge">—</div>
+    </div>
+    <!-- No-rodent: 2 cells. With-rodent: 3 cells shown via JS -->
+    <div class="result-grid cols-2" id="comm-result-grid-norodent">
+      <div class="result-cell">
+        <div class="result-cell-label">Initial</div>
+        <div class="result-cell-type">First Service</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="comm-initial-nr">—</span></div>
+        <div class="result-val-sub">Due at first service</div>
+      </div>
+      <div class="result-cell secondary">
+        <div class="result-cell-label" id="comm-recur-label-nr">Recurring</div>
+        <div class="result-cell-type" id="comm-recur-type-nr">Per Service</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="comm-recur-nr">—</span></div>
+        <div class="result-val-sub" id="comm-recur-sub-nr">—</div>
+      </div>
+    </div>
+    <!-- Rodent breakdown: clearly separated initial vs recurring sections -->
+    <div id="comm-result-grid-rodent" style="display:none;">
+
+      <!-- SECTION HEADER: Due Today -->
+      <div style="background:var(--gold);padding:8px 16px;display:flex;align-items:center;gap:8px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;">💰 Due at First Service</div>
+      </div>
+      <div class="result-grid cols-2">
+        <div class="result-cell" style="border-top:3px solid var(--gold);">
+          <div class="result-cell-label">Pest Service</div>
+          <div class="result-cell-type">Initial</div>
+          <div class="result-val" style="font-size:28px;"><span class="dollar">$</span><span id="comm-pest-initial">—</span></div>
+          <div class="result-val-sub">Pest treatment</div>
+        </div>
+        <div class="result-cell" style="background:#FFF8E1;border-top:3px solid var(--gold-dark);">
+          <div class="result-cell-label" id="comm-addon-initial-label" style="color:var(--gold-dark);">🐀 Rodent Setup</div>
+          <div class="result-cell-type" id="comm-addon-initial-type">Initial + 3 Follow-ups</div>
+          <div class="result-val" style="font-size:28px;"><span class="dollar">$</span><span id="comm-rodent-initial-val">—</span></div>
+          <div class="result-val-sub" id="comm-addon-initial-sub">Includes bait stations</div>
+        </div>
+      </div>
+      <div style="background:var(--navy);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,199,44,0.7);text-transform:uppercase;letter-spacing:0.8px;">Total Due Today</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--gold);">$<span id="comm-grand-initial">—</span></div>
+      </div>
+
+      <!-- DIVIDER between sections -->
+      <div style="height:8px;background:var(--bg);border-top:1px solid #C8D8EC;border-bottom:1px solid #C8D8EC;"></div>
+
+      <!-- SECTION HEADER: Recurring -->
+      <div style="background:var(--blue);padding:8px 16px;display:flex;align-items:center;gap:8px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:1px;">🔄 Recurring Charges</div>
+      </div>
+      <div class="result-grid cols-2">
+        <div class="result-cell" style="border-top:3px solid var(--blue);">
+          <div class="result-cell-label" id="comm-pest-recur-label">Pest Service</div>
+          <div class="result-cell-type" id="comm-pest-recur-type">Per Service</div>
+          <div class="result-val" style="font-size:28px;"><span class="dollar">$</span><span id="comm-pest-recur-val">—</span></div>
+          <div class="result-val-sub" id="comm-pest-recur-sub">—</div>
+        </div>
+        <div class="result-cell secondary" style="border-top:3px solid var(--navy);">
+          <div class="result-cell-label" id="comm-rodent-recur-label" style="color:var(--muted);">🐀 Rodent Service</div>
+          <div class="result-cell-type" id="comm-rodent-recur-type">Per Visit</div>
+          <div class="result-val" style="font-size:28px;"><span class="dollar">$</span><span id="comm-rodent-recur-val">—</span></div>
+          <div class="result-val-sub" id="comm-rodent-recur-sub">—</div>
+        </div>
+      </div>
+      <div style="background:var(--blue);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.8px;">Total Recurring</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff;">$<span id="comm-recur-combined">—</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Breakdown card -->
+  <div class="card" id="comm-breakdown-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">📋</div><div><div class="card-head-label">Quote Breakdown</div></div></div>
+    <div class="card-body">
+      <div id="comm-breakdown-body"></div>
+    </div>
+  </div>
+
+  <!-- Dynamic Rate Reference -->
+  <div class="card" id="comm-rate-ref" style="display:none;">
+    <div class="card-head"><div class="card-icon">📖</div><div><div class="card-head-label">Rate Reference</div><div class="card-head-sub" id="comm-rate-ref-sub">Applicable rates for this job</div></div></div>
+    <div class="card-body">
+      <div id="comm-rate-ref-body"></div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     TERMITE
+══════════════════════════════════ -->
+<div class="tab-panel" id="tab-termite">
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🧮</div><div><div class="card-head-label">Trelona ATBS Calculator</div><div class="card-head-sub">Enter linear footage to calculate</div></div></div>
+    <div class="card-body">
+      <div class="field-wrap">
+        <input class="field-input" type="number" id="trelona-lf" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 180" oninput="trelonaCalc()" />
+        <span class="field-unit">lin ft</span>
+      </div>
+      <div class="field-hint" id="trelona-hint">Enter linear footage for pricing</div>
+      <table class="tier-table" style="margin-top:12px;">
+        <thead><tr><th>Linear Footage</th><th>Rate</th></tr></thead>
+        <tbody>
+          <tr id="tr-t1"><td>100 – 199 lin ft</td><td>$5.00/lin ft</td></tr>
+          <tr id="tr-t2"><td>200 – 299 lin ft</td><td>$4.50/lin ft</td></tr>
+          <tr id="tr-t3"><td>300+ lin ft</td><td>$4.00/lin ft</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" id="trelona-found-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">🏗️</div><div><div class="card-head-label">Foundation Type</div><div class="card-head-sub">Affects monthly billing</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" id="trelona-found-pills">
+        <button class="pill active" data-val="crawlspace" onclick="trelonaSelectFound(this)">Crawlspace — $30/mo</button>
+        <button class="pill" data-val="slab" onclick="trelonaSelectFound(this)">Slab — $25/mo</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="trelona-foam-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">🫧</div><div><div class="card-head-label">Add Foaming?</div><div class="card-head-sub">Termidor Foam — $200/hr</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="none" id="trelona-foam-none" onclick="trelonaFoam('none')">No Foaming</button>
+        <button class="pill" data-val="half" id="trelona-foam-half" onclick="trelonaFoam('half')">Half Hour — $100</button>
+        <button class="pill" data-val="full" id="trelona-foam-full" onclick="trelonaFoam('full')">Full Hour — $200</button>
+        <button class="pill" data-val="custom" id="trelona-foam-custom" onclick="trelonaFoam('custom')">Custom Hours</button>
+      </div>
+      <div id="trelona-foam-hours-wrap" style="display:none;">
+        <span class="section-label">Foaming hours</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="trelona-foam-hours" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2" min="0.5" step="0.5" oninput="trelonaCalc()" />
+          <span class="field-unit">hrs</span>
+        </div>
+        <div class="field-hint">$200/hr</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box" id="trelona-result" style="display:none;">
+    <div class="result-head">
+      <div class="result-head-label">Trelona Quote</div>
+      <div class="result-head-badge" id="trelona-badge">—</div>
+    </div>
+    <div class="result-grid cols-2" id="trelona-result-grid">
+      <div class="result-cell">
+        <div class="result-cell-label">Total Install</div>
+        <div class="result-cell-type">One-Time</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="trelona-total">—</span></div>
+        <div class="result-val-sub" id="trelona-rate-note">—</div>
+      </div>
+      <div class="result-cell secondary" id="trelona-foam-result-cell" style="display:none;">
+        <div class="result-cell-label">Foaming</div>
+        <div class="result-cell-type" id="trelona-foam-result-type">Add-On</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="trelona-foam-result-val">—</span></div>
+        <div class="result-val-sub" id="trelona-foam-result-sub">—</div>
+      </div>
+      <div class="result-cell secondary" id="trelona-monthly-cell">
+        <div class="result-cell-label">Monthly Service</div>
+        <div class="result-cell-type" id="trelona-type-label">Crawlspace</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="trelona-monthly">30</span></div>
+        <div class="result-val-sub">Ongoing billing</div>
+      </div>
+    </div>
+    <div style="background:var(--navy);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;" id="trelona-total-bar" style="display:none;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,199,44,0.7);text-transform:uppercase;letter-spacing:0.8px;">Total</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--gold);">$<span id="trelona-grand-total">—</span></div>
+    </div>
+  </div>
+
+  <!-- TERMIDOR HE CALCULATOR -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">💉</div><div><div class="card-head-label">Termidor HE Liquid Treatment</div><div class="card-head-sub">Enter linear footage to calculate</div></div></div>
+    <div class="card-body">
+
+      <div style="margin-bottom:14px;">
+        <span class="section-label">Linear footage to treat</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="termidor-lf" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 150" min="1" oninput="termidorCalc()" />
+          <span class="field-unit">lin ft</span>
+        </div>
+      </div>
+
+      <span class="section-label">Foundation type</span>
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="standard" id="termidor-standard" onclick="termidorType('standard')">Standard</button>
+        <button class="pill" data-val="brick" id="termidor-brick" onclick="termidorType('brick')">Multi Brick</button>
+      </div>
+
+      <div id="termidor-brick-slider-wrap" style="display:none;margin-bottom:14px;">
+        <div class="slider-header" style="margin-bottom:6px;">
+          <div class="slider-title">Brick Foundation Rate</div>
+          <div class="slider-val-badge" id="termidor-brick-rate-disp">$7.50/lin ft</div>
+        </div>
+        <div class="slider-labels"><span>Standard ($7.50)</span><span>Complex ($8.00)</span></div>
+        <input type="range" id="termidor-brick-slider" min="7.50" max="8.00" step="0.50" value="7.50" oninput="termidorBrickSlider()" />
+      </div>
+
+      <span class="section-label">Add foaming?</span>
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="none" id="termidor-foam-none" onclick="termidorFoam('none')">No Foaming</button>
+        <button class="pill" data-val="half" id="termidor-foam-half" onclick="termidorFoam('half')">Half Hour</button>
+        <button class="pill" data-val="full" id="termidor-foam-full" onclick="termidorFoam('full')">Full Hour</button>
+        <button class="pill" data-val="custom" id="termidor-foam-custom" onclick="termidorFoam('custom')">Custom Hours</button>
+      </div>
+
+      <div id="termidor-foam-hours-wrap" style="display:none;margin-bottom:10px;">
+        <span class="section-label">Foaming hours</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="termidor-foam-hours" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2" min="1" step="0.5" oninput="termidorCalc()" />
+          <span class="field-unit">hrs</span>
+        </div>
+        <div class="field-hint">$200/hr</div>
+      </div>
+
+      <div class="result-box" id="termidor-result" style="display:none;margin-top:14px;">
+        <div class="result-head">
+          <div class="result-head-label">Termidor Quote</div>
+          <div class="result-head-badge" id="termidor-badge">—</div>
+        </div>
+        <div class="result-grid cols-2" id="termidor-result-grid">
+          <div class="result-cell">
+            <div class="result-cell-label">Treatment</div>
+            <div class="result-cell-type">Liquid Application</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="termidor-treatment-val">—</span></div>
+            <div class="result-val-sub" id="termidor-treatment-sub">—</div>
+          </div>
+          <div class="result-cell secondary" id="termidor-foam-cell" style="display:none;">
+            <div class="result-cell-label">Foaming</div>
+            <div class="result-cell-type" id="termidor-foam-type">Add-On</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="termidor-foam-val">—</span></div>
+            <div class="result-val-sub" id="termidor-foam-sub">—</div>
+          </div>
+        </div>
+        <div style="background:var(--navy);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;" id="termidor-total-bar">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,199,44,0.7);text-transform:uppercase;letter-spacing:0.8px;">Total</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--gold);">$<span id="termidor-total-val">—</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CENTERFIRE CALCULATOR -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🏗️</div><div><div class="card-head-label">Centerfire Commercial Pretreat</div><div class="card-head-sub">Enter sq ft to calculate</div></div></div>
+    <div class="card-body">
+
+      <div style="margin-bottom:12px;">
+        <span class="section-label">Square footage to treat</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="centerfire-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2400" min="1" oninput="centerfireCalc()" />
+          <span class="field-unit">sq ft</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <div class="slider-header" style="margin-bottom:6px;">
+          <div class="slider-title">Rate — Job Complexity</div>
+          <div class="slider-val-badge" id="centerfire-rate-disp">$0.35/sq ft</div>
+        </div>
+        <div class="slider-labels"><span>Standard ($0.35)</span><span>Complex ($0.50)</span></div>
+        <input type="range" id="centerfire-slider" min="0.35" max="0.50" step="0.05" value="0.35" oninput="centerfireSlider()" />
+        <div class="difficulty-label" id="centerfire-diff-label">Standard pretreat</div>
+      </div>
+
+      <div class="result-box" id="centerfire-result" style="display:none;margin-top:14px;">
+        <div class="result-head">
+          <div class="result-head-label">Centerfire Quote</div>
+          <div class="result-head-badge" id="centerfire-badge">—</div>
+        </div>
+        <div class="result-grid cols-1">
+          <div class="result-cell">
+            <div class="result-cell-label">Pretreat Total</div>
+            <div class="result-cell-type">One-Time</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="centerfire-total">—</span></div>
+            <div class="result-val-sub" id="centerfire-sub">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box mgmt" style="margin-top:10px;"><div class="note-icon">⚠️</div><div class="note-text"><strong>Large or complex structures — contact Travis before quoting.</strong></div></div>
+
+    </div>
+  </div>
+
+  <!-- PRETREATMENTS CALCULATOR -->
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🧪</div><div><div class="card-head-label">Pretreatments</div><div class="card-head-sub">Select services and enter sq ft</div></div></div>
+    <div class="card-body">
+
+      <div style="margin-bottom:14px;">
+        <span class="section-label">Square footage</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="pretreat-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 1800" min="1" oninput="pretreatCalc()" />
+          <span class="field-unit">sq ft</span>
+        </div>
+      </div>
+
+      <span class="section-label">Select treatments</span>
+      <div class="pill-row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+        <button class="toggle-pill" data-key="boracare" data-rate="0.60" onclick="pretreatToggle(this)">
+          Bora-Care<span class="pill-rate">$0.60/sq ft</span><span class="pill-check"></span>
+        </button>
+        <button class="toggle-pill" data-key="timbor" data-rate="0.50" onclick="pretreatToggle(this)">
+          Timbor Fungi<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
+        </button>
+      </div>
+
+      <div class="result-box" id="pretreat-result" style="display:none;margin-top:4px;">
+        <div class="result-head">
+          <div class="result-head-label">Pretreatment Quote</div>
+          <div class="result-head-badge" id="pretreat-badge">—</div>
+        </div>
+        <div id="pretreat-cells" class="result-grid cols-2"></div>
+        <div style="background:var(--navy);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;" id="pretreat-total-bar" style="display:none;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,199,44,0.7);text-transform:uppercase;letter-spacing:0.8px;">Total</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--gold);">$<span id="pretreat-total-val">—</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     MOISTURE
+══════════════════════════════════ -->
+<div class="tab-panel" id="tab-moisture">
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">📐</div><div><div class="card-head-label">Crawlspace Square Footage</div><div class="card-head-sub">Used for all per-sq-ft calculations</div></div></div>
+    <div class="card-body">
+      <div class="field-wrap">
+        <input class="field-input" type="number" id="moisture-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 800" oninput="moistureCalc()" />
+        <span class="field-unit">sq ft</span>
+      </div>
+      <div class="field-hint" id="moisture-sqft-hint">Enter sq ft to enable cost calculations</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">✅</div><div><div class="card-head-label">Select All Services That Apply</div><div class="card-head-sub">Tap each one — sliders adjust difficulty / rate</div></div></div>
+    <div class="card-body">
+
+      <!-- VAPOR BARRIER -->
+      <div style="margin-bottom:14px;">
+        <div class="field-hint" style="margin-bottom:8px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.6px;">Vapor Barrier</div>
+        <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
+          <button class="toggle-pill" data-key="vapor" data-rate="0.50" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Vapor Barrier<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="vapor-remove" data-rate="0.50" data-unit="sqft-slider-extra" onclick="moistureToggle(this)">
+            Barrier + Removal<span class="pill-rate">$0.50/sq ft + removal</span><span class="pill-check"></span>
+          </button>
+        </div>
+        <div class="slider-block" id="slider-vapor">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="vapor-rate-disp">$0.50/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($0.50)</span><span>Complex ($0.75)</span></div>
+          <input type="range" id="vapor-slider" min="0.50" max="0.75" step="0.05" value="0.50" oninput="sliderUpdate('vapor')" />
+          <div class="difficulty-label" id="vapor-diff-label">Standard install</div>
+        </div>
+        <div class="slider-block" id="slider-vapor-remove">
+          <div class="slider-header">
+            <div class="slider-title">Removal Difficulty Fee</div>
+            <div class="slider-val-badge" id="vapor-remove-extra-disp">$150</div>
+          </div>
+          <div class="slider-labels"><span>Easy ($100)</span><span>Hard ($200)</span></div>
+          <input type="range" id="vapor-remove-slider" min="100" max="200" step="10" value="150" oninput="sliderUpdate('vapor-remove')" />
+          <div class="difficulty-label" id="vapor-remove-diff-label">Moderate difficulty</div>
+        </div>
+      </div>
+
+      <!-- ENCAPSULATION -->
+      <div style="margin-bottom:14px;">
+        <div class="field-hint" style="margin-bottom:8px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.6px;">Encapsulation</div>
+        <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
+          <button class="toggle-pill" data-key="encap-full" data-rate="3.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            10 mil + Wall Liner<span class="pill-rate">$3.00/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="encap-floor" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Floor Liner Only<span class="pill-rate">$2.00/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="piers" data-rate="500" data-unit="flat" onclick="moistureToggle(this)">
+            Pier Wrapping<span class="pill-rate">$500 flat (≤15 piers)</span><span class="pill-check"></span>
+          </button>
+        </div>
+        <div class="slider-block" id="slider-encap-full">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="encap-full-rate-disp">$3.00/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($3.00)</span><span>Complex ($4.00)</span></div>
+          <input type="range" id="encap-full-slider" min="3.00" max="4.00" step="0.25" value="3.00" oninput="sliderUpdate('encap-full')" />
+          <div class="difficulty-label" id="encap-full-diff-label">Standard access</div>
+        </div>
+        <div class="slider-block" id="slider-encap-floor">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="encap-floor-rate-disp">$2.00/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($2.00)</span><span>Complex ($3.00)</span></div>
+          <input type="range" id="encap-floor-slider" min="2.00" max="3.00" step="0.25" value="2.00" oninput="sliderUpdate('encap-floor')" />
+          <div class="difficulty-label" id="encap-floor-diff-label">Standard access</div>
+        </div>
+      </div>
+
+      <!-- INSULATION -->
+      <div style="margin-bottom:14px;">
+        <div class="field-hint" style="margin-bottom:8px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.6px;">Insulation</div>
+        <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
+          <button class="toggle-pill" data-key="insul-remove" data-rate="0.75" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Insulation Removal R19<span class="pill-rate">$0.75–$1.00/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="insul-install" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Insulation Install<span class="pill-rate">$2.00/sq ft</span><span class="pill-check"></span>
+          </button>
+        </div>
+        <div class="slider-block" id="slider-insul-remove">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="insul-remove-rate-disp">$0.75/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Easy ($0.75)</span><span>Hard ($1.00)</span></div>
+          <input type="range" id="insul-remove-slider" min="0.75" max="1.00" step="0.05" value="0.75" oninput="sliderUpdate('insul-remove')" />
+          <div class="difficulty-label" id="insul-remove-diff-label">Easy access</div>
+        </div>
+        <div class="slider-block" id="slider-insul-install">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="insul-install-rate-disp">$2.00/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($2.00)</span><span>Complex ($2.75)</span></div>
+          <input type="range" id="insul-install-slider" min="2.00" max="2.75" step="0.25" value="2.00" oninput="sliderUpdate('insul-install')" />
+          <div class="difficulty-label" id="insul-install-diff-label">Standard install</div>
+        </div>
+      </div>
+
+      <!-- TREATMENTS -->
+      <div style="margin-bottom:14px;">
+        <div class="field-hint" style="margin-bottom:8px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.6px;">Treatments</div>
+        <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
+          <button class="toggle-pill" data-key="timbor" data-rate="0.50" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Timbor Fungi<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="dsv" data-rate="0.25" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            DSV Sanitation<span class="pill-rate">$0.25/sq ft</span><span class="pill-check"></span>
+          </button>
+        </div>
+        <div class="slider-block" id="slider-timbor">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="timbor-rate-disp">$0.50/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($0.50)</span><span>Complex ($0.75)</span></div>
+          <input type="range" id="timbor-slider" min="0.50" max="0.75" step="0.05" value="0.50" oninput="sliderUpdate('timbor')" />
+          <div class="difficulty-label" id="timbor-diff-label">Standard access</div>
+        </div>
+        <div class="slider-block" id="slider-dsv">
+          <div class="slider-header">
+            <div class="slider-title">Difficulty / Rate</div>
+            <div class="slider-val-badge" id="dsv-rate-disp">$0.25/sq ft</div>
+          </div>
+          <div class="slider-labels"><span>Standard ($0.25)</span><span>Complex ($0.50)</span></div>
+          <input type="range" id="dsv-slider" min="0.25" max="0.50" step="0.05" value="0.25" oninput="sliderUpdate('dsv')" />
+          <div class="difficulty-label" id="dsv-diff-label">Standard access</div>
+        </div>
+      </div>
+
+      <!-- DEHUMIDIFIER -->
+      <div>
+        <div class="field-hint" style="margin-bottom:8px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.6px;">Dehumidifier</div>
+        <div class="note-box warn" style="margin-bottom:8px;"><div class="note-icon">⚠️</div><div class="note-text"><strong>Maintenance plan NOT currently active.</strong> Confirm with management before quoting dehumidifier.</div></div>
+        <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
+          <button class="toggle-pill" data-key="dehu-e100w" data-rate="3150" data-unit="flat" onclick="moistureToggle(this)">
+            E100W WiFi<span class="pill-rate">$3,150 w/ pump</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="dehu-e100" data-rate="2950" data-unit="flat" onclick="moistureToggle(this)">
+            E100<span class="pill-rate">$2,950 w/ pump</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="dehu-e070w" data-rate="2950" data-unit="flat" onclick="moistureToggle(this)">
+            E070W WiFi<span class="pill-rate">$2,950 w/ pump</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="dehu-e070" data-rate="2750" data-unit="flat" onclick="moistureToggle(this)">
+            E070<span class="pill-rate">$2,750 w/ pump</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="pump" data-rate="175" data-unit="flat" onclick="moistureToggle(this)">
+            Pump Replacement<span class="pill-rate">$175</span><span class="pill-check"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPOT / PARTIAL INSTALL CALCULATOR -->
+  <div class="card" style="border: 2px solid var(--gold);">
+    <div class="card-head" style="background:var(--gold);">
+      <div class="card-icon">📐</div>
+      <div>
+        <div class="card-head-label" style="color:var(--navy);">Spot / Partial Install Calculator</div>
+        <div class="card-head-sub" style="color:rgba(28,58,97,0.65);">Quick price for partial sq ft — no full crawlspace needed</div>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div style="margin-bottom:14px;">
+        <span class="section-label">Partial square footage</span>
+        <div class="field-wrap">
+          <input class="field-input" type="number" id="partial-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 200" min="1" oninput="partialCalc()" />
+          <span class="field-unit">sq ft</span>
+        </div>
+      </div>
+
+      <span class="section-label">Select service type</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;" id="partial-pills">
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="vapor"        data-label="Vapor Barrier"          data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Vapor Barrier</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-full"   data-label="Encapsulation (Full)"   data-min="3.00" data-max="6.00" onclick="partialSelect(this)">Encapsulation</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-floor"  data-label="Floor Liner"            data-min="2.00" data-max="4.00" onclick="partialSelect(this)">Floor Liner</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-remove" data-label="Insulation Removal"     data-min="0.75" data-max="1.50" onclick="partialSelect(this)">Insul. Removal</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-install"data-label="Insulation Install"     data-min="2.00" data-max="4.00" onclick="partialSelect(this)">Insul. Install</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="timbor"       data-label="Timbor Fungi"           data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Timbor Fungi</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="dsv"          data-label="DSV Sanitation"         data-min="0.25" data-max="0.50" onclick="partialSelect(this)">DSV Sanitation</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="boracare"     data-label="Bora-Care"              data-min="0.60" data-max="1.20" onclick="partialSelect(this)">Bora-Care</button>
+      </div>
+
+      <div id="partial-slider-wrap" style="display:none;margin:12px 0;">
+        <div class="slider-header" style="margin-bottom:6px;">
+          <div class="slider-title" id="partial-slider-title">Difficulty / Rate</div>
+          <div class="slider-val-badge" id="partial-rate-disp">—</div>
+        </div>
+        <div class="slider-labels">
+          <span id="partial-slider-min-label">—</span>
+          <span id="partial-slider-max-label">—</span>
+        </div>
+        <input type="range" id="partial-slider" min="0" max="100" step="1" value="0" oninput="partialSliderMove()" />
+        <div class="difficulty-label" id="partial-diff-label">—</div>
+      </div>
+
+      <div class="result-box" id="partial-result" style="display:none;margin-top:10px;">
+        <div class="result-head">
+          <div class="result-head-label" id="partial-result-label">Partial Install</div>
+          <div class="result-head-badge" id="partial-result-badge">—</div>
+        </div>
+        <div class="result-grid cols-2">
+          <div class="result-cell">
+            <div class="result-cell-label">Spot Area</div>
+            <div class="result-cell-type">Partial Install</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="partial-cost">—</span></div>
+            <div class="result-val-sub" id="partial-cost-sub">—</div>
+          </div>
+          <div class="result-cell secondary">
+            <div class="result-cell-label">Rate Used</div>
+            <div class="result-cell-type">Per Sq Ft</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="partial-rate-used">—</span></div>
+            <div class="result-val-sub" id="partial-range-note">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Moisture Result -->
+  <div id="moisture-result" style="display:none;">
+    <div class="result-box">
+      <div class="result-head">
+        <div class="result-head-label">Moisture Estimate</div>
+        <div class="result-head-badge" id="moisture-item-count">0 services selected</div>
+      </div>
+      <div class="result-grid cols-1">
+        <div class="result-cell">
+          <div class="result-cell-label">Total</div>
+          <div class="result-cell-type">Quote</div>
+          <div class="result-val lg"><span class="dollar">$</span><span id="moisture-grand-total">0</span></div>
+          <div class="result-val-sub">Based on selected services + sq ft entered</div>
+        </div>
+      </div>
+    </div>
+    <div class="moisture-breakdown" id="moisture-breakdown"></div>
+    <div class="note-box info" style="margin-top:10px;" id="moisture-ranges-note" style="display:none;"></div>
+  </div>
+
+</div>
+══════════════════════════════════ -->
+<div class="tab-panel" id="tab-ancillary">
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🛏️</div><div><div class="card-head-label">Bed Bugs</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Inspection</div><div class="info-price">$100</div></div>
+      <div class="info-row"><div class="info-label">Treatment — per room</div><div class="info-price">$550/room</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🦟</div><div><div class="card-head-label">Mosquito / Tick</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Mosquito Yard — Average</div><div class="info-price">$59/mo</div></div>
+      <div class="info-row"><div class="info-label">Mosquito Yard — XL</div><div class="info-price">$69/mo</div></div>
+      <div class="info-row"><div class="info-label">Currently Quarterly Customer</div><div class="info-price">$89/mo</div></div>
+      <div class="info-row"><div class="info-label">Commercial — Mosquito / Tick</div><div class="info-price">$150/hr</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🪳</div><div><div class="card-head-label">German Cockroaches</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Residential — One-Time <small>Includes 3 weekly follow-ups</small></div><div class="info-price">$750</div></div>
+      <div class="info-row"><div class="info-label">Additional Follow-ups</div><div class="info-price">$100</div></div>
+      <div class="divider"></div>
+      <div class="info-row"><div class="info-label">Commercial — 1 unit <small>One-time, includes 3 weekly follow-ups</small></div><div class="info-price">$550</div></div>
+      <div class="info-row"><div class="info-label">Commercial — 2–5 units <small>Per unit, one-time</small></div><div class="info-price">$400/unit</div></div>
+      <div class="info-row"><div class="info-label">Commercial — 5+ units <small>Per unit, one-time</small></div><div class="info-price">$250/unit</div></div>
+      <div class="info-row"><div class="info-label">Commercial — Additional follow-ups</div><div class="info-price">$150/mo</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🐀</div><div><div class="card-head-label">Rodents</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Inspection</div><div class="info-price">$100</div></div>
+      <div class="info-row"><div class="info-label">Residential — One-Time Initial <small>Includes 3 follow-ups</small></div><div class="info-price">$750</div></div>
+      <div class="info-row"><div class="info-label">Bait Station <small>Per station over 2</small></div><div class="info-price">$20/ea</div></div>
+      <div class="info-row"><div class="info-label">Commercial Quarterly <small>Checking traps & stations</small></div><div class="info-price">$150</div></div>
+      <div class="info-row"><div class="info-label">Commercial Monthly <small>Checking traps & stations</small></div><div class="info-price">$90</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🐝</div><div><div class="card-head-label">Carpenter Pests</div></div></div>
+    <div class="card-body">
+      <div class="info-row"><div class="info-label">Carpenter Ants — Initial</div><div class="info-price">$350</div></div>
+      <div class="info-row"><div class="info-label">Carpenter Bees — Initial <small>Add $150 if ladder & 2 people needed</small></div><div class="info-price">$350</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="safe-bottom"></div>
+</div>
+
+<script>
+/* TAB SWITCHING */
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ═══ RESIDENTIAL ═══ */
+const resPlan = {
+  home: {
+    essential: { initial: 199, monthly: 48, inclusions: "Quarterly exterior pest treatments, exterior barrier, interior service as needed, web removal, 2 exterior rodent bait stations, free re-service." },
+    advanced:  { initial: 299, monthly: 58, inclusions: "Everything in Essential + 4 termite monitoring stations, quarterly monitoring & reporting, early termite detection, annual documented inspection." },
+    complete:  { monthly: 78, inclusions: "Everything in Advanced + Full Trelona active bait system, active termite elimination, bait replaced as needed, retreatment coverage.", sqft: [[1500,699],[2500,799],[3500,899],[Infinity,999]] }
+  },
+  townhouse: {
+    essential: { initial: 185, monthly: 45, inclusions: "Quarterly pest treatments, exterior protection (front & rear), interior service as needed, 2 exterior rodent stations as layout allows, free re-service." },
+    advanced:  { initial: 229, monthly: 55, inclusions: "Everything in Essential + 4 termite monitoring stations, quarterly monitoring & reporting, early termite detection." },
+    complete:  { initial: 500, monthly: 70, inclusions: "Everything in Advanced + 4-station Trelona active bait system, annual comprehensive termite inspection, bait replaced as needed." }
+  }
+};
+
+// Rodent pricing logic:
+// Essential: flat $550 (replaces standard initial)
+// Advanced: flat $650
+// Complete: standard complete initial + $351 (the $550-$199 rodent premium)
+// Townhouse follows same structure
+const resRodentScale = 550 / 199;
+const resRodentSqft = [[1500, 1050],[2500, 1150],[3500, 1250],[Infinity, 1350]];
+const resRodentInitials = {
+  home:      { essential: 550, advanced: 650 },
+  townhouse: { essential: 550, advanced: 650, complete: 851 }
+};
+
+let resProp = 'home', resTier = 'essential', resRodent = 'no';
+
+function resSelectProp(el) {
+  resProp = el.dataset.val;
+  document.querySelectorAll('#res-prop-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  resRender();
+}
+function resSelectTier(el) {
+  resTier = el.dataset.val;
+  document.querySelectorAll('#res-tier-pills .pill').forEach(p => { p.classList.remove('active','active-gold'); });
+  el.classList.add(resTier === 'complete' ? 'active-gold' : 'active');
+  resRender();
+}
+function resSelectRodent(el) {
+  resRodent = el.dataset.val;
+  document.querySelectorAll('#res-rodent-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('res-rodent-note').style.display = resRodent === 'yes' ? '' : 'none';
+  resRender();
+}
+function resCalc() {
+  ['res-t1','res-t2','res-t3','res-t4'].forEach(id => document.getElementById(id).classList.remove('active-tier'));
+  const v = parseInt(document.getElementById('res-sqft').value);
+  if (!v || v < 1) { document.getElementById('res-sqft-hint').textContent = 'Enter sq ft to calculate Complete pricing'; document.getElementById('res-sqft-hint').className = 'field-hint'; resRender(); return; }
+  let row, hint;
+  if (v <= 1500) { row='res-t1'; hint='Band: Up to 1,500 sq ft'; }
+  else if (v <= 2500) { row='res-t2'; hint='Band: 1,501–2,500 sq ft'; }
+  else if (v <= 3500) { row='res-t3'; hint='Band: 2,501–3,500 sq ft'; }
+  else { row='res-t4'; hint='Band: 3,501+ sq ft'; }
+  document.getElementById(row).classList.add('active-tier');
+  document.getElementById('res-sqft-hint').textContent = hint;
+  document.getElementById('res-sqft-hint').className = 'field-hint has-val';
+  resRender();
+}
+function resGetCompleteInitial(v) {
+  const table = resRodent === 'yes' ? resRodentSqft : resPlan.home.complete.sqft;
+  for (const [max, price] of table) { if (v <= max) return price; }
+  return resRodent === 'yes' ? 2760 : 999;
+}
+function resRender() {
+  const d = resPlan[resProp][resTier];
+  let initial;
+
+  if (resRodent === 'yes') {
+    // Scaled rodent initial
+    if (resTier === 'complete') {
+      if (resProp === 'townhouse') {
+        initial = resRodentInitials.townhouse.complete.toLocaleString();
+      } else {
+        const v = parseInt(document.getElementById('res-sqft').value);
+        initial = v > 0 ? resGetCompleteInitial(v).toLocaleString() : '—';
+      }
+    } else {
+      initial = (resRodentInitials[resProp][resTier] || '—').toLocaleString
+        ? resRodentInitials[resProp][resTier].toLocaleString()
+        : '—';
+    }
+  } else {
+    // Standard pricing
+    if (d.sqft) {
+      const v = parseInt(document.getElementById('res-sqft').value);
+      initial = v > 0 ? resGetCompleteInitial(v).toLocaleString() : '—';
+    } else {
+      initial = d.initial.toLocaleString();
+    }
+  }
+
+  document.getElementById('res-initial').textContent = initial;
+  document.getElementById('res-monthly').textContent = d.monthly.toLocaleString();
+  document.getElementById('res-inclusions').textContent = d.inclusions;
+  const propLabel = resProp === 'home' ? 'Home' : 'Townhouse';
+  const tierLabel = resTier.charAt(0).toUpperCase() + resTier.slice(1);
+  const rodentTag = resRodent === 'yes' ? ' + Rodent' : '';
+  document.getElementById('res-badge').textContent = tierLabel + ' — ' + propLabel + rodentTag;
+  document.getElementById('res-sqft-card').style.display = (resTier === 'complete' && resProp === 'home') ? '' : 'none';
+}
+
+/* ═══ COMMERCIAL CALCULATOR ═══ */
+let commType = 'warehouse', commFreq = 'monthly', commOfficeUnitType = 'single', commExteriorIncl = 'no';
+let commDoorRate = 15, commRodentMode = 'none', commRodentRecurFreq = 'monthly';
+let commRoachMode = 'none', commRoachUnitBand = '1';
+
+const commRates = {
+  warehouse: { monthly: { rate: 175, min: 90, addlRate: null }, quarterly: { rate: null, min: 180, addlRate: 150 } },
+  restaurant:{ monthly: { rate: 150, min: 90, addlRate: null }, quarterly: { rate: null, min: 125, addlRate: 150 } },
+  office:    {
+    single:  { monthly: { rate: 150, min: 90, addlRate: null }, quarterly: { rate: null, min: 125, addlRate: 150 } },
+    multi:   { monthly: { rate: 175, min: 90, addlRate: null }, quarterly: { rate: null, min: 180, addlRate: 150 } }
+  }
+};
+const mgmtApproval = { restaurant: ['quarterly'], apartment: ['quarterly'] };
+
+function commSelect(field, el) {
+  if (field === 'type') {
+    commType = el.dataset.val;
+    document.querySelectorAll('#comm-type-pills .pill').forEach(p => p.classList.remove('active'));
+  } else {
+    commFreq = el.dataset.val;
+    document.querySelectorAll('#comm-freq-pills .pill').forEach(p => p.classList.remove('active'));
+  }
+  el.classList.add('active');
+  commUpdateUI();
+  commCalc();
+}
+
+function commOfficeUnit(val) {
+  commOfficeUnitType = val;
+  document.getElementById('comm-office-single').classList.toggle('active', val === 'single');
+  document.getElementById('comm-office-multi').classList.toggle('active', val === 'multi');
+  commCalc();
+}
+
+function commExterior(val) {
+  commExteriorIncl = val;
+  document.getElementById('comm-exterior-no').classList.toggle('active', val === 'no');
+  document.getElementById('comm-exterior-yes').classList.toggle('active', val === 'yes');
+  document.getElementById('comm-exterior-hours-wrap').style.display = val === 'yes' ? '' : 'none';
+  commCalc();
+}
+
+function commRodentType(val) {
+  commRodentMode = val;
+  ['none','both'].forEach(v => {
+    document.getElementById('comm-rodent-' + v).classList.toggle('active', v === val);
+  });
+  document.getElementById('comm-rodent-initial-fields').style.display = val === 'both' ? '' : 'none';
+  document.getElementById('comm-rodent-recurring-fields').style.display = val === 'both' ? '' : 'none';
+  commCalc();
+}
+
+function commRodentFreq(val) {
+  commRodentRecurFreq = val;
+  document.getElementById('comm-rodent-freq-monthly').classList.toggle('active', val === 'monthly');
+  document.getElementById('comm-rodent-freq-quarterly').classList.toggle('active', val === 'quarterly');
+  commCalc();
+}
+
+function commRoachType(val) {
+  commRoachMode = val === 'yes' ? 'both' : 'none';
+  ['none','yes'].forEach(v => document.getElementById('comm-roach-' + v).classList.toggle('active', v === val));
+  document.getElementById('comm-roach-fields').style.display = val === 'yes' ? '' : 'none';
+  if (val === 'yes') commRoachShowFields();
+  commCalc();
+}
+
+function commRoachShowFields() {
+  const isApt = commType === 'apartment';
+  document.getElementById('comm-roach-apt-fields').style.display = isApt ? '' : 'none';
+  document.getElementById('comm-roach-flat-fields').style.display = isApt ? 'none' : '';
+  if (!isApt) commCalc();
+}
+
+function commRoachUnits(val) {
+  commRoachUnitBand = val;
+}
+
+function commRoachUnitInput() {
+  const count = parseInt(document.getElementById('comm-roach-unit-count').value) || 0;
+  const hintEl = document.getElementById('comm-roach-band-hint');
+  const miniResult = document.getElementById('comm-roach-mini-result');
+
+  if (!count) {
+    hintEl.textContent = 'Enter count — pricing band auto-detects';
+    hintEl.className = 'field-hint';
+    miniResult.style.display = 'none';
+    commCalc();
+    return;
+  }
+
+  let rate, band, initialCost;
+  if (count === 1) {
+    rate = 550; band = '1 unit — flat $550'; initialCost = 550;
+  } else if (count <= 5) {
+    rate = 400; band = '2–5 units @ $400/unit'; initialCost = count * 400;
+  } else {
+    rate = 250; band = '5+ units @ $250/unit'; initialCost = count * 250;
+  }
+
+  hintEl.textContent = 'Band: ' + band;
+  hintEl.className = 'field-hint has-val';
+  document.getElementById('comm-roach-badge').textContent = count + ' unit' + (count > 1 ? 's' : '') + ' — ' + band;
+  document.getElementById('comm-roach-initial-disp').textContent = initialCost.toLocaleString();
+  document.getElementById('comm-roach-initial-sub').textContent = count > 1
+    ? count + ' units × $' + rate.toLocaleString()
+    : 'Flat rate — entire unit';
+  miniResult.style.display = '';
+  commCalc();
+}
+
+function commGetRoachLines() {
+  const lines = [];
+  if (commRoachMode === 'none') return lines;
+
+  const isApt = commType === 'apartment';
+  let initialCost = 0, unitNote = '';
+
+  if (isApt) {
+    const count = parseInt(document.getElementById('comm-roach-unit-count').value) || 0;
+    if (!count) return lines;
+    if (count === 1) { initialCost = 550; unitNote = '1 unit'; }
+    else if (count <= 5) { initialCost = count * 400; unitNote = count + ' units × $400'; }
+    else { initialCost = count * 250; unitNote = count + ' units × $250'; }
+  } else {
+    initialCost = 550;
+    unitNote = 'flat rate — location-wide';
+  }
+
+  lines.push({ label: '🪳 German roach initial (' + unitNote + ') + 3 follow-ups', val: initialCost, type: 'initial' });
+  // No recurring line — folds into regular service
+  return lines;
+}
+
+function commGetRodentLines() {
+  const lines = [];
+  if (commRodentMode === 'none') return lines;
+
+  // Initial
+  lines.push({ label: 'Rodent initial (inspection + 3 follow-ups)', val: 550, type: 'initial' });
+  const stations = parseInt(document.getElementById('comm-rodent-stations').value) || 0;
+  if (stations > 2) {
+    const extra = (stations - 2) * 20;
+    lines.push({ label: (stations - 2) + ' additional bait stations × $20', val: extra, type: 'initial' });
+  } else if (stations > 0) {
+    lines.push({ label: stations + ' bait station' + (stations > 1 ? 's' : '') + ' (included in initial)', val: 0, type: 'initial' });
+  }
+
+  // Recurring
+  const recurCost = commRodentRecurFreq === 'monthly' ? 90 : 150;
+  const freqLabel = commRodentRecurFreq === 'monthly' ? 'monthly' : 'quarterly';
+  lines.push({ label: 'Rodent recurring (' + freqLabel + ') — traps & stations', val: recurCost, type: 'recurring' });
+
+  return lines;
+}
+
+function commDoorSlider() {
+  const el = document.getElementById('comm-door-slider');
+  commDoorRate = parseInt(el.value);
+  const pct = ((commDoorRate - 13) / 4) * 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  const labels = ['Light infestation / small units', 'Moderate — average size units', 'Heavy infestation / larger units', 'Severe — large units, major issue', 'Severe — large units, major issue'];
+  document.getElementById('comm-door-rate-disp').textContent = '$' + commDoorRate + '/door';
+  document.getElementById('comm-door-diff-label').textContent = labels[commDoorRate - 13];
+  commCalc();
+}
+
+function commUpdateRateRef() {
+  const card = document.getElementById('comm-rate-ref');
+  const body = document.getElementById('comm-rate-ref-body');
+  const sub  = document.getElementById('comm-rate-ref-sub');
+  const isApt = commType === 'apartment';
+  const isQuarterly = commFreq === 'quarterly';
+  const freqLabel = isQuarterly ? 'Quarterly' : 'Monthly';
+  const typeLabel = { warehouse:'Warehouse', restaurant:'Restaurant', apartment:'Apartment', office:'Office' }[commType];
+
+  let rows = [];
+
+  if (isApt) {
+    rows.push({ label: 'Interior units', rate: '$13–$17/door (based on severity)' });
+    if (commExteriorIncl === 'yes') {
+      rows.push({ label: 'Exterior / common areas', rate: '$175/hr' });
+    }
+  } else {
+    let rateObj;
+    if (commType === 'office') {
+      rateObj = commRates.office[commOfficeUnitType][commFreq];
+      const unitLabel = commOfficeUnitType === 'single' ? 'Single unit' : 'Multi-unit (2+)';
+      if (isQuarterly) {
+        rows.push({ label: unitLabel + ' — minimum charge', rate: '$' + rateObj.min });
+        rows.push({ label: 'Additional time beyond minimum', rate: '$150/hr' });
+      } else {
+        rows.push({ label: unitLabel + ' — hourly rate', rate: '$' + rateObj.rate + '/hr' });
+        rows.push({ label: 'Minimum charge', rate: '$' + rateObj.min });
+      }
+    } else {
+      rateObj = commRates[commType][commFreq];
+      if (isQuarterly) {
+        rows.push({ label: typeLabel + ' — minimum charge', rate: '$' + rateObj.min });
+        rows.push({ label: 'Additional time beyond minimum', rate: '$150/hr' });
+        if (commType === 'restaurant') rows.push({ label: 'Service call fee', rate: '$75' });
+      } else {
+        rows.push({ label: typeLabel + ' — hourly rate', rate: '$' + rateObj.rate + '/hr' });
+        rows.push({ label: 'Minimum charge', rate: '$' + rateObj.min });
+      }
+    }
+  }
+
+  if (commRodentMode !== 'none') {
+    rows.push({ label: 'Rodent initial (incl. 3 follow-ups)', rate: '$550' });
+    rows.push({ label: 'Bait stations beyond 2', rate: '$20/ea' });
+    const recurCost = commRodentRecurFreq === 'monthly' ? '$90/mo' : '$150/quarter';
+    rows.push({ label: 'Rodent recurring (' + commRodentRecurFreq + ')', rate: recurCost });
+  }
+
+  if (commRoachMode !== 'none') {
+    rows.push({ label: 'German roach — 1 unit', rate: '$550' });
+    rows.push({ label: 'German roach — 2–5 units', rate: '$400/unit' });
+    rows.push({ label: 'German roach — 5+ units', rate: '$250/unit' });
+    rows.push({ label: 'Additional follow-ups (if needed)', rate: '$150/visit' });
+  }
+
+  if (rows.length === 0) { card.style.display = 'none'; return; }
+
+  sub.textContent = typeLabel + ' — ' + freqLabel;
+  body.innerHTML = rows.map(r =>
+    `<div class="info-row"><div class="info-label">${r.label}</div><div class="info-price">${r.rate}</div></div>`
+  ).join('');
+
+  const needsMgmt = mgmtApproval[commType] && mgmtApproval[commType].includes(commFreq);
+  if (needsMgmt) {
+    body.innerHTML += `<div class="note-box mgmt" style="margin-top:10px;"><div class="note-icon">⚠️</div><div class="note-text"><strong>Management approval required before quoting.</strong></div></div>`;
+  }
+
+  card.style.display = '';
+}
+
+function commUpdateUI() {
+  const isApt = commType === 'apartment';
+  const isHourly = !isApt;
+  const isOffice = commType === 'office';
+  const isQuarterly = commFreq === 'quarterly';
+
+  document.getElementById('comm-apt-card').style.display = isApt ? '' : 'none';
+  document.getElementById('comm-hourly-card').style.display = isHourly ? '' : 'none';
+  document.getElementById('comm-office-multiunit').style.display = isOffice ? '' : 'none';
+
+  // Update roach fields if already open
+  if (commRoachMode !== 'none') commRoachShowFields();
+
+  // Management approval warning
+  const needsMgmt = mgmtApproval[commType] && mgmtApproval[commType].includes(commFreq);
+  document.getElementById('comm-mgmt-warn').style.display = needsMgmt ? '' : 'none';
+  commUpdateRateRef();
+}
+
+function commCalc() {
+  const isApt = commType === 'apartment';
+  const isQuarterly = commFreq === 'quarterly';
+  let total = 0, initial = 0, lines = [], recurLabel = isQuarterly ? 'Per Quarter' : 'Per Month';
+
+  if (isApt) {
+    const units = parseInt(document.getElementById('comm-apt-units').value) || 0;
+    const extHours = commExteriorIncl === 'yes' ? (parseFloat(document.getElementById('comm-exterior-hours').value) || 0) / 60 : 0;
+
+    if (units > 0) {
+      const doorTotal = units * commDoorRate;
+      lines.push({ label: units + ' units × $' + commDoorRate + '/door', val: doorTotal });
+      total += doorTotal;
+    }
+    if (extHours > 0) {
+      const extMins = parseFloat(document.getElementById('comm-exterior-hours').value) || 0;
+      const extTotal = Math.round(extHours * 175);
+      lines.push({ label: extMins + ' min exterior/common areas × $175/hr', val: extTotal });
+      total += extTotal;
+    }
+    initial = total;
+
+  } else {
+    // Hourly types — input is now in minutes
+    const mins = parseFloat(document.getElementById('comm-hours').value) || 0;
+    const hours = mins / 60;
+
+    let rateObj;
+    if (commType === 'office') {
+      rateObj = commRates.office[commOfficeUnitType][commFreq];
+    } else {
+      rateObj = commRates[commType][commFreq];
+    }
+
+    if (!rateObj) return;
+
+    if (isQuarterly) {
+      // Quarterly: minimum flat charge. If time × $150/hr exceeds minimum, use hourly instead.
+      const hrCost = hours > 0 ? Math.round(hours * 150) : 0;
+      if (hours > 0 && hrCost > rateObj.min) {
+        total = hrCost;
+        lines.push({ label: mins + ' min × $150/hr = $' + hrCost, val: hrCost });
+      } else {
+        total = rateObj.min;
+        const minNote = hours > 0 ? ' (' + mins + ' min billed at minimum)' : '';
+        lines.push({ label: 'Quarterly minimum' + minNote, val: rateObj.min });
+      }
+      if (commType === 'restaurant') {
+        lines.push({ label: 'Service call fee', val: 75 });
+        total += 75;
+      }
+    } else {
+      // Monthly: straight hourly, floor at minimum
+      if (mins > 0) {
+        const hrCost = Math.round(hours * rateObj.rate);
+        const billed = Math.max(rateObj.min, hrCost);
+        total = billed;
+        if (hrCost < rateObj.min) {
+          lines.push({ label: mins + ' min × $' + rateObj.rate + '/hr = $' + hrCost + ' — minimum applied', val: rateObj.min });
+        } else {
+          lines.push({ label: mins + ' min × $' + rateObj.rate + '/hr', val: hrCost });
+        }
+      } else {
+        total = rateObj.min;
+        lines.push({ label: 'Minimum charge ($' + rateObj.rate + '/hr)', val: rateObj.min });
+      }
+    }
+
+    // Update hint
+    const hintEl = document.getElementById('comm-hours-hint');
+    if (hintEl && mins > 0) {
+      hintEl.textContent = (mins / 60).toFixed(2) + ' hrs — ' + (isQuarterly ? 'min $' + rateObj.min : '$' + rateObj.rate + '/hr');
+      hintEl.className = 'field-hint has-val';
+    } else if (hintEl) {
+      hintEl.textContent = 'Enter time — minimum charge applies if under threshold';
+      hintEl.className = 'field-hint';
+    }
+
+    initial = total;
+  }
+
+  if (lines.length === 0 && commRodentMode === 'none' && commRoachMode === 'none') {
+    document.getElementById('comm-result').style.display = 'none';
+    document.getElementById('comm-breakdown-card').style.display = 'none';
+    return;
+  }
+
+  // Rodent lines
+  const rodentLines = commGetRodentLines();
+  const roachLines  = commGetRoachLines();
+  const rodentInitialCost = rodentLines.filter(l => l.type === 'initial').reduce((s,l) => s + l.val, 0);
+  const rodentRecurCost   = rodentLines.filter(l => l.type === 'recurring').reduce((s,l) => s + l.val, 0);
+  const roachInitialCost  = roachLines.filter(l => l.type === 'initial').reduce((s,l) => s + l.val, 0);
+  const roachRecurCost    = roachLines.filter(l => l.type === 'recurring').reduce((s,l) => s + l.val, 0);
+  const hasRodent = commRodentMode !== 'none';
+  const hasRoach  = commRoachMode !== 'none';
+  const hasAddons = hasRodent; // roach has no recurring so only splits view when rodent present
+
+  const typeLabel = { warehouse:'Warehouse', restaurant:'Restaurant', apartment:'Apartment', office:'Office' }[commType];
+  const freqLabel = commFreq.charAt(0).toUpperCase() + commFreq.slice(1);
+  document.getElementById('comm-result-badge').textContent = typeLabel + ' — ' + freqLabel
+    + (hasRodent ? ' + Rodent' : '') + (hasRoach ? ' + Roach' : '');
+
+  const recurTypeStr = isQuarterly ? 'Quarterly' : 'Monthly';
+  const recurSubStr  = isQuarterly ? 'Per service visit' : 'Per month';
+
+  if (!hasAddons) {
+    if (hasRoach) {
+      // Roach only — show split: pest initial | roach initial, but simple recurring
+      document.getElementById('comm-result-grid-norodent').style.display = 'none';
+      document.getElementById('comm-result-grid-rodent').style.display = '';
+      document.getElementById('comm-pest-initial').textContent = initial.toLocaleString();
+      document.getElementById('comm-rodent-initial-val').textContent = roachInitialCost.toLocaleString();
+      document.getElementById('comm-addon-initial-label').textContent = '🪳 Roach Initial';
+      document.getElementById('comm-addon-initial-type').textContent = 'One-Time + 3 Follow-ups';
+      document.getElementById('comm-addon-initial-sub').textContent = 'Includes 3 weekly follow-ups';
+      document.getElementById('comm-grand-initial').textContent = (initial + roachInitialCost).toLocaleString();
+      document.getElementById('comm-pest-recur-val').textContent = total.toLocaleString();
+      document.getElementById('comm-pest-recur-label').textContent = 'Pest ' + recurTypeStr;
+      document.getElementById('comm-pest-recur-type').textContent = 'Per Service';
+      document.getElementById('comm-pest-recur-sub').textContent = recurSubStr;
+      document.getElementById('comm-rodent-recur-val').textContent = '—';
+      document.getElementById('comm-rodent-recur-label').textContent = '🪳 Roach Recurring';
+      document.getElementById('comm-rodent-recur-type').textContent = 'After Initial';
+      document.getElementById('comm-rodent-recur-sub').textContent = 'Folds into regular service';
+      document.getElementById('comm-recur-combined').textContent = total.toLocaleString();
+    } else {
+      document.getElementById('comm-result-grid-norodent').style.display = '';
+      document.getElementById('comm-result-grid-rodent').style.display = 'none';
+      document.getElementById('comm-initial-nr').textContent = initial.toLocaleString();
+      document.getElementById('comm-recur-nr').textContent = total.toLocaleString();
+      document.getElementById('comm-recur-label-nr').textContent = recurTypeStr;
+      document.getElementById('comm-recur-type-nr').textContent = 'Per Service';
+      document.getElementById('comm-recur-sub-nr').textContent = recurSubStr;
+    }
+  } else {
+    document.getElementById('comm-result-grid-norodent').style.display = 'none';
+    document.getElementById('comm-result-grid-rodent').style.display = '';
+    document.getElementById('comm-pest-initial').textContent = initial.toLocaleString();
+    document.getElementById('comm-rodent-initial-val').textContent = (rodentInitialCost + roachInitialCost).toLocaleString();
+    const addonLabel = hasRodent && hasRoach ? '🐀🪳 Rodent + Roach' : '🐀 Rodent Setup';
+    const addonSub = hasRodent && hasRoach ? 'Rodent setup + roach initial' : 'Includes bait stations';
+    document.getElementById('comm-addon-initial-label').textContent = addonLabel;
+    document.getElementById('comm-addon-initial-type').textContent = 'Initial + 3 Follow-ups';
+    document.getElementById('comm-addon-initial-sub').textContent = addonSub;
+    document.getElementById('comm-grand-initial').textContent = (initial + rodentInitialCost + roachInitialCost).toLocaleString();
+    document.getElementById('comm-pest-recur-val').textContent = total.toLocaleString();
+    document.getElementById('comm-pest-recur-label').textContent = 'Pest ' + recurTypeStr;
+    document.getElementById('comm-pest-recur-type').textContent = 'Per Service';
+    document.getElementById('comm-pest-recur-sub').textContent = recurSubStr;
+    const addonRecurLabel = hasRodent ? '🐀 Rodent Recurring' : '🐀 Rodent';
+    const addonRecurSub = hasRodent ? 'Traps & stations checked' : '';
+    document.getElementById('comm-rodent-recur-val').textContent = rodentRecurCost.toLocaleString();
+    document.getElementById('comm-rodent-recur-label').textContent = addonRecurLabel;
+    document.getElementById('comm-rodent-recur-type').textContent = 'Per Visit';
+    document.getElementById('comm-rodent-recur-sub').textContent = addonRecurSub;
+    document.getElementById('comm-recur-combined').textContent = (total + rodentRecurCost).toLocaleString();
+  }
+
+  // Breakdown
+  const breakdownEl = document.getElementById('comm-breakdown-body');
+  const renderRows = (arr, icon) => arr.map(l =>
+    `<div class="info-row"><div class="info-label">${icon ? icon + ' ' : ''}${l.label}</div><div class="info-price">${l.val > 0 ? '$' + l.val.toLocaleString() : '<span style="color:var(--muted);font-size:13px;">Included</span>'}</div></div>`
+  ).join('');
+
+  let html = '';
+  if (hasAddons || hasRoach) {
+    html += `<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;">First Service</div>`;
+    html += renderRows(lines, '🛡️');
+    html += renderRows(rodentLines.filter(l=>l.type==='initial'), '🐀');
+    html += renderRows(roachLines.filter(l=>l.type==='initial'), '🪳');
+    html += `<div class="info-row" style="padding:6px 0 2px;"><div class="info-label" style="font-weight:700;color:var(--navy);">First Service Total</div><div class="info-price">$${(initial + rodentInitialCost + roachInitialCost).toLocaleString()}</div></div>`;
+    html += `<div class="divider"></div>`;
+    html += `<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;">Recurring</div>`;
+    html += renderRows(lines, '🛡️');
+    if (hasRodent) html += renderRows(rodentLines.filter(l=>l.type==='recurring'), '🐀');
+    if (hasRoach) html += `<div class="info-row"><div class="info-label">🪳 German roach units — folds into regular service</div><div class="info-price" style="color:var(--muted);font-size:13px;">No add'l charge</div></div>`;
+    html += `<div class="info-row" style="padding:6px 0 2px;"><div class="info-label" style="font-weight:700;color:var(--navy);">Recurring Total</div><div class="info-price">$${(total + rodentRecurCost).toLocaleString()}</div></div>`;
+  } else {
+    html += renderRows(lines, '');
+    html += `<div class="divider"></div><div class="info-row" style="padding-top:4px;"><div class="info-label" style="font-weight:700;color:var(--navy);">Estimated Total</div><div class="info-price" style="font-size:20px;">$${total.toLocaleString()}</div></div>`;
+  }
+
+  breakdownEl.innerHTML = html;
+  document.getElementById('comm-result').style.display = '';
+  document.getElementById('comm-breakdown-card').style.display = '';
+  commUpdateRateRef();
+}
+
+/* ═══ PARTIAL / SPOT INSTALL CALCULATOR ═══ */
+let partialKey = null, partialRate = 0;
+
+function partialSelect(el) {
+  partialKey = el.dataset.key;
+  document.querySelectorAll('#partial-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+
+  const min = parseFloat(el.dataset.min);
+  const max = parseFloat(el.dataset.max);
+  const label = el.dataset.label;
+  partialRate = min;
+
+  const sliderWrap = document.getElementById('partial-slider-wrap');
+  const slider = document.getElementById('partial-slider');
+
+  if (min === max) {
+    sliderWrap.style.display = 'none';
+  } else {
+    sliderWrap.style.display = '';
+    slider.value = 0;
+    slider.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) 0%, #C8D8EC 0%, #C8D8EC 100%)`;
+    document.getElementById('partial-slider-title').textContent = label + ' — Difficulty / Rate';
+    document.getElementById('partial-slider-min-label').textContent = 'Easy ($' + min.toFixed(2) + ')';
+    document.getElementById('partial-slider-max-label').textContent = 'Hard ($' + max.toFixed(2) + ')';
+    document.getElementById('partial-rate-disp').textContent = '$' + min.toFixed(2) + '/sq ft';
+    document.getElementById('partial-diff-label').textContent = 'Easy access';
+    slider.dataset.min = min;
+    slider.dataset.max = max;
+  }
+
+  document.getElementById('partial-result-label').textContent = label + ' — Partial';
+  partialCalc();
+}
+
+function partialSliderMove() {
+  const slider = document.getElementById('partial-slider');
+  const min = parseFloat(slider.dataset.min);
+  const max = parseFloat(slider.dataset.max);
+  const pct = parseInt(slider.value);
+  partialRate = min + (pct / 100) * (max - min);
+  slider.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  document.getElementById('partial-rate-disp').textContent = '$' + partialRate.toFixed(2) + '/sq ft';
+  document.getElementById('partial-diff-label').textContent = getDiffLabel(pct, 0, 100);
+  partialCalc();
+}
+
+function partialCalc() {
+  const sq = parseInt(document.getElementById('partial-sqft').value) || 0;
+  const resultBox = document.getElementById('partial-result');
+  if (!partialKey || !sq) { resultBox.style.display = 'none'; moistureCalc(); return; }
+  const el = document.querySelector(`#partial-pills .pill[data-key="${partialKey}"]`);
+  if (!el) return;
+  const min = parseFloat(el.dataset.min);
+  const max = parseFloat(el.dataset.max);
+  const rate = min === max ? min : partialRate;
+  const cost = Math.round(rate * sq);
+  document.getElementById('partial-cost').textContent = cost.toLocaleString();
+  document.getElementById('partial-cost-sub').textContent = sq.toLocaleString() + ' sq ft × $' + rate.toFixed(2);
+  document.getElementById('partial-rate-used').textContent = rate.toFixed(2);
+  document.getElementById('partial-range-note').textContent = min === max ? 'Fixed rate' : 'Range: $' + min.toFixed(2) + ' – $' + max.toFixed(2);
+  document.getElementById('partial-result-badge').textContent = sq.toLocaleString() + ' sq ft';
+  resultBox.style.display = '';
+  // Update moisture grand total to include this
+  moistureCalc();
+}
+
+// Init
+resRender();
+
+/* ═══ TERMIDOR HE ═══ */
+let termidorFoundType = 'standard', termidorFoamType = 'none', termidorBrickRate = 7.50;
+
+function termidorType(val) {
+  termidorFoundType = val;
+  ['standard','brick'].forEach(v => document.getElementById('termidor-' + v).classList.toggle('active', v === val));
+  document.getElementById('termidor-brick-slider-wrap').style.display = val === 'brick' ? '' : 'none';
+  termidorCalc();
+}
+
+function termidorFoam(val) {
+  termidorFoamType = val;
+  ['none','half','full','custom'].forEach(v => document.getElementById('termidor-foam-' + v).classList.toggle('active', v === val));
+  document.getElementById('termidor-foam-hours-wrap').style.display = val === 'custom' ? '' : 'none';
+  termidorCalc();
+}
+
+function termidorBrickSlider() {
+  const el = document.getElementById('termidor-brick-slider');
+  // Use integer slider steps (750, 800) and divide by 100
+  termidorBrickRate = parseFloat(el.value);
+  // Clamp to 7.50 or 8.00
+  termidorBrickRate = termidorBrickRate <= 7.50 ? 7.50 : 8.00;
+  const pct = termidorBrickRate === 7.50 ? 0 : 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  document.getElementById('termidor-brick-rate-disp').textContent = '$' + termidorBrickRate.toFixed(2) + '/lin ft';
+  termidorCalc();
+}
+
+function termidorCalc() {
+  const lf = parseInt(document.getElementById('termidor-lf').value) || 0;
+  const resultBox = document.getElementById('termidor-result');
+  if (!lf) { resultBox.style.display = 'none'; return; }
+
+  const rate = termidorFoundType === 'standard' ? 7.00 : termidorBrickRate;
+  const treatCost = Math.round(lf * rate);
+
+  let foamCost = 0, foamLabel = '', foamSub = '';
+  if (termidorFoamType === 'half') { foamCost = 100; foamLabel = 'Half Hour'; foamSub = 'Flat rate'; }
+  else if (termidorFoamType === 'full') { foamCost = 200; foamLabel = 'Full Hour'; foamSub = '$200/hr'; }
+  else if (termidorFoamType === 'custom') {
+    const hrs = parseFloat(document.getElementById('termidor-foam-hours').value) || 0;
+    foamCost = Math.round(hrs * 200);
+    foamLabel = hrs + ' hr' + (hrs !== 1 ? 's' : '');
+    foamSub = hrs + ' × $200/hr';
+  }
+
+  const total = treatCost + foamCost;
+  const typeStr = termidorFoundType === 'standard' ? 'Standard' : 'Multi Brick';
+
+  document.getElementById('termidor-treatment-val').textContent = treatCost.toLocaleString();
+  document.getElementById('termidor-treatment-sub').textContent = lf + ' lin ft × $' + rate.toFixed(2) + '/lin ft';
+  document.getElementById('termidor-badge').textContent = typeStr + ' — ' + lf.toLocaleString() + ' lin ft';
+
+  const foamCell = document.getElementById('termidor-foam-cell');
+  if (foamCost > 0) {
+    foamCell.style.display = '';
+    document.getElementById('termidor-foam-val').textContent = foamCost.toLocaleString();
+    document.getElementById('termidor-foam-type').textContent = foamLabel;
+    document.getElementById('termidor-foam-sub').textContent = foamSub;
+    document.getElementById('termidor-result-grid').className = 'result-grid cols-2';
+    document.getElementById('termidor-total-bar').style.display = '';
+  } else {
+    foamCell.style.display = 'none';
+    document.getElementById('termidor-result-grid').className = 'result-grid cols-1';
+    document.getElementById('termidor-total-bar').style.display = 'none';
+  }
+
+  document.getElementById('termidor-total-val').textContent = total.toLocaleString();
+  resultBox.style.display = '';
+}
+
+/* ═══ CENTERFIRE ═══ */
+let centerfireRate = 0.35;
+function centerfireSlider() {
+  const el = document.getElementById('centerfire-slider');
+  const steps = [0.35, 0.40, 0.45, 0.50];
+  const idx = Math.round((el.value - 0.35) / 0.05);
+  centerfireRate = steps[Math.min(idx, steps.length - 1)];
+  const pct = ((centerfireRate - 0.35) / 0.15) * 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  document.getElementById('centerfire-rate-disp').textContent = '$' + centerfireRate.toFixed(2) + '/sq ft';
+  const labels = { 0.35:'Standard pretreat', 0.40:'Moderate complexity', 0.45:'Complex structure', 0.50:'High complexity — confirm with Travis' };
+  document.getElementById('centerfire-diff-label').textContent = labels[centerfireRate] || '';
+  centerfireCalc();
+}
+function centerfireCalc() {
+  const sq = parseInt(document.getElementById('centerfire-sqft').value) || 0;
+  const resultBox = document.getElementById('centerfire-result');
+  if (!sq) { resultBox.style.display = 'none'; return; }
+  const total = Math.round(centerfireRate * sq);
+  document.getElementById('centerfire-total').textContent = total.toLocaleString();
+  document.getElementById('centerfire-badge').textContent = sq.toLocaleString() + ' sq ft';
+  document.getElementById('centerfire-sub').textContent = sq.toLocaleString() + ' sq ft × $' + centerfireRate.toFixed(2) + '/sq ft';
+  resultBox.style.display = '';
+}
+
+/* ═══ PRETREATMENTS ═══ */
+const pretreatSelected = new Set();
+function pretreatToggle(el) {
+  const key = el.dataset.key;
+  if (pretreatSelected.has(key)) { pretreatSelected.delete(key); el.classList.remove('selected'); }
+  else { pretreatSelected.add(key); el.classList.add('selected'); }
+  pretreatCalc();
+}
+function pretreatCalc() {
+  const sq = parseInt(document.getElementById('pretreat-sqft').value) || 0;
+  const resultBox = document.getElementById('pretreat-result');
+  if (pretreatSelected.size === 0) { resultBox.style.display = 'none'; return; }
+
+  const items = [
+    { key:'boracare', rate:0.60, label:'Bora-Care' },
+    { key:'timbor',   rate:0.50, label:'Timbor Fungi' },
+  ].filter(i => pretreatSelected.has(i.key));
+
+  let total = 0;
+  const cellsEl = document.getElementById('pretreat-cells');
+  cellsEl.className = 'result-grid cols-' + (items.length === 1 ? '1' : '2');
+  cellsEl.innerHTML = items.map((item, idx) => {
+    const cost = sq > 0 ? Math.round(item.rate * sq) : 0;
+    total += cost;
+    const isSecondary = idx === 1 ? 'secondary' : '';
+    const valStr = sq > 0 ? cost.toLocaleString() : '—';
+    const subStr = sq > 0 ? sq.toLocaleString() + ' sq ft × $' + item.rate.toFixed(2) : 'Enter sq ft above';
+    return `<div class="result-cell ${isSecondary}">
+      <div class="result-cell-label">${item.label}</div>
+      <div class="result-cell-type">$${item.rate.toFixed(2)}/sq ft</div>
+      <div class="result-val lg"><span class="dollar">$</span>${valStr}</div>
+      <div class="result-val-sub">${subStr}</div>
+    </div>`;
+  }).join('');
+
+  const totalBar = document.getElementById('pretreat-total-bar');
+  if (items.length > 1 && sq > 0) {
+    totalBar.style.display = '';
+    document.getElementById('pretreat-total-val').textContent = total.toLocaleString();
+  } else {
+    totalBar.style.display = 'none';
+  }
+
+  const names = items.map(i => i.label).join(' + ');
+  document.getElementById('pretreat-badge').textContent = names + (sq > 0 ? ' — ' + sq.toLocaleString() + ' sq ft' : '');
+  resultBox.style.display = '';
+}
+let trelonaFound = 'crawlspace', trelonaFoamType = 'none';
+function trelonaSelectFound(el) {
+  trelonaFound = el.dataset.val;
+  document.querySelectorAll('#trelona-found-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  trelonaCalc();
+}
+function trelonaFoam(val) {
+  trelonaFoamType = val;
+  ['none','half','full','custom'].forEach(v => document.getElementById('trelona-foam-' + v).classList.toggle('active', v === val));
+  document.getElementById('trelona-foam-hours-wrap').style.display = val === 'custom' ? '' : 'none';
+  trelonaCalc();
+}
+function trelonaCalc() {
+  const lf = parseInt(document.getElementById('trelona-lf').value);
+  ['tr-t1','tr-t2','tr-t3'].forEach(id => document.getElementById(id).classList.remove('active-tier'));
+  const resultBox = document.getElementById('trelona-result');
+  const foundCard = document.getElementById('trelona-found-card');
+  const foamCard  = document.getElementById('trelona-foam-card');
+  if (!lf || lf < 100) {
+    document.getElementById('trelona-hint').textContent = lf > 0 && lf < 100 ? 'Minimum 100 linear feet for Trelona' : 'Enter linear footage for pricing';
+    document.getElementById('trelona-hint').className = 'field-hint';
+    resultBox.style.display = 'none'; foundCard.style.display = 'none'; foamCard.style.display = 'none'; return;
+  }
+  let rate, rowId, band;
+  if (lf <= 199) { rate=5.00; rowId='tr-t1'; band='100–199 lin ft'; }
+  else if (lf <= 299) { rate=4.50; rowId='tr-t2'; band='200–299 lin ft'; }
+  else { rate=4.00; rowId='tr-t3'; band='300+ lin ft'; }
+  document.getElementById(rowId).classList.add('active-tier');
+  const installCost = Math.round(lf * rate);
+  const monthly = trelonaFound === 'slab' ? 25 : 30;
+
+  let foamCost = 0, foamLabel = '', foamSub = '';
+  if (trelonaFoamType === 'half') { foamCost = 100; foamLabel = 'Half Hour'; foamSub = 'Flat rate'; }
+  else if (trelonaFoamType === 'full') { foamCost = 200; foamLabel = 'Full Hour'; foamSub = '$200/hr'; }
+  else if (trelonaFoamType === 'custom') {
+    const hrs = parseFloat(document.getElementById('trelona-foam-hours').value) || 0;
+    foamCost = Math.round(hrs * 200);
+    foamLabel = hrs + ' hr' + (hrs !== 1 ? 's' : '');
+    foamSub = hrs + ' × $200/hr';
+  }
+
+  document.getElementById('trelona-hint').textContent = 'Rate: $' + rate.toFixed(2) + '/lin ft (' + band + ')';
+  document.getElementById('trelona-hint').className = 'field-hint has-val';
+  document.getElementById('trelona-total').textContent = installCost.toLocaleString();
+  document.getElementById('trelona-rate-note').textContent = '$' + rate.toFixed(2) + '/lin ft × ' + lf + ' ft';
+  document.getElementById('trelona-monthly').textContent = monthly;
+  document.getElementById('trelona-badge').textContent = lf.toLocaleString() + ' lin ft';
+  document.getElementById('trelona-type-label').textContent = trelonaFound === 'slab' ? 'Slab' : 'Crawlspace';
+
+  const foamCell  = document.getElementById('trelona-foam-result-cell');
+  const totalBar  = document.getElementById('trelona-total-bar');
+  if (foamCost > 0) {
+    foamCell.style.display = '';
+    document.getElementById('trelona-foam-result-val').textContent = foamCost.toLocaleString();
+    document.getElementById('trelona-foam-result-type').textContent = foamLabel;
+    document.getElementById('trelona-foam-result-sub').textContent = foamSub;
+    document.getElementById('trelona-result-grid').className = 'result-grid cols-2';
+    totalBar.style.display = '';
+    document.getElementById('trelona-grand-total').textContent = (installCost + foamCost).toLocaleString();
+  } else {
+    foamCell.style.display = 'none';
+    document.getElementById('trelona-result-grid').className = 'result-grid cols-2';
+    totalBar.style.display = 'none';
+  }
+
+  resultBox.style.display = '';
+  foundCard.style.display = '';
+  foamCard.style.display  = '';
+}
+
+/* ═══ MOISTURE ═══ */
+const moistureSelected = new Set();
+const moistureLabels = {
+  'vapor':        'Vapor Barrier',
+  'vapor-remove': 'Vapor Barrier + Removal',
+  'encap-full':   '10 mil Encapsulation + Wall Liner',
+  'encap-floor':  'Floor Liner Only',
+  'piers':        'Pier Wrapping (≤15 piers)',
+  'insul-remove': 'Insulation Removal R19',
+  'insul-install':'Insulation Installation',
+  'timbor':       'Timbor Fungi Treatment',
+  'dsv':          'DSV Sanitation',
+  'dehu-e100w':   'Aprilaire E100W WiFi Dehumidifier w/pump (includes sealing off foundation vents)',
+  'dehu-e100':    'Aprilaire E100 Dehumidifier w/pump (includes sealing off foundation vents)',
+  'dehu-e070w':   'Aprilaire E070W WiFi Dehumidifier w/pump (includes sealing off foundation vents)',
+  'dehu-e070':    'Aprilaire E070 Dehumidifier w/pump (includes sealing off foundation vents)',
+  'pump':         'Pump Replacement',
+};
+
+const sliderConfig = {
+  'vapor':        { sliderId:'vapor-slider',        dispId:'vapor-rate-disp',        diffId:'vapor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
+  'vapor-remove': { sliderId:'vapor-remove-slider',  dispId:'vapor-remove-extra-disp', diffId:'vapor-remove-diff-label',  min:100,  max:200,  step:10,   type:'extra' },
+  'encap-full':   { sliderId:'encap-full-slider',    dispId:'encap-full-rate-disp',    diffId:'encap-full-diff-label',    min:3.00, max:4.00, step:0.25, type:'rate' },
+  'encap-floor':  { sliderId:'encap-floor-slider',   dispId:'encap-floor-rate-disp',   diffId:'encap-floor-diff-label',   min:2.00, max:3.00, step:0.25, type:'rate' },
+  'insul-remove': { sliderId:'insul-remove-slider',  dispId:'insul-remove-rate-disp',  diffId:'insul-remove-diff-label',  min:0.75, max:1.00, step:0.05, type:'rate' },
+  'insul-install':{ sliderId:'insul-install-slider', dispId:'insul-install-rate-disp', diffId:'insul-install-diff-label', min:2.00, max:2.75, step:0.25, type:'rate' },
+  'timbor':       { sliderId:'timbor-slider',        dispId:'timbor-rate-disp',        diffId:'timbor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
+  'dsv':          { sliderId:'dsv-slider',           dispId:'dsv-rate-disp',           diffId:'dsv-diff-label',           min:0.25, max:0.50, step:0.05, type:'rate' },
+};
+
+function getDiffLabel(val, min, max) {
+  const pct = (val - min) / (max - min);
+  if (pct <= 0.25) return 'Easy access';
+  if (pct <= 0.5)  return 'Moderate difficulty';
+  if (pct <= 0.75) return 'Difficult access';
+  return 'Very difficult — tight / low crawlspace';
+}
+
+function updateSliderTrack(sliderId) {
+  const el = document.getElementById(sliderId);
+  if (!el) return;
+  const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+}
+
+// Store current slider values in JS to avoid browser misparse of decimal range inputs
+const sliderValues = {
+  'vapor': 0.50, 'vapor-remove': 150, 'encap-full': 3.00, 'encap-floor': 2.00,
+  'insul-remove': 0.75, 'insul-install': 2.00, 'timbor': 0.50, 'dsv': 0.25,
+};
+
+function getSliderRate(key) {
+  return sliderValues[key] !== undefined ? sliderValues[key] : (sliderConfig[key] ? sliderConfig[key].min : 0);
+}
+
+function sliderUpdate(key) {
+  const cfg = sliderConfig[key];
+  if (!cfg) return;
+  const el = document.getElementById(cfg.sliderId);
+  // Use position ratio × range to get accurate decimal value regardless of browser parsing
+  const ratio = (el.value - el.min) / (el.max - el.min);
+  const val = cfg.min + ratio * (cfg.max - cfg.min);
+  const rounded = Math.round(val / cfg.step) * cfg.step;
+  const clamped = Math.min(cfg.max, Math.max(cfg.min, rounded));
+  sliderValues[key] = clamped;
+  updateSliderTrack(cfg.sliderId);
+  if (cfg.type === 'rate') {
+    document.getElementById(cfg.dispId).textContent = '$' + clamped.toFixed(2) + '/sq ft';
+  } else {
+    document.getElementById(cfg.dispId).textContent = '$' + Math.round(clamped);
+  }
+  document.getElementById(cfg.diffId).textContent = getDiffLabel(clamped, cfg.min, cfg.max);
+  moistureCalc();
+}
+
+function moistureToggle(el) {
+  const key = el.dataset.key;
+  if (moistureSelected.has(key)) {
+    moistureSelected.delete(key);
+    el.classList.remove('selected');
+    const sliderEl = document.getElementById('slider-' + key);
+    if (sliderEl) sliderEl.classList.remove('visible');
+    // If unchecking vapor-remove, also hide the vapor rate slider
+    if (key === 'vapor-remove' && !moistureSelected.has('vapor')) {
+      const vs = document.getElementById('slider-vapor');
+      if (vs) vs.classList.remove('visible');
+    }
+  } else {
+    moistureSelected.add(key);
+    el.classList.add('selected');
+    const sliderEl = document.getElementById('slider-' + key);
+    if (sliderEl) { sliderEl.classList.add('visible'); updateSliderTrack(sliderConfig[key] ? sliderConfig[key].sliderId : null); }
+    // If selecting vapor-remove, also show the vapor rate slider
+    if (key === 'vapor-remove') {
+      const vs = document.getElementById('slider-vapor');
+      if (vs) { vs.classList.add('visible'); updateSliderTrack(sliderConfig['vapor'].sliderId); }
+    }
+  }
+  moistureCalc();
+}
+
+function moistureCalc() {
+  const sqft = parseInt(document.getElementById('moisture-sqft').value) || 0;
+  const hint = document.getElementById('moisture-sqft-hint');
+  if (sqft > 0) { hint.textContent = sqft.toLocaleString() + ' sq ft entered'; hint.className = 'field-hint has-val'; }
+  else { hint.textContent = 'Enter sq ft to enable cost calculations'; hint.className = 'field-hint'; }
+
+  if (moistureSelected.size === 0) { document.getElementById('moisture-result').style.display = 'none'; return; }
+
+  let grandTotal = 0;
+  let lines = [];
+
+  document.querySelectorAll('.toggle-pill').forEach(el => {
+    const key = el.dataset.key;
+    if (!moistureSelected.has(key)) return;
+    const unit = el.dataset.unit;
+    let cost = 0, note = '';
+
+    if (unit === 'flat') {
+      const rate = parseFloat(el.dataset.rate);
+      cost = rate;
+      note = '$' + rate.toLocaleString() + ' flat';
+    } else if (unit === 'sqft') {
+      const rate = parseFloat(el.dataset.rate);
+      const extra = parseFloat(el.dataset.extra || 0);
+      if (sqft > 0) {
+        cost = Math.round(rate * sqft) + extra;
+        note = '$' + rate + '/sq ft × ' + sqft.toLocaleString() + (extra > 0 ? ' + $' + extra + ' removal fee' : '');
+      } else { note = 'Enter sq ft above'; }
+    } else if (unit === 'sqft-slider') {
+      const rate = getSliderRate(key) || parseFloat(el.dataset.rate);
+      if (sqft > 0) {
+        cost = Math.round(rate * sqft);
+        note = '$' + rate.toFixed(2) + '/sq ft × ' + sqft.toLocaleString();
+      } else { note = 'Enter sq ft above'; }
+    } else if (unit === 'sqft-slider-extra') {
+      // Base sq ft rate comes from the 'vapor' slider, removal fee from 'vapor-remove' sliderValues (flat $)
+      const baseRate = sliderValues['vapor'] || 0.50;
+      const removalFee = sliderValues['vapor-remove'] || 150;
+      if (sqft > 0) {
+        cost = Math.round(baseRate * sqft) + removalFee;
+        note = '$' + baseRate.toFixed(2) + '/sq ft × ' + sqft.toLocaleString() + ' + $' + Math.round(removalFee) + ' removal fee';
+      } else { note = 'Enter sq ft above'; }
+    }
+
+    grandTotal += cost;
+    lines.push({ label: moistureLabels[key] || key, note, cost });
+  });
+
+  // Include partial/spot install cost if active
+  const partialCostEl = document.getElementById('partial-cost');
+  const partialResultVisible = document.getElementById('partial-result').style.display !== 'none';
+  const partialCost = partialResultVisible ? parseInt(partialCostEl.textContent.replace(/,/g, '')) || 0 : 0;
+  const partialLabel = partialResultVisible ? document.getElementById('partial-result-label').textContent : '';
+  const partialSub = partialResultVisible ? document.getElementById('partial-cost-sub').textContent : '';
+  if (partialCost > 0) {
+    grandTotal += partialCost;
+    lines.push({ label: partialLabel, note: partialSub, cost: partialCost });
+  }
+
+  document.getElementById('moisture-grand-total').textContent = grandTotal.toLocaleString();
+  const count = moistureSelected.size + (partialCost > 0 ? 1 : 0);
+  document.getElementById('moisture-item-count').textContent = count + ' service' + (count !== 1 ? 's' : '') + ' selected';
+
+  const breakdown = document.getElementById('moisture-breakdown');
+  const dehuKeys = ['dehu-e100w','dehu-e100','dehu-e070w','dehu-e070'];
+  const hasDehu = dehuKeys.some(k => moistureSelected.has(k));
+
+  const elecNoteHTML = hasDehu ? `
+    <div style="background:var(--danger);border-radius:8px;padding:13px 16px;margin-top:10px;display:flex;gap:10px;align-items:flex-start;">
+      <div style="font-size:18px;flex-shrink:0;">⚡</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;">Does Not Include Electrical Hookup</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.55;">We use <strong style="color:#fff;">Hampton Roads Electric</strong> for this service. We can arrange the appointment — however, their bill is separate and is not included in this quote.</div>
+      </div>
+    </div>` : '';
+
+  breakdown.innerHTML = lines.map(l => `
+    <div class="moisture-line">
+      <div><div class="moisture-line-label">${l.label}</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">${l.note}</div></div>
+      <div class="moisture-line-price">${l.cost > 0 ? '$' + l.cost.toLocaleString() : '—'}</div>
+    </div>
+  `).join('') + `
+    <div class="moisture-total-row">
+      <div class="moisture-total-label">Total</div>
+      <div class="moisture-total-val">$${grandTotal.toLocaleString()}</div>
+    </div>` + elecNoteHTML;
+
+  document.getElementById('moisture-result').style.display = '';
+}
+
+resRender();
+</script>
+</body>
+</html>
