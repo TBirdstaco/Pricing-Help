@@ -184,36 +184,8 @@
 ══════════════════════════════════ -->
 <div class="tab-panel active" id="tab-residential">
 
-  <!-- PIN LOCK SCREEN -->
-  <div id="res-pin-screen">
-    <div class="card" style="margin-top:8px;">
-      <div class="card-head" style="background:var(--navy);">
-        <div class="card-icon">🔒</div>
-        <div><div class="card-head-label">Restricted Access</div><div class="card-head-sub">Enter PIN to view Residential pricing</div></div>
-      </div>
-      <div class="card-body" style="text-align:center;padding:24px 18px;">
-        <div id="res-pin-display" style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--navy);letter-spacing:12px;margin-bottom:20px;min-height:44px;">——————</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:260px;margin:0 auto;">
-          <button onclick="resPinKey('1')" class="pin-btn">1</button>
-          <button onclick="resPinKey('2')" class="pin-btn">2</button>
-          <button onclick="resPinKey('3')" class="pin-btn">3</button>
-          <button onclick="resPinKey('4')" class="pin-btn">4</button>
-          <button onclick="resPinKey('5')" class="pin-btn">5</button>
-          <button onclick="resPinKey('6')" class="pin-btn">6</button>
-          <button onclick="resPinKey('7')" class="pin-btn">7</button>
-          <button onclick="resPinKey('8')" class="pin-btn">8</button>
-          <button onclick="resPinKey('9')" class="pin-btn">9</button>
-          <button onclick="resPinClear()" class="pin-btn" style="background:var(--light);color:var(--muted);font-size:13px;">CLR</button>
-          <button onclick="resPinKey('0')" class="pin-btn">0</button>
-          <button onclick="resPinDelete()" class="pin-btn" style="background:var(--light);color:var(--muted);font-size:18px;">⌫</button>
-        </div>
-        <div id="res-pin-error" style="color:var(--danger);font-size:13px;font-weight:600;margin-top:14px;min-height:20px;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESIDENTIAL CONTENT (hidden until unlocked) -->
-  <div id="res-content" style="display:none;">
+  <!-- RESIDENTIAL CONTENT -->
+  <div id="res-content">
 
   <div class="card">
     <div class="card-head"><div class="card-icon">1️⃣</div><div><div class="card-head-label">Property Type</div></div></div>
@@ -225,28 +197,78 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label">Plan Tier</div></div></div>
+  <div class="card" id="res-tier-card">
+    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label" style="color:transparent;user-select:none;">——</div></div></div>
     <div class="card-body">
-      <div class="pill-row" id="res-tier-pills">
-        <button class="pill active" data-val="essential" onclick="resSelectTier(this)">Essential</button>
-        <button class="pill" data-val="advanced" onclick="resSelectTier(this)">Advanced</button>
-        <button class="pill" data-val="complete" onclick="resSelectTier(this)">Complete</button>
+      <!-- Tier PIN screen -->
+      <div id="res-tier-pin-screen">
+        <button onclick="resTierShowPad()" style="display:flex;align-items:center;gap:6px;background:var(--light);border:1px solid #C8D8EC;border-radius:8px;padding:8px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;cursor:pointer;-webkit-appearance:none;">
+          🔒 Locked
+        </button>
+        <!-- Compact PIN pad — hidden until button tapped -->
+        <div id="res-tier-pin-pad" style="display:none;margin-top:10px;background:#f8fafd;border:1px solid #C8D8EC;border-radius:10px;padding:12px;max-width:220px;">
+          <div id="res-tier-pin-display" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--navy);letter-spacing:8px;text-align:center;margin-bottom:10px;">——————</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <button onclick="resTierPinKey('1')" class="pin-btn" style="padding:10px;font-size:16px;">1</button>
+            <button onclick="resTierPinKey('2')" class="pin-btn" style="padding:10px;font-size:16px;">2</button>
+            <button onclick="resTierPinKey('3')" class="pin-btn" style="padding:10px;font-size:16px;">3</button>
+            <button onclick="resTierPinKey('4')" class="pin-btn" style="padding:10px;font-size:16px;">4</button>
+            <button onclick="resTierPinKey('5')" class="pin-btn" style="padding:10px;font-size:16px;">5</button>
+            <button onclick="resTierPinKey('6')" class="pin-btn" style="padding:10px;font-size:16px;">6</button>
+            <button onclick="resTierPinKey('7')" class="pin-btn" style="padding:10px;font-size:16px;">7</button>
+            <button onclick="resTierPinKey('8')" class="pin-btn" style="padding:10px;font-size:16px;">8</button>
+            <button onclick="resTierPinKey('9')" class="pin-btn" style="padding:10px;font-size:16px;">9</button>
+            <button onclick="resTierPinClear()" class="pin-btn" style="padding:10px;font-size:11px;background:var(--light);color:var(--muted);">CLR</button>
+            <button onclick="resTierPinKey('0')" class="pin-btn" style="padding:10px;font-size:16px;">0</button>
+            <button onclick="resTierPinDelete()" class="pin-btn" style="padding:10px;font-size:16px;background:var(--light);color:var(--muted);">⌫</button>
+          </div>
+          <div id="res-tier-pin-error" style="color:var(--danger);font-size:12px;font-weight:600;margin-top:8px;min-height:16px;text-align:center;"></div>
+        </div>
+      </div>
+      <!-- Tier pills — hidden until PIN entered -->
+      <div id="res-tier-content" style="display:none;">
+        <div class="pill-row" id="res-tier-pills">
+          <button class="pill active" data-val="essential" onclick="resSelectTier(this)">Essential</button>
+          <button class="pill" data-val="advanced" onclick="resSelectTier(this)">Advanced</button>
+          <button class="pill" data-val="complete" onclick="resSelectTier(this)">Complete</button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head"><div class="card-icon">3️⃣</div><div><div class="card-head-label">Rodents Main Issue?</div><div class="card-head-sub">Changes the initial price</div></div></div>
+    <div class="card-head"><div class="card-icon">3️⃣</div><div><div class="card-head-label">Additional Initial Charges</div><div class="card-head-sub">Select all that apply</div></div></div>
     <div class="card-body">
-      <div class="pill-row" id="res-rodent-pills">
-        <button class="pill active" data-val="no" onclick="resSelectRodent(this)">No — Standard Pricing</button>
-        <button class="pill" data-val="yes" onclick="resSelectRodent(this)">Yes — Rodents Main Issue</button>
+
+      <span class="section-label">Rodents</span>
+      <div class="pill-row" style="margin-bottom:12px;" id="res-rodent-pills">
+        <button class="pill active" data-val="no" onclick="resSelectRodent(this)">No</button>
+        <button class="pill" data-val="yes" onclick="resSelectRodent(this)">Yes — Rodents</button>
       </div>
+
+      <span class="section-label">Carpenter Ants</span>
+      <div class="pill-row" style="margin-bottom:12px;" id="res-carpant-pills">
+        <button class="pill active" data-val="no" onclick="resSelectCarpAnt(this)">No</button>
+        <button class="pill" data-val="yes" onclick="resSelectCarpAnt(this)">Yes — Carpenter Ants</button>
+      </div>
+
+      <span class="section-label">Carpenter Bees</span>
+      <div class="pill-row" id="res-carpbee-pills">
+        <button class="pill active" data-val="no" onclick="resSelectCarpBee(this)">No</button>
+        <button class="pill" data-val="yes" onclick="resSelectCarpBee(this)">Yes — Carpenter Bees</button>
+      </div>
+
+      <span class="section-label">Ladder Required</span>
+      <div class="pill-row" style="margin-bottom:4px;" id="res-ladder-pills">
+        <button class="pill active" data-val="no" onclick="resSelectLadder(this)">No</button>
+        <button class="pill" data-val="yes" onclick="resSelectLadder(this)">Yes — Ladder (+$150)</button>
+      </div>
+
       <div class="note-box info" id="res-rodent-note" style="display:none;margin-top:10px;">
         <div class="note-icon">🐀</div>
         <div class="note-text">Initial price reflects rodents as the primary issue. Monthly billing remains the same. Includes inspection + 3 follow-up visits.</div>
       </div>
+
     </div>
   </div>
 
@@ -275,7 +297,7 @@
   <div class="result-box">
     <div class="result-head">
       <div class="result-head-label">Quote Summary</div>
-      <div class="result-head-badge" id="res-badge">Essential — Home</div>
+      <div class="result-head-badge" id="res-badge" style="display:none;">Essential — Home</div>
     </div>
     <div class="result-grid cols-2">
       <div class="result-cell">
@@ -283,6 +305,7 @@
         <div class="result-cell-type">One-Time</div>
         <div class="result-val lg"><span class="dollar">$</span><span id="res-initial">199</span></div>
         <div class="result-val-sub">Due at first service</div>
+        <div id="res-addl-charges" style="display:none;margin-top:6px;border-top:1px solid #D8E6F4;padding-top:6px;font-size:11px;color:var(--muted);line-height:1.6;" id="res-addl-charges"></div>
       </div>
       <div class="result-cell secondary">
         <div class="result-cell-label">Recurring</div>
@@ -324,13 +347,6 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-head"><div class="card-icon">🐀</div><div><div class="card-head-label">Rodents</div></div></div>
-    <div class="card-body">
-      <div class="info-row"><div class="info-label">Rodent Inspection</div><div class="info-price">$100</div></div>
-      <div class="info-row"><div class="info-label">Rodent Initial <small>Includes 3 follow-ups</small></div><div class="info-price">$550</div></div>
-    </div>
-  </div>
 
   </div><!-- /res-content -->
 
@@ -418,7 +434,7 @@
   </div>
 
   <!-- HOURLY TYPES: Warehouse, Restaurant, Office -->
-  <div class="card" id="comm-hourly-card" style="display:none;">
+  <div class="card" id="comm-hourly-card">
     <div class="card-head"><div class="card-icon">⏱️</div><div><div class="card-head-label">Estimated Time</div><div class="card-head-sub">How long will this service take?</div></div></div>
     <div class="card-body">
 
@@ -701,6 +717,29 @@
     </div>
   </div>
 
+  <div class="card" id="trelona-spot-card" style="display:none;">
+    <div class="card-head"><div class="card-icon">💉</div><div><div class="card-head-label">Add Spot Termidor HE?</div><div class="card-head-sub">Cost added to initial fee</div></div></div>
+    <div class="card-body">
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="none" id="trelona-spot-none" onclick="trelonaSpot('none')">No Spot Treatment</button>
+        <button class="pill" data-val="yes" id="trelona-spot-yes" onclick="trelonaSpot('yes')">Yes — Add Spot Termidor</button>
+      </div>
+      <div id="trelona-spot-fields" style="display:none;">
+        <span class="section-label">Spot treatment linear footage</span>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <input class="field-input" type="number" id="trelona-spot-lf" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 30" min="1" oninput="trelonaCalc()" />
+          <span class="field-unit">lin ft</span>
+        </div>
+        <div class="slider-header" style="margin-bottom:6px;">
+          <div class="slider-title">Spot Treatment Rate</div>
+          <div class="slider-val-badge" id="trelona-spot-rate-disp">$7.50/lin ft</div>
+        </div>
+        <div class="slider-labels"><span>$7.50</span><span>$10.00</span></div>
+        <input type="range" id="trelona-spot-slider" min="7.50" max="10.00" step="0.25" value="7.50" oninput="trelonaSpotSlider()" />
+      </div>
+    </div>
+  </div>
+
   <div class="result-box" id="trelona-result" style="display:none;">
     <div class="result-head">
       <div class="result-head-label">Trelona Quote</div>
@@ -708,10 +747,16 @@
     </div>
     <div class="result-grid cols-2" id="trelona-result-grid">
       <div class="result-cell">
-        <div class="result-cell-label">Total Install</div>
-        <div class="result-cell-type">One-Time</div>
+        <div class="result-cell-label">One-Time</div>
+        <div class="result-cell-type">Initial Fee</div>
         <div class="result-val lg"><span class="dollar">$</span><span id="trelona-total">—</span></div>
-        <div class="result-val-sub" id="trelona-rate-note">—</div>
+        <div class="result-val-sub" id="trelona-rate-note">Covers initial installation of bait stations and first treatment</div>
+      </div>
+      <div class="result-cell secondary" id="trelona-spot-result-cell" style="display:none;">
+        <div class="result-cell-label">Spot Termidor</div>
+        <div class="result-cell-type">Add-On</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="trelona-spot-cost">—</span></div>
+        <div class="result-val-sub" id="trelona-spot-sub">—</div>
       </div>
       <div class="result-cell secondary" id="trelona-foam-result-cell" style="display:none;">
         <div class="result-cell-label">Foaming</div>
@@ -720,15 +765,24 @@
         <div class="result-val-sub" id="trelona-foam-result-sub">—</div>
       </div>
       <div class="result-cell secondary" id="trelona-monthly-cell">
-        <div class="result-cell-label">Monthly Service</div>
-        <div class="result-cell-type" id="trelona-type-label">Crawlspace</div>
+        <div class="result-cell-label">Recurring</div>
+        <div class="result-cell-type" id="trelona-type-label">Monthly Payment</div>
         <div class="result-val lg"><span class="dollar">$</span><span id="trelona-monthly">30</span></div>
-        <div class="result-val-sub">Ongoing billing</div>
+        <div class="result-val-sub">Includes once yearly inspection and ongoing monitoring</div>
       </div>
     </div>
     <div style="background:var(--navy);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;" id="trelona-total-bar" style="display:none;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,199,44,0.7);text-transform:uppercase;letter-spacing:0.8px;">Total</div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--gold);">$<span id="trelona-grand-total">—</span></div>
+    </div>
+  </div>
+
+  <!-- Trelona Proposal Text -->
+  <div id="trelona-proposal" style="display:none;">
+    <div class="moisture-breakdown" id="trelona-proposal-body"></div>
+    <div style="background:var(--white);border:1px solid #C8D8EC;border-radius:10px;padding:10px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;" id="trelona-time-row">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">⏱ Est. Job Time</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:var(--blue);" id="trelona-time-val">—</div>
     </div>
   </div>
 
@@ -745,6 +799,12 @@
         </div>
       </div>
 
+      <span class="section-label">Property type</span>
+      <div class="pill-row" style="margin-bottom:14px;">
+        <button class="pill active" data-val="residential" id="termidor-prop-residential" onclick="termidorPropType('residential')">Residential</button>
+        <button class="pill" data-val="commercial" id="termidor-prop-commercial" onclick="termidorPropType('commercial')">Commercial</button>
+      </div>
+
       <span class="section-label">Foundation type</span>
       <div class="pill-row" style="margin-bottom:14px;">
         <button class="pill active" data-val="standard" id="termidor-standard" onclick="termidorType('standard')">Standard</button>
@@ -756,8 +816,8 @@
           <div class="slider-title">Brick Foundation Rate</div>
           <div class="slider-val-badge" id="termidor-brick-rate-disp">$7.50/lin ft</div>
         </div>
-        <div class="slider-labels"><span>Standard ($7.50)</span><span>Complex ($8.00)</span></div>
-        <input type="range" id="termidor-brick-slider" min="7.50" max="8.00" step="0.50" value="7.50" oninput="termidorBrickSlider()" />
+        <div class="slider-labels"><span>$7.50</span><span>$10.00</span></div>
+        <input type="range" id="termidor-brick-slider" min="7.50" max="10.00" step="0.25" value="7.50" oninput="termidorBrickSlider()" />
       </div>
 
       <span class="section-label">Add foaming?</span>
@@ -789,6 +849,12 @@
             <div class="result-val lg"><span class="dollar">$</span><span id="termidor-treatment-val">—</span></div>
             <div class="result-val-sub" id="termidor-treatment-sub">—</div>
           </div>
+          <div class="result-cell secondary">
+            <div class="result-cell-label" id="termidor-annual-label">Annual</div>
+            <div class="result-cell-type">Termite Inspection</div>
+            <div class="result-val lg"><span class="dollar">$</span><span id="termidor-annual-val">180</span></div>
+            <div class="result-val-sub" id="termidor-annual-sub">Per year</div>
+          </div>
           <div class="result-cell secondary" id="termidor-foam-cell" style="display:none;">
             <div class="result-cell-label">Foaming</div>
             <div class="result-cell-type" id="termidor-foam-type">Add-On</div>
@@ -805,7 +871,14 @@
     </div>
   </div>
 
-  <!-- CENTERFIRE CALCULATOR -->
+  <!-- Termidor Proposal Text -->
+  <div id="termidor-proposal" style="display:none;">
+    <div class="moisture-breakdown" id="termidor-proposal-body"></div>
+    <div style="background:var(--white);border:1px solid #C8D8EC;border-radius:10px;padding:10px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">⏱ Est. Job Time</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:var(--blue);" id="termidor-time-val">—</div>
+    </div>
+  </div>
   <div class="card">
     <div class="card-head"><div class="card-icon">🏗️</div><div><div class="card-head-label">Centerfire Commercial Pretreat</div><div class="card-head-sub">Enter sq ft to calculate</div></div></div>
     <div class="card-body">
@@ -866,9 +939,6 @@
         <button class="toggle-pill" data-key="boracare" data-rate="0.60" onclick="pretreatToggle(this)">
           Bora-Care<span class="pill-rate">$0.60/sq ft</span><span class="pill-check"></span>
         </button>
-        <button class="toggle-pill" data-key="timbor" data-rate="0.50" onclick="pretreatToggle(this)">
-          Timbor Fungi<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
-        </button>
       </div>
 
       <div class="result-box" id="pretreat-result" style="display:none;margin-top:4px;">
@@ -918,9 +988,21 @@
           <button class="toggle-pill" data-key="vapor" data-rate="0.50" data-unit="sqft-slider" onclick="moistureToggle(this)">
             Vapor Barrier<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="vapor-remove" data-rate="0.50" data-unit="sqft-slider-extra" onclick="moistureToggle(this)">
-            Removal + Barrier<span class="pill-rate">$0.50/sq ft + removal</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="vapor-remove-only" data-rate="150" data-unit="flat-slider" onclick="moistureToggle(this)">
+            Vapor Barrier Removal Only<span class="pill-rate">$100–$200 flat</span><span class="pill-check"></span>
           </button>
+          <button class="toggle-pill" data-key="vapor-remove" data-rate="0.50" data-unit="sqft-slider-extra" onclick="moistureToggle(this)">
+            Removal of Existing Vapor Barrier and Reinstallation of 6 Mil Vapor Barrier<span class="pill-rate">$0.50/sq ft + removal</span><span class="pill-check"></span>
+          </button>
+        </div>
+        <div class="slider-block" id="slider-vapor-remove-only">
+          <div class="slider-header">
+            <div class="slider-title">Removal Fee</div>
+            <div class="slider-val-badge" id="vapor-remove-only-disp">$150</div>
+          </div>
+          <div class="slider-labels"><span>Easy ($100)</span><span>Hard ($200)</span></div>
+          <input type="range" id="vapor-remove-only-slider" min="100" max="200" step="10" value="150" oninput="sliderUpdate('vapor-remove-only')" />
+          <div class="difficulty-label" id="vapor-remove-only-diff-label">Moderate removal</div>
         </div>
         <div class="slider-block" id="slider-vapor">
           <div class="slider-header">
@@ -946,32 +1028,20 @@
       <div style="margin-bottom:14px;">
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Encapsulation</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="encap-full" data-rate="3.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            10 mil + Wall Liner<span class="pill-rate">$3.00/sq ft</span><span class="pill-check"></span>
-          </button>
           <button class="toggle-pill" data-key="encap-floor" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Floor Liner Only<span class="pill-rate">$2.00/sq ft</span><span class="pill-check"></span>
+            12 Mil Reinforced Vapor Barrier<span class="pill-rate">$1.50–$2.50/sq ft</span><span class="pill-check"></span>
           </button>
           <button class="toggle-pill" data-key="piers" data-rate="500" data-unit="flat" onclick="moistureToggle(this)">
             Pier Wrapping<span class="pill-rate">$500 flat (≤15 piers)</span><span class="pill-check"></span>
           </button>
         </div>
-        <div class="slider-block" id="slider-encap-full">
-          <div class="slider-header">
-            <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="encap-full-rate-disp">$3.00/sq ft</div>
-          </div>
-          <div class="slider-labels"><span>Standard ($3.00)</span><span>Complex ($4.00)</span></div>
-          <input type="range" id="encap-full-slider" min="3.00" max="4.00" step="0.25" value="3.00" oninput="sliderUpdate('encap-full')" />
-          <div class="difficulty-label" id="encap-full-diff-label">Standard access</div>
-        </div>
         <div class="slider-block" id="slider-encap-floor">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="encap-floor-rate-disp">$2.00/sq ft</div>
+            <div class="slider-val-badge" id="encap-floor-rate-disp">$1.50/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($2.00)</span><span>Complex ($3.00)</span></div>
-          <input type="range" id="encap-floor-slider" min="2.00" max="3.00" step="0.25" value="2.00" oninput="sliderUpdate('encap-floor')" />
+          <div class="slider-labels"><span>Standard ($1.50)</span><span>Complex ($2.50)</span></div>
+          <input type="range" id="encap-floor-slider" min="1.50" max="2.50" step="0.25" value="1.50" oninput="sliderUpdate('encap-floor')" />
           <div class="difficulty-label" id="encap-floor-diff-label">Standard access</div>
         </div>
       </div>
@@ -981,10 +1051,13 @@
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Insulation</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
           <button class="toggle-pill" data-key="insul-remove" data-rate="0.75" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Insulation Removal R19<span class="pill-rate">$0.75–$1.00/sq ft</span><span class="pill-check"></span>
+            Insulation Removal<span class="pill-rate">$0.75–$1.00/sq ft</span><span class="pill-check"></span>
           </button>
           <button class="toggle-pill" data-key="insul-install" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
             Insulation Install<span class="pill-rate">$2.00/sq ft</span><span class="pill-check"></span>
+          </button>
+          <button class="toggle-pill" data-key="foam-board" data-rate="0" data-unit="foam" onclick="moistureToggle(this)">
+            GPS Foam Board R10<span class="pill-check"></span>
           </button>
         </div>
         <div class="slider-block" id="slider-insul-remove">
@@ -1005,6 +1078,53 @@
           <input type="range" id="insul-install-slider" min="2.00" max="2.75" step="0.25" value="2.00" oninput="sliderUpdate('insul-install')" />
           <div class="difficulty-label" id="insul-install-diff-label">Standard install</div>
         </div>
+
+        <!-- GPS Foam Board inputs — shown when foam-board is selected -->
+        <div id="foam-board-inputs" style="display:none;background:#f8fafd;border:1px solid #C8D8EC;border-radius:10px;padding:14px;margin-top:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px;">Linear Footage</div>
+              <div class="field-wrap" style="margin:0;">
+                <input class="field-input" type="number" id="foam-lf" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 150" min="1" oninput="foamCalc()" />
+                <span class="field-unit">lin ft</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px;">Crawlspace Height</div>
+              <div class="field-wrap" style="margin:0;">
+                <input class="field-input" type="number" id="foam-height" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 24" min="4" oninput="foamCalc()" />
+                <span class="field-unit">inches</span>
+              </div>
+              <div class="field-hint" style="margin-top:4px;">Board cut to this height — 3" inspection gap left at bottom during install</div>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <div class="slider-header" style="margin-bottom:4px;">
+              <div class="slider-title">Price Multiplier</div>
+              <div class="slider-val-badge" id="foam-mult-disp">5.8×</div>
+            </div>
+            <div class="slider-labels"><span>Easy</span><span>Tight</span></div>
+            <input type="range" id="foam-mult-slider" min="5.0" max="6.5" step="0.1" value="5.8" oninput="foamMultSlider()" />
+          </div>
+          <div id="foam-board-result" style="display:none;">
+            <div style="border-top:1px solid #D8E6F4;padding-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Boards</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy);" id="foam-boards-count">—</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Material</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy);">$<span id="foam-material-cost">—</span></div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Quote</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);">$<span id="foam-quote-cost">—</span></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;" id="foam-board-detail">—</div>
+          </div>
+        </div>
+
       </div>
 
       <!-- TREATMENTS -->
@@ -1086,13 +1206,13 @@
       <span class="section-label">Select services</span>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;" id="partial-pills">
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="vapor"        data-label="Vapor Barrier"       data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Vapor Barrier</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-full"   data-label="Encapsulation"       data-min="3.00" data-max="6.00" onclick="partialSelect(this)">Encapsulation</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-floor"  data-label="Floor Liner"         data-min="2.00" data-max="4.00" onclick="partialSelect(this)">Floor Liner</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-floor"  data-label="Floor Liner"         data-min="2.00" data-max="4.00" onclick="partialSelect(this)">12 Mil Barrier</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-remove" data-label="Insul. Removal"      data-min="0.75" data-max="1.50" onclick="partialSelect(this)">Insul. Removal</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-install"data-label="Insul. Install"      data-min="2.00" data-max="4.00" onclick="partialSelect(this)">Insul. Install</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="timbor"       data-label="Timbor Fungi"        data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Timbor Fungi</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="dsv"          data-label="DSV Sanitation"      data-min="0.25" data-max="0.50" onclick="partialSelect(this)">DSV Sanitation</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="boracare"     data-label="Bora-Care"           data-min="0.60" data-max="1.20" onclick="partialSelect(this)">Bora-Care</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="foam-board"   data-label="GPS Foam Board R10"  data-min="0" data-max="0" data-foam="1" onclick="partialSelect(this)">GPS Foam Board</button>
       </div>
 
       <!-- Per-item expanded rows -->
@@ -1194,6 +1314,117 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
+/* ═══ GPS FOAM BOARD ═══ */
+let foamBoardCost = 0, foamBoardDetail = '', foamMult = 5.8;
+
+function foamMultSlider() {
+  const el = document.getElementById('foam-mult-slider');
+  foamMult = parseFloat(el.value);
+  const pct = ((foamMult - 3.0) / 1.0) * 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  document.getElementById('foam-mult-disp').textContent = foamMult.toFixed(1) + '×';
+  foamCalc();
+}
+
+function foamCalc() {
+  const lf = parseInt(document.getElementById('foam-lf').value) || 0;
+  const heightIn = parseInt(document.getElementById('foam-height').value) || 0;
+  const resultEl = document.getElementById('foam-board-result');
+
+  if (!lf || !heightIn || heightIn <= 3) { resultEl.style.display = 'none'; foamBoardCost = 0; foamBoardDetail = ''; moistureCalc(); return; }
+
+  const usableHeight = heightIn; // subtract 3" inspection gap
+  const cutsPerBoard = Math.floor(48 / usableHeight); // 96" = 8ft board height
+  if (cutsPerBoard < 1) { resultEl.style.display = 'none'; foamBoardCost = 0; moistureCalc(); return; }
+  const lfPerBoard = cutsPerBoard * 8;
+  const boards = Math.ceil(lf / lfPerBoard);
+  const material = boards * 40;
+  const quote = Math.round(material * foamMult);
+
+  foamBoardCost = quote;
+  foamBoardDetail = lf + ' lin ft · ' + boards + ' board' + (boards !== 1 ? 's' : '');
+
+  document.getElementById('foam-boards-count').textContent = boards;
+  document.getElementById('foam-material-cost').textContent = material.toLocaleString();
+  document.getElementById('foam-quote-cost').textContent = quote.toLocaleString();
+  document.getElementById('foam-board-detail').textContent = lf + ' lin ft ÷ ' + lfPerBoard + ' ft/board = ' + boards + ' boards × $40 × ' + foamMult.toFixed(1) + '×';
+  resultEl.style.display = '';
+  moistureCalc();
+}
+
+function foamPartialCalc(idSuffix) {
+  const lf = parseInt(document.getElementById('foam-lf' + idSuffix).value) || 0;
+  const heightIn = parseInt(document.getElementById('foam-height' + idSuffix).value) || 0;
+  if (!lf || !heightIn || heightIn <= 3) return 0;
+  const usableHeight = heightIn;
+  const cutsPerBoard = Math.floor(48 / usableHeight);
+  if (cutsPerBoard < 1) return 0;
+  const lfPerBoard = cutsPerBoard * 8;
+  const boards = Math.ceil(lf / lfPerBoard);
+  const material = boards * 40;
+  return { boards, material, quote: Math.round(material * foamMult), lfPerBoard, cutsPerBoard, usableHeight };
+}
+
+/* ═══ RESIDENTIAL INITIAL CALCULATOR ═══ */
+const resInitialSelected = new Set();
+
+function resInitialToggle(el) {
+  const key = el.dataset.key;
+  if (resInitialSelected.has(key)) {
+    resInitialSelected.delete(key);
+    el.classList.remove('active');
+  } else {
+    resInitialSelected.add(key);
+    el.classList.add('active');
+  }
+  resInitialCalc();
+}
+
+function resInitialCalc() {
+  const resultEl = document.getElementById('res-initial-result');
+  if (resInitialSelected.size === 0) { resultEl.style.display = 'none'; return; }
+
+  const hasRodent  = resInitialSelected.has('rodent');
+  const hasCarpBee = resInitialSelected.has('carpbee');
+  const hasLadder  = resInitialSelected.has('ladder');
+
+  const lines = [];
+  let total = 0;
+
+  if (hasRodent && hasCarpBee) {
+    lines.push({ label: 'Rodent Initial (includes carpenter bee treatment)', note: 'Includes 3 follow-up visits' });
+    total += 550;
+  } else if (hasRodent) {
+    lines.push({ label: 'Rodent Initial', note: 'Includes 3 follow-up visits' });
+    total += 550;
+  } else if (hasCarpBee) {
+    lines.push({ label: 'Carpenter Bee Initial', note: 'One-time treatment' });
+    total += 350;
+  }
+
+  if (hasLadder) {
+    lines.push({ label: 'Ladder Service', note: '2-person required' });
+    total += 150;
+  }
+
+  const breakdown = document.getElementById('res-initial-breakdown');
+  breakdown.innerHTML = lines.map(l => `
+    <div class="moisture-line">
+      <div>
+        <div class="moisture-line-label">${l.label}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:1px;">${l.note}</div>
+      </div>
+      <div class="moisture-line-price">$${total > 0 ? '' : '—'}</div>
+    </div>`).join('') + `
+    <div class="moisture-total-row">
+      <div class="moisture-total-label">Total</div>
+      <div class="moisture-total-val">$${total.toLocaleString()}</div>
+    </div>`;
+
+  document.getElementById('res-initial-total').textContent = '$' + total.toLocaleString();
+  resultEl.style.display = '';
+}
+
 /* ═══ RESIDENTIAL PIN ═══ */
 const RES_PIN = '199922';
 let resPinEntry = '';
@@ -1225,7 +1456,7 @@ const resRodentInitials = {
   townhouse: { essential: 550, advanced: 650, complete: 851 }
 };
 
-let resProp = 'home', resTier = 'essential', resRodent = 'no';
+let resProp = 'home', resTier = 'essential', resRodent = 'no', resCarpBee = 'no', resCarpAnt = 'no', resLadder = 'no';
 
 function resSelectProp(el) {
   resProp = el.dataset.val;
@@ -1239,6 +1470,27 @@ function resSelectTier(el) {
   el.classList.add(resTier === 'complete' ? 'active-gold' : 'active');
   resRender();
 }
+function resSelectLadder(el) {
+  resLadder = el.dataset.val;
+  document.querySelectorAll('#res-ladder-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  resRender();
+}
+
+function resSelectCarpAnt(el) {
+  resCarpAnt = el.dataset.val;
+  document.querySelectorAll('#res-carpant-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  resRender();
+}
+
+function resSelectCarpBee(el) {
+  resCarpBee = el.dataset.val;
+  document.querySelectorAll('#res-carpbee-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  resRender();
+}
+
 function resSelectRodent(el) {
   resRodent = el.dataset.val;
   document.querySelectorAll('#res-rodent-pills .pill').forEach(p => p.classList.remove('active'));
@@ -1266,7 +1518,6 @@ function resGetCompleteInitial(v) {
   return resRodent === 'yes' ? 2760 : 999;
 }
 function resRender() {
-  if (!resPinUnlocked) return;
   const d = resPlan[resProp][resTier];
   let initial;
 
@@ -1301,6 +1552,31 @@ function resRender() {
   const tierLabel = resTier.charAt(0).toUpperCase() + resTier.slice(1);
   const rodentTag = resRodent === 'yes' ? ' + Rodent' : '';
   document.getElementById('res-badge').textContent = tierLabel + ' — ' + propLabel + rodentTag;
+
+  // Additional initial charges
+  let addlTotal = 0;
+  let overrideInitial = null;
+
+  const hasCarpPest = resCarpBee === 'yes' || resCarpAnt === 'yes';
+
+  if (resRodent === 'yes') {
+    // Rodent initial already baked into tier price — carpenter ants/bees fold in
+  } else if (hasCarpPest) {
+    if (resCarpBee === 'yes' && resCarpAnt === 'yes') {
+      overrideInitial = 700; // both standalone, separate treatments
+    } else {
+      overrideInitial = 350; // one or the other
+    }
+  }
+  if (resLadder === 'yes') addlTotal += 150;
+
+  const initialNum = overrideInitial !== null ? overrideInitial : (parseInt(String(initial).replace(/,/g, '')) || 0);
+  const combinedInitial = initialNum + addlTotal;
+  document.getElementById('res-initial').textContent = combinedInitial.toLocaleString();
+
+  const addlEl = document.getElementById('res-addl-charges');
+  addlEl.style.display = 'none';
+
   document.getElementById('res-sqft-card').style.display = (resTier === 'complete' && resProp === 'home') ? '' : 'none';
 }
 
@@ -1688,13 +1964,13 @@ const partialSqfts = {};
 
 const partialDefs = {
   'vapor':        { label: 'Vapor Barrier',    min: 0.50, max: 1.00 },
-  'encap-full':   { label: 'Encapsulation',    min: 3.00, max: 6.00 },
-  'encap-floor':  { label: 'Floor Liner',      min: 2.00, max: 4.00 },
-  'insul-remove': { label: 'Insul. Removal',   min: 0.75, max: 1.50 },
+  'encap-floor':  { label: '12 Mil Reinforced Vapor Barrier',      min: 1.50, max: 2.50 },
+  'insul-remove': { label: 'Insulation Removal',   min: 0.75, max: 1.50 },
   'insul-install':{ label: 'Insul. Install',   min: 2.00, max: 4.00 },
   'timbor':       { label: 'Timbor Fungi',     min: 0.50, max: 1.00 },
   'dsv':          { label: 'DSV Sanitation',   min: 0.25, max: 0.50 },
   'boracare':     { label: 'Bora-Care',        min: 0.60, max: 1.20 },
+  'foam-board':   { label: 'GPS Foam Board R10', min: 0, max: 0, foam: true },
 };
 
 function partialSqftChanged() {
@@ -1735,6 +2011,50 @@ function renderPartialItems() {
   wrap.innerHTML = [...partialSelected].map(key => {
     const def = partialDefs[key];
     const sq = partialSqfts[key] || '';
+
+    if (def.foam) {
+      // GPS Foam Board — custom inputs
+      const pLf = partialSqfts[key + '_lf'] || '';
+      const pHt = partialSqfts[key + '_ht'] || '';
+      let foamInfo = '—';
+      if (pLf && pHt && parseInt(pHt) > 3) {
+        const usableHt = parseInt(pHt) - 3;
+        const cuts = Math.floor(48 / usableHt);
+        const lfPer = cuts * 8;
+        const boards = Math.ceil(parseInt(pLf) / lfPer);
+        const mat = boards * 40;
+        const q = Math.round(mat * foamMult);
+        foamInfo = boards + ' boards · $' + mat + ' mat · $' + q + ' quote';
+      }
+      return `
+        <div style="background:#f8fafd;border:1px solid #C8D8EC;border-radius:10px;padding:12px 14px;margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;">${def.label}</div>
+            <div id="partial-cost-${key}" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--navy);">—</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px;">Linear Footage</div>
+              <div style="position:relative;">
+                <input type="number" id="partial-foam-lf-${key}" inputmode="numeric" pattern="[0-9]*" value="${pLf}" placeholder="lin ft" min="1"
+                  style="width:100%;border:2px solid var(--blue);border-radius:8px;padding:9px 40px 9px 12px;font-family:'Barlow',sans-serif;font-size:15px;font-weight:600;color:var(--navy);background:var(--light);outline:none;-webkit-appearance:none;box-sizing:border-box;"
+                  oninput="partialFoamInput('${key}')" />
+                <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none;">lin ft</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px;">Crawlspace Height</div>
+              <div style="position:relative;">
+                <input type="number" id="partial-foam-ht-${key}" inputmode="numeric" pattern="[0-9]*" value="${pHt}" placeholder="inches" min="4"
+                  style="width:100%;border:2px solid var(--blue);border-radius:8px;padding:9px 40px 9px 12px;font-family:'Barlow',sans-serif;font-size:15px;font-weight:600;color:var(--navy);background:var(--light);outline:none;-webkit-appearance:none;box-sizing:border-box;"
+                  oninput="partialFoamInput('${key}')" />
+                <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none;">inches</span>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);font-style:italic;" id="partial-foam-detail-${key}">${foamInfo}</div>
+        </div>`;
+    }
     const rate = partialRates[key] || def.min;
     const isFixed = def.min === def.max;
     const pct = isFixed ? 0 : Math.round(((rate - def.min) / (def.max - def.min)) * 100);
@@ -1777,6 +2097,33 @@ function renderPartialItems() {
   }).join('');
 }
 
+function partialFoamInput(key) {
+  const lf = parseInt(document.getElementById('partial-foam-lf-' + key).value) || 0;
+  const ht = parseInt(document.getElementById('partial-foam-ht-' + key).value) || 0;
+  partialSqfts[key + '_lf'] = lf;
+  partialSqfts[key + '_ht'] = ht;
+
+  const costEl = document.getElementById('partial-cost-' + key);
+  const detailEl = document.getElementById('partial-foam-detail-' + key);
+
+  if (lf && ht && ht > 3) {
+    const usableHt = ht;
+    const cuts = Math.floor(48 / usableHt);
+    const lfPer = cuts * 8;
+    const boards = Math.ceil(lf / lfPer);
+    const mat = boards * 40;
+    const quote = Math.round(mat * foamMult);
+    partialRates[key] = quote;
+    if (costEl) costEl.textContent = '$' + quote.toLocaleString();
+    if (detailEl) detailEl.textContent = boards + ' boards · $' + mat + ' material · ' + foamMult.toFixed(1) + '× multiplier';
+  } else {
+    partialRates[key] = 0;
+    if (costEl) costEl.textContent = '—';
+    if (detailEl) detailEl.textContent = ht <= 3 && ht > 0 ? 'Height must be more than 3 inches' : '—';
+  }
+  partialCalc();
+}
+
 function partialItemSqft(key, val) {
   partialSqfts[key] = parseInt(val) || 0;
   const def = partialDefs[key];
@@ -1810,9 +2157,15 @@ function partialCalc() {
   if (partialSelected.size === 0) { subtotalEl.style.display = 'none'; moistureCalc(); return; }
   partialSelected.forEach(key => {
     const def = partialDefs[key];
-    const sq = partialSqfts[key] || 0;
-    const rate = partialRates[key] || def.min;
-    if (sq > 0) subtotal += Math.round(rate * sq);
+    if (!def) return;
+    if (def.foam) {
+      const cost = partialRates[key] || 0;
+      subtotal += cost;
+    } else {
+      const sq = partialSqfts[key] || 0;
+      const rate = partialRates[key] || def.min;
+      if (sq > 0) subtotal += Math.round(rate * sq);
+    }
   });
   if (subtotal > 0) {
     subtotalEl.style.display = '';
@@ -1827,7 +2180,13 @@ function partialCalc() {
 resRender();
 
 /* ═══ TERMIDOR HE ═══ */
-let termidorFoundType = 'standard', termidorFoamType = 'none', termidorBrickRate = 7.50;
+let termidorFoundType = 'standard', termidorFoamType = 'none', termidorBrickRate = 7.50, termidorPropVal = 'residential';
+
+function termidorPropType(val) {
+  termidorPropVal = val;
+  ['residential','commercial'].forEach(v => document.getElementById('termidor-prop-' + v).classList.toggle('active', v === val));
+  termidorCalc();
+}
 
 function termidorType(val) {
   termidorFoundType = val;
@@ -1845,11 +2204,8 @@ function termidorFoam(val) {
 
 function termidorBrickSlider() {
   const el = document.getElementById('termidor-brick-slider');
-  // Use integer slider steps (750, 800) and divide by 100
   termidorBrickRate = parseFloat(el.value);
-  // Clamp to 7.50 or 8.00
-  termidorBrickRate = termidorBrickRate <= 7.50 ? 7.50 : 8.00;
-  const pct = termidorBrickRate === 7.50 ? 0 : 100;
+  const pct = ((termidorBrickRate - 7.50) / (10.00 - 7.50)) * 100;
   el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
   document.getElementById('termidor-brick-rate-disp').textContent = '$' + termidorBrickRate.toFixed(2) + '/lin ft';
   termidorCalc();
@@ -1880,6 +2236,18 @@ function termidorCalc() {
   document.getElementById('termidor-treatment-sub').textContent = lf + ' lin ft × $' + rate.toFixed(2) + '/lin ft';
   document.getElementById('termidor-badge').textContent = typeStr + ' — ' + lf.toLocaleString() + ' lin ft';
 
+  // Annual inspection fee
+  let annualFee, annualSub;
+  if (termidorPropVal === 'commercial' && treatCost > 2000) {
+    annualFee = Math.round(treatCost * 0.15);
+    annualSub = '15% of treatment cost';
+  } else {
+    annualFee = lf > 300 ? 200 : 180;
+    annualSub = lf > 300 ? 'Per year (>300 lin ft)' : 'Per year';
+  }
+  document.getElementById('termidor-annual-val').textContent = annualFee.toLocaleString();
+  document.getElementById('termidor-annual-sub').textContent = annualSub;
+
   const foamCell = document.getElementById('termidor-foam-cell');
   if (foamCost > 0) {
     foamCell.style.display = '';
@@ -1896,9 +2264,38 @@ function termidorCalc() {
 
   document.getElementById('termidor-total-val').textContent = total.toLocaleString();
   resultBox.style.display = '';
-}
 
-/* ═══ CENTERFIRE ═══ */
+  // Proposal text + time (no prices)
+  const fmtT = m => { const r = Math.round(m/15)*15; const h = Math.floor(r/60); const mn = r%60; return mn > 0 ? h+' hr '+mn+' min' : h+' hr'; };
+  const minsPerLf = termidorFoundType === 'brick' ? (3.5*60/200) : (2.5*60/200);
+  const jobMins = Math.round(minsPerLf * lf);
+  let fmMins = 0;
+  if (termidorFoamType === 'half') fmMins = 30;
+  else if (termidorFoamType === 'full') fmMins = 60;
+  else if (termidorFoamType === 'custom') fmMins = Math.round((parseFloat(document.getElementById('termidor-foam-hours').value)||0)*60);
+  const totalMinsT = jobMins + fmMins;
+
+  const propLines = [];
+  propLines.push({ label: 'Termidor HE Liquid Termiticide Treatment', note: lf.toLocaleString() + ' lin ft — ' + (termidorFoundType === 'brick' ? 'Multi Brick Foundation' : 'Standard Foundation') });
+  if (foamCost > 0) propLines.push({ label: 'Termidor Foam Application', note: termidorFoamType === 'half' ? 'Half hour' : termidorFoamType === 'full' ? 'Full hour' : (parseFloat(document.getElementById('termidor-foam-hours').value)||0) + ' hrs' });
+  propLines.push({ label: 'Annual Termite Inspection', note: 'Per year' });
+
+  const propBody = document.getElementById('termidor-proposal-body');
+  propBody.innerHTML = propLines.map(l => `
+    <div class="moisture-line">
+      <div>
+        <div class="moisture-line-label">${l.label}</div>
+        ${l.note ? `<div style="font-size:11px;color:var(--muted);margin-top:1px;">${l.note}</div>` : ''}
+      </div>
+    </div>`).join('') + `
+    <div class="moisture-total-row" style="display:flex;justify-content:space-between;">
+      <div class="moisture-total-label">Total</div>
+      <div class="moisture-total-val">$${total.toLocaleString()}</div>
+    </div>`;
+
+  if (totalMinsT > 0) document.getElementById('termidor-time-val').textContent = fmtT(Math.max(15, totalMinsT - 15)) + ' – ' + fmtT(totalMinsT + 15);
+  document.getElementById('termidor-proposal').style.display = '';
+}
 let centerfireRate = 0.35;
 function centerfireSlider() {
   const el = document.getElementById('centerfire-slider');
@@ -1938,7 +2335,6 @@ function pretreatCalc() {
 
   const items = [
     { key:'boracare', rate:0.60, label:'Bora-Care' },
-    { key:'timbor',   rate:0.50, label:'Timbor Fungi' },
   ].filter(i => pretreatSelected.has(i.key));
 
   let total = 0;
@@ -1970,11 +2366,28 @@ function pretreatCalc() {
   document.getElementById('pretreat-badge').textContent = names + (sq > 0 ? ' — ' + sq.toLocaleString() + ' sq ft' : '');
   resultBox.style.display = '';
 }
-let trelonaFound = 'crawlspace', trelonaFoamType = 'none';
+let trelonaFound = 'crawlspace', trelonaFoamType = 'none', trelonaSpotMode = 'none', trelonaSpotRate = 7.50;
+
 function trelonaSelectFound(el) {
   trelonaFound = el.dataset.val;
   document.querySelectorAll('#trelona-found-pills .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
+  trelonaCalc();
+}
+
+function trelonaSpot(val) {
+  trelonaSpotMode = val;
+  ['none','yes'].forEach(v => document.getElementById('trelona-spot-' + v).classList.toggle('active', v === val));
+  document.getElementById('trelona-spot-fields').style.display = val === 'yes' ? '' : 'none';
+  trelonaCalc();
+}
+
+function trelonaSpotSlider() {
+  const el = document.getElementById('trelona-spot-slider');
+  trelonaSpotRate = parseFloat(el.value);
+  const pct = ((trelonaSpotRate - 7.50) / 2.50) * 100;
+  el.style.background = `linear-gradient(to right, var(--navy) 0%, var(--navy) ${pct}%, #C8D8EC ${pct}%, #C8D8EC 100%)`;
+  document.getElementById('trelona-spot-rate-disp').textContent = '$' + trelonaSpotRate.toFixed(2) + '/lin ft';
   trelonaCalc();
 }
 function trelonaFoam(val) {
@@ -2000,7 +2413,13 @@ function trelonaCalc() {
   else { rate=4.00; rowId='tr-t3'; band='300+ lin ft'; }
   document.getElementById(rowId).classList.add('active-tier');
   const installCost = Math.round(lf * rate);
-  const monthly = trelonaFound === 'slab' ? 25 : 30;
+  const monthly = (() => {
+    if (lf >= 400) {
+      const multiplier = trelonaFound === 'slab' ? 1.05 : 1.25;
+      return Math.round((lf * multiplier) / 12);
+    }
+    return trelonaFound === 'slab' ? 25 : 30;
+  })();
 
   let foamCost = 0, foamLabel = '', foamSub = '';
   if (trelonaFoamType === 'half') { foamCost = 100; foamLabel = 'Half Hour'; foamSub = 'Flat rate'; }
@@ -2018,38 +2437,79 @@ function trelonaCalc() {
   document.getElementById('trelona-rate-note').textContent = '$' + rate.toFixed(2) + '/lin ft × ' + lf + ' ft';
   document.getElementById('trelona-monthly').textContent = monthly;
   document.getElementById('trelona-badge').textContent = lf.toLocaleString() + ' lin ft';
-  document.getElementById('trelona-type-label').textContent = trelonaFound === 'slab' ? 'Slab' : 'Crawlspace';
+  document.getElementById('trelona-type-label').textContent = 'Monthly Payment — ' + (trelonaFound === 'slab' ? 'Slab' : 'Crawlspace');
+
+  const spotCell = document.getElementById('trelona-spot-result-cell');
+  let spotCost = 0;
+  let spotLf = 0;
+  if (trelonaSpotMode === 'yes') {
+    spotLf = parseInt(document.getElementById('trelona-spot-lf').value) || 0;
+    spotCost = spotLf > 0 ? Math.round(spotLf * trelonaSpotRate) : 0;
+  }
+  spotCell.style.display = 'none'; // cost folds into initial, no separate cell
 
   const foamCell  = document.getElementById('trelona-foam-result-cell');
   const totalBar  = document.getElementById('trelona-total-bar');
-  if (foamCost > 0) {
-    foamCell.style.display = '';
-    document.getElementById('trelona-foam-result-val').textContent = foamCost.toLocaleString();
-    document.getElementById('trelona-foam-result-type').textContent = foamLabel;
-    document.getElementById('trelona-foam-result-sub').textContent = foamSub;
-    document.getElementById('trelona-result-grid').className = 'result-grid cols-2';
+  const combinedInitial = installCost + spotCost;
+  const grandTotal = combinedInitial + foamCost;
+
+  document.getElementById('trelona-total').textContent = combinedInitial.toLocaleString();
+  document.getElementById('trelona-rate-note').textContent = spotCost > 0
+    ? 'Trelona install + ' + spotLf + ' lin ft spot Termidor'
+    : 'Covers initial installation of bait stations and first treatment';
+
+  if (foamCost > 0 || spotCost > 0) {
     totalBar.style.display = '';
-    document.getElementById('trelona-grand-total').textContent = (installCost + foamCost).toLocaleString();
-  } else {
-    foamCell.style.display = 'none';
-    document.getElementById('trelona-result-grid').className = 'result-grid cols-2';
+    document.getElementById('trelona-grand-total').textContent = grandTotal.toLocaleString();  } else {
     totalBar.style.display = 'none';
   }
+
+  // Proposal text (no prices)
+  const fmtMins = m => { const r = Math.round(m/15)*15; const h = Math.floor(r/60); const mn = r%60; return mn > 0 ? h+' hr '+mn+' min' : h+' hr'; };
+  let trelonaMinutes = Math.round((40/200) * lf);
+  let spotMinutes = (trelonaSpotMode === 'yes' && spotLf > 0) ? Math.round((10/10) * spotLf) : 0;
+  let foamMinutes = 0;
+  if (trelonaFoamType === 'half') foamMinutes = 30;
+  else if (trelonaFoamType === 'full') foamMinutes = 60;
+  else if (trelonaFoamType === 'custom') foamMinutes = Math.round((parseFloat(document.getElementById('trelona-foam-hours').value)||0)*60);
+  const totalMins = trelonaMinutes + spotMinutes + foamMinutes;
+
+  const foundLabel = trelonaFound === 'slab' ? 'Slab' : 'Crawlspace';
+  const proposalLines = [];
+  proposalLines.push({ label: 'Trelona ATBS Bait Station System', note: lf.toLocaleString() + ' lin ft — ' + foundLabel });
+  if (trelonaSpotMode === 'yes' && spotLf > 0) proposalLines.push({ label: 'Termidor HE Spot Treatment', note: spotLf.toLocaleString() + ' lin ft' });
+  if (foamCost > 0) proposalLines.push({ label: 'Termidor Foam Application', note: trelonaFoamType === 'half' ? 'Half hour' : trelonaFoamType === 'full' ? 'Full hour' : (parseFloat(document.getElementById('trelona-foam-hours').value)||0) + ' hrs' });
+
+  const proposalBody = document.getElementById('trelona-proposal-body');
+  proposalBody.innerHTML = proposalLines.map(l => `
+    <div class="moisture-line">
+      <div>
+        <div class="moisture-line-label">${l.label}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:1px;">${l.note}</div>
+      </div>
+    </div>`).join('');
+
+  if (totalMins > 0) {
+    document.getElementById('trelona-time-val').textContent = fmtMins(Math.max(15, totalMins - 15)) + ' – ' + fmtMins(totalMins + 15);
+    document.getElementById('trelona-time-row').style.display = '';
+  }
+  document.getElementById('trelona-proposal').style.display = '';
 
   resultBox.style.display = '';
   foundCard.style.display = '';
   foamCard.style.display  = '';
+  document.getElementById('trelona-spot-card').style.display = '';
 }
 
 /* ═══ MOISTURE ═══ */
 const moistureSelected = new Set();
 const moistureLabels = {
   'vapor':        'Vapor Barrier',
-  'vapor-remove': 'Removal + Vapor Barrier',
-  'encap-full':   '10 mil Encapsulation + Wall Liner',
-  'encap-floor':  'Floor Liner Only',
+  'vapor-remove-only': 'Vapor Barrier Removal Only',
+  'vapor-remove': 'Removal of Existing Vapor Barrier and Reinstallation of 6 Mil Vapor Barrier',
+  'encap-floor':  '12 Mil Reinforced Vapor Barrier',
   'piers':        'Pier Wrapping (≤15 piers)',
-  'insul-remove': 'Insulation Removal R19',
+  'insul-remove': 'Insulation Removal',
   'insul-install':'Insulation Installation',
   'timbor':       'Timbor Fungi Treatment',
   'dsv':          'DSV Sanitation',
@@ -2058,13 +2518,15 @@ const moistureLabels = {
   'dehu-e070w':   'Aprilaire E070W WiFi Dehumidifier w/pump (includes sealing off foundation vents)',
   'dehu-e070':    'Aprilaire E070 Dehumidifier w/pump (includes sealing off foundation vents)',
   'pump':         'Pump Replacement',
+  'foam-board':   'Foam Board',
 };
 
 const sliderConfig = {
   'vapor':        { sliderId:'vapor-slider',        dispId:'vapor-rate-disp',        diffId:'vapor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
+  'vapor-remove-only': { sliderId:'vapor-remove-only-slider', dispId:'vapor-remove-only-disp', diffId:'vapor-remove-only-diff-label', min:100, max:200, step:10, type:'extra' },
   'vapor-remove': { sliderId:'vapor-remove-slider',  dispId:'vapor-remove-extra-disp', diffId:'vapor-remove-diff-label',  min:100,  max:200,  step:10,   type:'extra' },
   'encap-full':   { sliderId:'encap-full-slider',    dispId:'encap-full-rate-disp',    diffId:'encap-full-diff-label',    min:3.00, max:4.00, step:0.25, type:'rate' },
-  'encap-floor':  { sliderId:'encap-floor-slider',   dispId:'encap-floor-rate-disp',   diffId:'encap-floor-diff-label',   min:2.00, max:3.00, step:0.25, type:'rate' },
+  'encap-floor':  { sliderId:'encap-floor-slider',   dispId:'encap-floor-rate-disp',   diffId:'encap-floor-diff-label',   min:1.50, max:2.50, step:0.25, type:'rate' },
   'insul-remove': { sliderId:'insul-remove-slider',  dispId:'insul-remove-rate-disp',  diffId:'insul-remove-diff-label',  min:0.75, max:1.00, step:0.05, type:'rate' },
   'insul-install':{ sliderId:'insul-install-slider', dispId:'insul-install-rate-disp', diffId:'insul-install-diff-label', min:2.00, max:2.75, step:0.25, type:'rate' },
   'timbor':       { sliderId:'timbor-slider',        dispId:'timbor-rate-disp',        diffId:'timbor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
@@ -2088,7 +2550,7 @@ function updateSliderTrack(sliderId) {
 
 // Store current slider values in JS to avoid browser misparse of decimal range inputs
 const sliderValues = {
-  'vapor': 0.50, 'vapor-remove': 150, 'encap-full': 3.00, 'encap-floor': 2.00,
+  'vapor': 0.50, 'vapor-remove-only': 150, 'vapor-remove': 150, 'encap-floor': 1.50,
   'insul-remove': 0.75, 'insul-install': 2.00, 'timbor': 0.50, 'dsv': 0.25,
 };
 
@@ -2128,16 +2590,17 @@ function moistureToggle(el) {
       const vs = document.getElementById('slider-vapor');
       if (vs) vs.classList.remove('visible');
     }
+    if (key === 'foam-board') document.getElementById('foam-board-inputs').style.display = 'none';
   } else {
     moistureSelected.add(key);
     el.classList.add('selected');
     const sliderEl = document.getElementById('slider-' + key);
     if (sliderEl) { sliderEl.classList.add('visible'); updateSliderTrack(sliderConfig[key] ? sliderConfig[key].sliderId : null); }
-    // If selecting vapor-remove, also show the vapor rate slider
     if (key === 'vapor-remove') {
       const vs = document.getElementById('slider-vapor');
       if (vs) { vs.classList.add('visible'); updateSliderTrack(sliderConfig['vapor'].sliderId); }
     }
+    if (key === 'foam-board') document.getElementById('foam-board-inputs').style.display = '';
   }
   moistureCalc();
 }
@@ -2148,7 +2611,7 @@ function moistureCalc() {
   if (sqft > 0) { hint.textContent = sqft.toLocaleString() + ' sq ft entered'; hint.className = 'field-hint has-val'; }
   else { hint.textContent = 'Enter sq ft to enable cost calculations'; hint.className = 'field-hint'; }
 
-  if (moistureSelected.size === 0) { document.getElementById('moisture-result').style.display = 'none'; return; }
+  if (moistureSelected.size === 0 && partialSelected.size === 0) { document.getElementById('moisture-result').style.display = 'none'; return; }
 
   let grandTotal = 0;
   let lines = [];
@@ -2166,18 +2629,22 @@ function moistureCalc() {
 
   // Time base rates (mins per sq ft or flat)
   const timeBases = {
-    'vapor':        { minsPerSqft: 70/800 },   // ~70 min per 800 sq ft (targets 2hr 45min at 1550sqft)
-    'vapor-remove': { minsPerSqft: 70/800 },   // vapor install + removal time (handled specially below)
-    'insul-remove': { minsPerSqft: 45/1000 },  // 40 min + 15% = 46 → 45 min per 1000 sq ft
-    'insul-install':{ minsPerSqft: 45/1000 },  // 35 min + 15% = 40.25 → 45 min per 1000 sq ft
-    'timbor':       { minsPerSqft: 30/500  },  // unchanged — 30 min per 500 sq ft
-    'dsv':          { minsPerSqft: 15/1000 },  // unchanged — 15 min per 1000 sq ft
-    'dehu-e100w':   { flat: 135 },             // 2 hrs + 15% = 138 → 135 min (2 hr 15 min)
-    'dehu-e100':    { flat: 135 },
-    'dehu-e070w':   { flat: 135 },
-    'dehu-e070':    { flat: 135 },
+    'vapor':             { minsPerSqft: 70/800 },
+    'vapor-remove':      { minsPerSqft: 70/800 },
+    'vapor-remove-only': { flat: 0 },            // removal-only: handled via flat 30-60 min (no sqft needed)
+    'encap-floor':       { minsPerSqft: 60/800 }, // ~1 hr per 800 sq ft (similar to vapor, heavier material)
+    'insul-remove':      { minsPerSqft: 60/1000 },
+    'insul-install':     { minsPerSqft: 70/1000 },
+    'timbor':            { minsPerSqft: 30/500  },
+    'dsv':               { minsPerSqft: 20/1000 },
+    'piers':             { flat: 60 },            // ~1 hr flat for pier wrapping
+    'dehu-e100w':        { flat: 150 },
+    'dehu-e100':         { flat: 150 },
+    'dehu-e070w':        { flat: 150 },
+    'dehu-e070':         { flat: 150 },
   };
   timeBases['boracare'] = { minsPerSqft: 30/500 }; // unchanged — 30 min per 500 sq ft
+  timeBases['foam-board'] = { minsPerLinFt: 420/200 }; // 7 hr midpoint / 200 lin ft
 
   document.querySelectorAll('.toggle-pill').forEach(el => {
     const key = el.dataset.key;
@@ -2194,20 +2661,27 @@ function moistureCalc() {
       const extra = parseFloat(el.dataset.extra || 0);
       if (sqft > 0) {
         cost = Math.round(rate * sqft) + extra;
-        note = sqft.toLocaleString() + ' sq ft';
+        note = 'Approx ' + sqft.toLocaleString() + ' sq ft';
       } else { note = 'Enter sq ft above'; }
     } else if (unit === 'sqft-slider') {
       const rate = getSliderRate(key) || parseFloat(el.dataset.rate);
       if (sqft > 0) {
         cost = Math.round(rate * sqft);
-        note = sqft.toLocaleString() + ' sq ft';
+        note = 'Approx ' + sqft.toLocaleString() + ' sq ft';
       } else { note = 'Enter sq ft above'; }
+    } else if (unit === 'foam') {
+      cost = foamBoardCost || 0;
+      if (cost === 0) return;
+      note = foamBoardDetail || '';
+    } else if (unit === 'flat-slider') {
+      cost = sliderValues[key] || parseFloat(el.dataset.rate) || 0;
+      note = '';
     } else if (unit === 'sqft-slider-extra') {
       const baseRate = sliderValues['vapor'] || 0.50;
       const removalFee = sliderValues['vapor-remove'] || 150;
       if (sqft > 0) {
         cost = Math.round(baseRate * sqft) + removalFee;
-        note = sqft.toLocaleString() + ' sq ft';
+        note = 'Approx ' + sqft.toLocaleString() + ' sq ft';
       } else { note = 'Enter sq ft above'; }
     }
 
@@ -2215,9 +2689,9 @@ function moistureCalc() {
     lines.push({ label: moistureLabels[key] || key, note, cost });
 
     // Auto-add disposal fee if insulation removal > 500 sq ft
-    if (key === 'insul-remove' && sqft > 750) {
+    if (key === 'insul-remove' && sqft > 700) {
       grandTotal += 350;
-      lines.push({ label: 'Insulation Disposal Fee', note: 'Auto-applied — removal over 500 sq ft', cost: 350 });
+      lines.push({ label: 'Insulation Disposal Fee', note: '', cost: 350 });
     }
 
     // Time estimate — runs independently of cost block
@@ -2228,15 +2702,25 @@ function moistureCalc() {
 
       if (key === 'vapor' && moistureSelected.has('vapor-remove')) {
         // Skip — vapor-remove already includes install time
+      } else if (key === 'vapor-remove-only') {
+        const cfg = sliderConfig['vapor-remove-only'];
+        const val = sliderValues['vapor-remove-only'] !== undefined ? sliderValues['vapor-remove-only'] : 150;
+        const pct = cfg ? (val - cfg.min) / (cfg.max - cfg.min) : 0;
+        mins = Math.round(30 + pct * 30); // 30–60 min scaled with difficulty
       } else if (key === 'vapor-remove') {
         const vaporMins = sqft > 0 ? Math.round((70/800) * sqft * diffMult('vapor')) : 0;
         const cfg = sliderConfig['vapor-remove'];
         const removalVal = sliderValues['vapor-remove'] !== undefined ? sliderValues['vapor-remove'] : 150;
         const removalPct = cfg ? (removalVal - cfg.min) / (cfg.max - cfg.min) : 0;
-        const removalMins = Math.round(15 + removalPct * 30); // 15-45 min scaled with difficulty
+        const removalMins = Math.round(30 + removalPct * 30); // 30-60 min scaled with difficulty
         mins = vaporMins + removalMins;
       } else if (tb.flat) {
         mins = tb.flat;
+      } else if (tb.minsPerLinFt) {
+        const lf = parseInt(document.getElementById('foam-lf').value) || 0;
+        // For foam board, scale time using foamMult position (5.0=easy, 6.5=tight → 1.0x to 1.5x)
+        const foamDiffMult = 1.0 + ((foamMult - 5.0) / 1.5) * 0.5;
+        mins = lf > 0 ? Math.round(tb.minsPerLinFt * lf * foamDiffMult) : 0;
       } else if (tb.minsPerSqft && sqft > 0) {
         mins = Math.round(tb.minsPerSqft * sqft * mult);
       }
@@ -2255,27 +2739,47 @@ function moistureCalc() {
     partialSelected.forEach(key => {
       const def = partialDefs[key];
       if (!def) return;
-      const sq = partialSqfts[key] || 0;
-      const rate = partialRates[key] || def.min;
-      const cost = sq > 0 ? Math.round(rate * sq) : 0;
-      if (cost > 0) {
-        partialCost += cost;
-        lines.push({ label: def.label + ' — Partial', note: sq.toLocaleString() + ' sq ft', cost });
-        // Auto-add disposal fee if insulation removal partial > 500 sq ft
-        if (key === 'insul-remove' && sq > 750) {
-          partialCost += 350;
-          lines.push({ label: 'Insulation Disposal Fee', note: 'Auto-applied — removal over 500 sq ft', cost: 350 });
-        }
-        // Time for partial
-        const tb = timeBases[key];
-        if (tb && sq > 0) {
-          const pRate = partialRates[key] || def.min;
-          const pct = def.max > def.min ? (pRate - def.min) / (def.max - def.min) : 0;
-          const mult = 1.0 + pct * 0.5;
-          const mins = tb.minsPerSqft ? Math.round(tb.minsPerSqft * sq * mult) : (tb.flat || 0);
-          if (mins > 0) {
+
+      if (def.foam) {
+        const cost = partialRates[key] || 0;
+        const lf = partialSqfts[key + '_lf'] || 0;
+        const ht = partialSqfts[key + '_ht'] || 0;
+        if (cost > 0) {
+          partialCost += cost;
+          const usableHt = ht;
+          const cuts = Math.floor(48 / usableHt);
+          const boards = Math.ceil(lf / (cuts * 8));
+          lines.push({ label: def.label + ' — Partial', note: lf + ' lin ft · ' + boards + ' boards', cost });
+          // Time
+          const tb = timeBases[key];
+          if (tb && tb.minsPerLinFt && lf > 0) {
+            const foamDiffMult = 1.0 + ((foamMult - 5.0) / 1.5) * 0.5;
+            const mins = Math.round(tb.minsPerLinFt * lf * foamDiffMult);
             totalMins += mins;
             timeLines.push({ label: def.label + ' — Partial', mins });
+          }
+        }
+      } else {
+        const sq = partialSqfts[key] || 0;
+        const rate = partialRates[key] || def.min;
+        const cost = sq > 0 ? Math.round(rate * sq) : 0;
+        if (cost > 0) {
+          partialCost += cost;
+          lines.push({ label: def.label + ' — Partial', note: 'Approx ' + sq.toLocaleString() + ' sq ft', cost });
+          if (key === 'insul-remove' && sq > 700) {
+            partialCost += 350;
+            lines.push({ label: 'Insulation Disposal Fee', note: '', cost: 350 });
+          }
+          const tb = timeBases[key];
+          if (tb && sq > 0) {
+            const pRate = partialRates[key] || def.min;
+            const pct = def.max > def.min ? (pRate - def.min) / (def.max - def.min) : 0;
+            const mult = 1.0 + pct * 0.5;
+            const mins = tb.minsPerSqft ? Math.round(tb.minsPerSqft * sq * mult) : (tb.flat || 0);
+            if (mins > 0) {
+              totalMins += mins;
+              timeLines.push({ label: def.label + ' — Partial', mins });
+            }
           }
         }
       }
@@ -2322,8 +2826,47 @@ function moistureCalc() {
   document.getElementById('moisture-result').style.display = '';
 }
 
+let resTierPinEntry = '', resTierUnlocked = false;
+
+function resTierPinKey(digit) {
+  if (resTierUnlocked || resTierPinEntry.length >= 6) return;
+  resTierPinEntry += digit;
+  updateTierPinDisplay();
+  if (resTierPinEntry.length === 6) setTimeout(checkTierPin, 150);
+}
+function resTierPinDelete() {
+  resTierPinEntry = resTierPinEntry.slice(0, -1);
+  updateTierPinDisplay();
+  document.getElementById('res-tier-pin-error').textContent = '';
+}
+function resTierPinClear() {
+  resTierPinEntry = '';
+  updateTierPinDisplay();
+  document.getElementById('res-tier-pin-error').textContent = '';
+}
+function updateTierPinDisplay() {
+  const filled = '●'.repeat(resTierPinEntry.length);
+  const empty = '—'.repeat(6 - resTierPinEntry.length);
+  document.getElementById('res-tier-pin-display').textContent = filled + empty;
+}
+function checkTierPin() {
+  if (resTierPinEntry === RES_PIN) {
+    resTierUnlocked = true;
+    document.getElementById('res-tier-pin-screen').style.display = 'none';
+    document.getElementById('res-tier-content').style.display = '';
+    resRender();
+  } else {
+    document.getElementById('res-tier-pin-error').textContent = 'Incorrect PIN — try again';
+    resTierPinEntry = '';
+    updateTierPinDisplay();
+  }
+}
+
+function resTierShowPad() {
+  document.getElementById('res-tier-pin-pad').style.display = '';
+}
+
 function resPinKey(digit) {
-  if (resPinUnlocked || resPinEntry.length >= 6) return;
   resPinEntry += digit;
   updatePinDisplay();
   if (resPinEntry.length === 6) setTimeout(checkPin, 150);
