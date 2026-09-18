@@ -991,41 +991,41 @@
       <div style="margin-bottom:14px;">
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Vapor Barrier</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="vapor" data-rate="0.50" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Vapor Barrier<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="vapor" data-rate="0.65" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Vapor Barrier<span class="pill-rate">$0.65/sq ft</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="vapor-remove-only" data-rate="150" data-unit="flat-slider" onclick="moistureToggle(this)">
-            Vapor Barrier Removal Only<span class="pill-rate">$100–$200 flat</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="vapor-remove-only" data-rate="195" data-unit="flat-slider" onclick="moistureToggle(this)">
+            Vapor Barrier Removal Only<span class="pill-rate">$130–$260 flat</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="vapor-remove" data-rate="0.50" data-unit="sqft-slider-extra" onclick="moistureToggle(this)">
-            Removal of Existing Vapor Barrier and Reinstallation of 6 Mil Vapor Barrier<span class="pill-rate">$0.50/sq ft + removal</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="vapor-remove" data-rate="0.65" data-unit="sqft-slider-extra" onclick="moistureToggle(this)">
+            Removal of Existing Vapor Barrier and Reinstallation of 6 Mil Vapor Barrier<span class="pill-rate">$0.65/sq ft + removal</span><span class="pill-check"></span>
           </button>
         </div>
         <div class="slider-block" id="slider-vapor-remove-only">
           <div class="slider-header">
             <div class="slider-title">Removal Fee</div>
-            <div class="slider-val-badge" id="vapor-remove-only-disp">$150</div>
+            <div class="slider-val-badge" id="vapor-remove-only-disp">$195</div>
           </div>
-          <div class="slider-labels"><span>Easy ($100)</span><span>Hard ($200)</span></div>
-          <input type="range" id="vapor-remove-only-slider" min="100" max="200" step="10" value="150" oninput="sliderUpdate('vapor-remove-only')" />
+          <div class="slider-labels"><span>Easy ($130)</span><span>Hard ($260)</span></div>
+          <input type="range" id="vapor-remove-only-slider" min="130" max="260" step="10" value="195" oninput="sliderUpdate('vapor-remove-only')" />
           <div class="difficulty-label" id="vapor-remove-only-diff-label">Moderate removal</div>
         </div>
         <div class="slider-block" id="slider-vapor">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="vapor-rate-disp">$0.50/sq ft</div>
+            <div class="slider-val-badge" id="vapor-rate-disp">$0.65/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($0.50)</span><span>Complex ($0.75)</span></div>
-          <input type="range" id="vapor-slider" min="0.50" max="0.75" step="0.05" value="0.50" oninput="sliderUpdate('vapor')" />
+          <div class="slider-labels"><span>Standard ($0.65)</span><span>Complex ($0.98)</span></div>
+          <input type="range" id="vapor-slider" min="0.65" max="0.98" step="0.05" value="0.65" oninput="sliderUpdate('vapor')" />
           <div class="difficulty-label" id="vapor-diff-label">Standard install</div>
         </div>
         <div class="slider-block" id="slider-vapor-remove">
           <div class="slider-header">
             <div class="slider-title">Removal Difficulty Fee</div>
-            <div class="slider-val-badge" id="vapor-remove-extra-disp">$150</div>
+            <div class="slider-val-badge" id="vapor-remove-extra-disp">$195</div>
           </div>
-          <div class="slider-labels"><span>Easy ($100)</span><span>Hard ($200)</span></div>
-          <input type="range" id="vapor-remove-slider" min="100" max="200" step="10" value="150" oninput="sliderUpdate('vapor-remove')" />
+          <div class="slider-labels"><span>Easy ($130)</span><span>Hard ($260)</span></div>
+          <input type="range" id="vapor-remove-slider" min="130" max="260" step="10" value="195" oninput="sliderUpdate('vapor-remove')" />
           <div class="difficulty-label" id="vapor-remove-diff-label">Moderate difficulty</div>
         </div>
       </div>
@@ -1034,20 +1034,20 @@
       <div style="margin-bottom:14px;">
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Encapsulation</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="encap-floor" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            12 Mil Reinforced Vapor Barrier<span class="pill-rate">$1.50–$2.50/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="encap-floor" data-rate="2.60" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            12 Mil Reinforced Vapor Barrier<span class="pill-rate">$1.95–$3.25/sq ft</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="piers" data-rate="500" data-unit="flat" onclick="moistureToggle(this)">
-            Pier Wrapping<span class="pill-rate">$500 flat (≤15 piers)</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="piers" data-rate="650" data-unit="flat" onclick="moistureToggle(this)">
+            Pier Wrapping<span class="pill-rate">$650 flat (≤15 piers)</span><span class="pill-check"></span>
           </button>
         </div>
         <div class="slider-block" id="slider-encap-floor">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="encap-floor-rate-disp">$1.50/sq ft</div>
+            <div class="slider-val-badge" id="encap-floor-rate-disp">$1.95/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($1.50)</span><span>Complex ($2.50)</span></div>
-          <input type="range" id="encap-floor-slider" min="1.50" max="2.50" step="0.25" value="1.50" oninput="sliderUpdate('encap-floor')" />
+          <div class="slider-labels"><span>Standard ($1.95)</span><span>Complex ($3.25)</span></div>
+          <input type="range" id="encap-floor-slider" min="1.95" max="3.25" step="0.25" value="1.95" oninput="sliderUpdate('encap-floor')" />
           <div class="difficulty-label" id="encap-floor-diff-label">Standard access</div>
         </div>
       </div>
@@ -1056,11 +1056,11 @@
       <div style="margin-bottom:14px;">
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Insulation</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="insul-remove" data-rate="0.75" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Insulation Removal<span class="pill-rate">$0.75–$1.00/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="insul-remove" data-rate="0.98" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Insulation Removal<span class="pill-rate">$0.98–$1.30/sq ft</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="insul-install" data-rate="2.00" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Insulation Install<span class="pill-rate">$2.00/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="insul-install" data-rate="2.60" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Insulation Install<span class="pill-rate">$2.60/sq ft</span><span class="pill-check"></span>
           </button>
           <button class="toggle-pill" data-key="foam-board" data-rate="0" data-unit="foam" onclick="moistureToggle(this)">
             GPS Foam Board R10<span class="pill-check"></span>
@@ -1069,19 +1069,19 @@
         <div class="slider-block" id="slider-insul-remove">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="insul-remove-rate-disp">$0.75/sq ft</div>
+            <div class="slider-val-badge" id="insul-remove-rate-disp">$0.98/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Easy ($0.75)</span><span>Hard ($1.00)</span></div>
-          <input type="range" id="insul-remove-slider" min="0.75" max="1.00" step="0.05" value="0.75" oninput="sliderUpdate('insul-remove')" />
+          <div class="slider-labels"><span>Easy ($0.98)</span><span>Hard ($1.30)</span></div>
+          <input type="range" id="insul-remove-slider" min="0.98" max="1.30" step="0.05" value="0.98" oninput="sliderUpdate('insul-remove')" />
           <div class="difficulty-label" id="insul-remove-diff-label">Easy access</div>
         </div>
         <div class="slider-block" id="slider-insul-install">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="insul-install-rate-disp">$2.00/sq ft</div>
+            <div class="slider-val-badge" id="insul-install-rate-disp">$2.60/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($2.00)</span><span>Complex ($2.75)</span></div>
-          <input type="range" id="insul-install-slider" min="2.00" max="2.75" step="0.25" value="2.00" oninput="sliderUpdate('insul-install')" />
+          <div class="slider-labels"><span>Standard ($2.60)</span><span>Complex ($3.58)</span></div>
+          <input type="range" id="insul-install-slider" min="2.60" max="3.58" step="0.25" value="2.60" oninput="sliderUpdate('insul-install')" />
           <div class="difficulty-label" id="insul-install-diff-label">Standard install</div>
         </div>
 
@@ -1107,10 +1107,10 @@
           <div style="margin-bottom:10px;">
             <div class="slider-header" style="margin-bottom:4px;">
               <div class="slider-title">Price Multiplier</div>
-              <div class="slider-val-badge" id="foam-mult-disp">5.8×</div>
+              <div class="slider-val-badge" id="foam-mult-disp">7.5×</div>
             </div>
             <div class="slider-labels"><span>Easy</span><span>Tight</span></div>
-            <input type="range" id="foam-mult-slider" min="5.0" max="6.5" step="0.1" value="5.8" oninput="foamMultSlider()" />
+            <input type="range" id="foam-mult-slider" min="6.5" max="8.5" step="0.1" value="7.5" oninput="foamMultSlider()" />
           </div>
           <div id="foam-board-result" style="display:none;">
             <div style="border-top:1px solid #D8E6F4;padding-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
@@ -1137,29 +1137,29 @@
       <div style="margin-bottom:14px;">
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Treatments</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="timbor" data-rate="0.50" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            Timbor Fungi<span class="pill-rate">$0.50/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="timbor" data-rate="0.65" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            Timbor Fungi<span class="pill-rate">$0.65/sq ft</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="dsv" data-rate="0.25" data-unit="sqft-slider" onclick="moistureToggle(this)">
-            DSV Sanitation<span class="pill-rate">$0.25/sq ft</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="dsv" data-rate="0.33" data-unit="sqft-slider" onclick="moistureToggle(this)">
+            DSV Sanitation<span class="pill-rate">$0.33/sq ft</span><span class="pill-check"></span>
           </button>
         </div>
         <div class="slider-block" id="slider-timbor">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="timbor-rate-disp">$0.50/sq ft</div>
+            <div class="slider-val-badge" id="timbor-rate-disp">$0.65/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($0.50)</span><span>Complex ($0.75)</span></div>
-          <input type="range" id="timbor-slider" min="0.50" max="0.75" step="0.05" value="0.50" oninput="sliderUpdate('timbor')" />
+          <div class="slider-labels"><span>Standard ($0.65)</span><span>Complex ($0.98)</span></div>
+          <input type="range" id="timbor-slider" min="0.65" max="0.98" step="0.05" value="0.65" oninput="sliderUpdate('timbor')" />
           <div class="difficulty-label" id="timbor-diff-label">Standard access</div>
         </div>
         <div class="slider-block" id="slider-dsv">
           <div class="slider-header">
             <div class="slider-title">Difficulty / Rate</div>
-            <div class="slider-val-badge" id="dsv-rate-disp">$0.25/sq ft</div>
+            <div class="slider-val-badge" id="dsv-rate-disp">$0.33/sq ft</div>
           </div>
-          <div class="slider-labels"><span>Standard ($0.25)</span><span>Complex ($0.50)</span></div>
-          <input type="range" id="dsv-slider" min="0.25" max="0.50" step="0.05" value="0.25" oninput="sliderUpdate('dsv')" />
+          <div class="slider-labels"><span>Standard ($0.33)</span><span>Complex ($0.65)</span></div>
+          <input type="range" id="dsv-slider" min="0.33" max="0.65" step="0.05" value="0.33" oninput="sliderUpdate('dsv')" />
           <div class="difficulty-label" id="dsv-diff-label">Standard access</div>
         </div>
       </div>
@@ -1168,20 +1168,20 @@
       <div>
         <div class="field-hint" style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--white);background:var(--blue);font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-block;">Dehumidifier</div>
         <div class="pill-row" style="flex-wrap:wrap;gap:8px;">
-          <button class="toggle-pill" data-key="dehu-e100w" data-rate="3150" data-unit="flat" onclick="moistureToggle(this)">
-            E100W WiFi<span class="pill-rate">$3,150 w/ pump</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="dehu-e100w" data-rate="4095" data-unit="flat" onclick="moistureToggle(this)">
+            E100W WiFi<span class="pill-rate">$4,095 w/ pump</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="dehu-e100" data-rate="2950" data-unit="flat" onclick="moistureToggle(this)">
-            E100<span class="pill-rate">$2,950 w/ pump</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="dehu-e100" data-rate="3835" data-unit="flat" onclick="moistureToggle(this)">
+            E100<span class="pill-rate">$3,835 w/ pump</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="dehu-e070w" data-rate="2950" data-unit="flat" onclick="moistureToggle(this)">
-            E070W WiFi<span class="pill-rate">$2,950 w/ pump</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="dehu-e070w" data-rate="3835" data-unit="flat" onclick="moistureToggle(this)">
+            E070W WiFi<span class="pill-rate">$3,835 w/ pump</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="dehu-e070" data-rate="2750" data-unit="flat" onclick="moistureToggle(this)">
-            E070<span class="pill-rate">$2,750 w/ pump</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="dehu-e070" data-rate="3575" data-unit="flat" onclick="moistureToggle(this)">
+            E070<span class="pill-rate">$3,575 w/ pump</span><span class="pill-check"></span>
           </button>
-          <button class="toggle-pill" data-key="pump" data-rate="175" data-unit="flat" onclick="moistureToggle(this)">
-            Pump Replacement<span class="pill-rate">$175</span><span class="pill-check"></span>
+          <button class="toggle-pill" data-key="pump" data-rate="228" data-unit="flat" onclick="moistureToggle(this)">
+            Pump Replacement<span class="pill-rate">$228</span><span class="pill-check"></span>
           </button>
         </div>
       </div>
@@ -1211,13 +1211,13 @@
 
       <span class="section-label">Select services</span>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;" id="partial-pills">
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="vapor"        data-label="Vapor Barrier"       data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Vapor Barrier</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-floor"  data-label="Floor Liner"         data-min="2.00" data-max="4.00" onclick="partialSelect(this)">12 Mil Barrier</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-remove" data-label="Insul. Removal"      data-min="0.75" data-max="1.50" onclick="partialSelect(this)">Insul. Removal</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-install"data-label="Insul. Install"      data-min="2.00" data-max="4.00" onclick="partialSelect(this)">Insul. Install</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="timbor"       data-label="Timbor Fungi"        data-min="0.50" data-max="1.00" onclick="partialSelect(this)">Timbor Fungi</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="dsv"          data-label="DSV Sanitation"      data-min="0.25" data-max="0.50" onclick="partialSelect(this)">DSV Sanitation</button>
-        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="boracare"     data-label="Bora-Care"           data-min="0.60" data-max="1.20" onclick="partialSelect(this)">Bora-Care</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="vapor"        data-label="Vapor Barrier"       data-min="0.65" data-max="1.30" onclick="partialSelect(this)">Vapor Barrier</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="encap-floor"  data-label="Floor Liner"         data-min="1.95" data-max="3.25" onclick="partialSelect(this)">12 Mil Barrier</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-remove" data-label="Insul. Removal"      data-min="0.98" data-max="1.95" onclick="partialSelect(this)">Insul. Removal</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="insul-install"data-label="Insul. Install"      data-min="2.60" data-max="5.20" onclick="partialSelect(this)">Insul. Install</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="timbor"       data-label="Timbor Fungi"        data-min="0.65" data-max="1.30" onclick="partialSelect(this)">Timbor Fungi</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="dsv"          data-label="DSV Sanitation"      data-min="0.33" data-max="0.65" onclick="partialSelect(this)">DSV Sanitation</button>
+        <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="boracare"     data-label="Bora-Care"           data-min="0.78" data-max="1.56" onclick="partialSelect(this)">Bora-Care</button>
         <button class="pill" style="flex:0 0 calc(33.333% - 6px);min-width:0;" data-key="foam-board"   data-label="GPS Foam Board R10"  data-min="0" data-max="0" data-foam="1" onclick="partialSelect(this)">GPS Foam Board</button>
       </div>
 
@@ -1321,7 +1321,7 @@ function showTab(id, btn) {
 }
 
 /* ═══ GPS FOAM BOARD ═══ */
-let foamBoardCost = 0, foamBoardDetail = '', foamMult = 5.8;
+let foamBoardCost = 0, foamBoardDetail = '', foamMult = 7.5;
 
 function foamMultSlider() {
   const el = document.getElementById('foam-mult-slider');
@@ -1982,13 +1982,13 @@ const partialRates = {};
 const partialSqfts = {};
 
 const partialDefs = {
-  'vapor':        { label: 'Vapor Barrier',    min: 0.50, max: 1.00 },
-  'encap-floor':  { label: '12 Mil Reinforced Vapor Barrier',      min: 1.50, max: 2.50 },
-  'insul-remove': { label: 'Insulation Removal',   min: 0.75, max: 1.50 },
-  'insul-install':{ label: 'Insul. Install',   min: 2.00, max: 4.00 },
-  'timbor':       { label: 'Timbor Fungi',     min: 0.50, max: 1.00 },
-  'dsv':          { label: 'DSV Sanitation',   min: 0.25, max: 0.50 },
-  'boracare':     { label: 'Bora-Care',        min: 0.60, max: 1.20 },
+  'vapor':        { label: 'Vapor Barrier',    min: 0.65, max: 1.30 },
+  'encap-floor':  { label: '12 Mil Reinforced Vapor Barrier',      min: 1.95, max: 3.25 },
+  'insul-remove': { label: 'Insulation Removal',   min: 0.98, max: 1.95 },
+  'insul-install':{ label: 'Insul. Install',   min: 2.60, max: 5.20 },
+  'timbor':       { label: 'Timbor Fungi',     min: 0.65, max: 1.30 },
+  'dsv':          { label: 'DSV Sanitation',   min: 0.33, max: 0.65 },
+  'boracare':     { label: 'Bora-Care',        min: 0.78, max: 1.56 },
   'foam-board':   { label: 'GPS Foam Board R10', min: 0, max: 0, foam: true },
 };
 
@@ -2541,15 +2541,15 @@ const moistureLabels = {
 };
 
 const sliderConfig = {
-  'vapor':        { sliderId:'vapor-slider',        dispId:'vapor-rate-disp',        diffId:'vapor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
-  'vapor-remove-only': { sliderId:'vapor-remove-only-slider', dispId:'vapor-remove-only-disp', diffId:'vapor-remove-only-diff-label', min:100, max:200, step:10, type:'extra' },
-  'vapor-remove': { sliderId:'vapor-remove-slider',  dispId:'vapor-remove-extra-disp', diffId:'vapor-remove-diff-label',  min:100,  max:200,  step:10,   type:'extra' },
+  'vapor':        { sliderId:'vapor-slider',        dispId:'vapor-rate-disp',        diffId:'vapor-diff-label',        min:0.65, max:0.98, step:0.05, type:'rate' },
+  'vapor-remove-only': { sliderId:'vapor-remove-only-slider', dispId:'vapor-remove-only-disp', diffId:'vapor-remove-only-diff-label', min:130, max:260, step:10, type:'extra' },
+  'vapor-remove': { sliderId:'vapor-remove-slider',  dispId:'vapor-remove-extra-disp', diffId:'vapor-remove-diff-label',  min:130,  max:260,  step:10,   type:'extra' },
   'encap-full':   { sliderId:'encap-full-slider',    dispId:'encap-full-rate-disp',    diffId:'encap-full-diff-label',    min:3.00, max:4.00, step:0.25, type:'rate' },
-  'encap-floor':  { sliderId:'encap-floor-slider',   dispId:'encap-floor-rate-disp',   diffId:'encap-floor-diff-label',   min:1.50, max:2.50, step:0.25, type:'rate' },
-  'insul-remove': { sliderId:'insul-remove-slider',  dispId:'insul-remove-rate-disp',  diffId:'insul-remove-diff-label',  min:0.75, max:1.00, step:0.05, type:'rate' },
-  'insul-install':{ sliderId:'insul-install-slider', dispId:'insul-install-rate-disp', diffId:'insul-install-diff-label', min:2.00, max:2.75, step:0.25, type:'rate' },
-  'timbor':       { sliderId:'timbor-slider',        dispId:'timbor-rate-disp',        diffId:'timbor-diff-label',        min:0.50, max:0.75, step:0.05, type:'rate' },
-  'dsv':          { sliderId:'dsv-slider',           dispId:'dsv-rate-disp',           diffId:'dsv-diff-label',           min:0.25, max:0.50, step:0.05, type:'rate' },
+  'encap-floor':  { sliderId:'encap-floor-slider',   dispId:'encap-floor-rate-disp',   diffId:'encap-floor-diff-label',   min:1.95, max:3.25, step:0.25, type:'rate' },
+  'insul-remove': { sliderId:'insul-remove-slider',  dispId:'insul-remove-rate-disp',  diffId:'insul-remove-diff-label',  min:0.98, max:1.30, step:0.05, type:'rate' },
+  'insul-install':{ sliderId:'insul-install-slider', dispId:'insul-install-rate-disp', diffId:'insul-install-diff-label', min:2.60, max:3.58, step:0.25, type:'rate' },
+  'timbor':       { sliderId:'timbor-slider',        dispId:'timbor-rate-disp',        diffId:'timbor-diff-label',        min:0.65, max:0.98, step:0.05, type:'rate' },
+  'dsv':          { sliderId:'dsv-slider',           dispId:'dsv-rate-disp',           diffId:'dsv-diff-label',           min:0.33, max:0.65, step:0.05, type:'rate' },
 };
 
 function getDiffLabel(val, min, max) {
@@ -2569,8 +2569,8 @@ function updateSliderTrack(sliderId) {
 
 // Store current slider values in JS to avoid browser misparse of decimal range inputs
 const sliderValues = {
-  'vapor': 0.50, 'vapor-remove-only': 150, 'vapor-remove': 150, 'encap-floor': 1.50,
-  'insul-remove': 0.75, 'insul-install': 2.00, 'timbor': 0.50, 'dsv': 0.25,
+  'vapor': 0.65, 'vapor-remove-only': 195, 'vapor-remove': 195, 'encap-floor': 1.95,
+  'insul-remove': 0.98, 'insul-install': 2.60, 'timbor': 0.65, 'dsv': 0.33,
 };
 
 function getSliderRate(key) {
