@@ -169,6 +169,7 @@
   </div>
   <nav class="tab-nav">
     <button class="tab-btn active" onclick="showTab('residential', this)">🏠 Residential</button>
+    <button class="tab-btn" onclick="showTab('bundling', this)">🔒 Bundling</button>
     <button class="tab-btn" onclick="showTab('commercial', this)">🏢 Commercial</button>
     <button class="tab-btn" onclick="showTab('termite', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px;"><path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-1 5c-1.66 0-3 1.34-3 3v1H6.5C5.67 11 5 11.67 5 12.5S5.67 14 6.5 14H8v1c0 .55.45 1 1 1h.27l-2.18 4.37A1 1 0 0 0 8 22h1.2l2.8-5.6 2.8 5.6H16a1 1 0 0 0 .91-1.42L14.73 16H15c.55 0 1-.45 1-1v-1h1.5c.83 0 1.5-.67 1.5-1.5S18.33 11 17.5 11H16v-1c0-1.66-1.34-3-3-3h-2z"/></svg>Termite</button>
     <button class="tab-btn" onclick="showTab('moisture', this)">💧 Moisture</button>
@@ -188,56 +189,44 @@
   <div id="res-content">
 
   <div class="card">
-    <div class="card-head"><div class="card-icon">1️⃣</div><div><div class="card-head-label">Property Type</div></div></div>
-    <div class="card-body">
-      <div class="pill-row" id="res-prop-pills">
-        <button class="pill active" data-val="home" onclick="resSelectProp(this)">Home</button>
-        <button class="pill" data-val="townhouse" onclick="resSelectProp(this)">Townhouse / Condo</button>
-      </div>
-    </div>
+    <div class="card-head"><div class="card-icon">🏠</div><div><div class="card-head-label">Residential Pest</div><div class="card-head-sub">Quarterly pest control plans</div></div></div>
   </div>
 
-  <div class="card" id="res-tier-card">
-    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label" style="color:transparent;user-select:none;">——</div></div></div>
-    <div class="card-body">
-      <!-- Tier PIN screen -->
-      <div id="res-tier-pin-screen">
-        <button onclick="resTierShowPad()" style="display:flex;align-items:center;gap:6px;background:var(--light);border:1px solid #C8D8EC;border-radius:8px;padding:8px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;cursor:pointer;-webkit-appearance:none;">
-          🔒 Locked
-        </button>
-        <!-- Compact PIN pad — hidden until button tapped -->
-        <div id="res-tier-pin-pad" style="display:none;margin-top:10px;background:#f8fafd;border:1px solid #C8D8EC;border-radius:10px;padding:12px;max-width:220px;">
-          <div id="res-tier-pin-display" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--navy);letter-spacing:8px;text-align:center;margin-bottom:10px;">——————</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-            <button onclick="resTierPinKey('1')" class="pin-btn" style="padding:10px;font-size:16px;">1</button>
-            <button onclick="resTierPinKey('2')" class="pin-btn" style="padding:10px;font-size:16px;">2</button>
-            <button onclick="resTierPinKey('3')" class="pin-btn" style="padding:10px;font-size:16px;">3</button>
-            <button onclick="resTierPinKey('4')" class="pin-btn" style="padding:10px;font-size:16px;">4</button>
-            <button onclick="resTierPinKey('5')" class="pin-btn" style="padding:10px;font-size:16px;">5</button>
-            <button onclick="resTierPinKey('6')" class="pin-btn" style="padding:10px;font-size:16px;">6</button>
-            <button onclick="resTierPinKey('7')" class="pin-btn" style="padding:10px;font-size:16px;">7</button>
-            <button onclick="resTierPinKey('8')" class="pin-btn" style="padding:10px;font-size:16px;">8</button>
-            <button onclick="resTierPinKey('9')" class="pin-btn" style="padding:10px;font-size:16px;">9</button>
-            <button onclick="resTierPinClear()" class="pin-btn" style="padding:10px;font-size:11px;background:var(--light);color:var(--muted);">CLR</button>
-            <button onclick="resTierPinKey('0')" class="pin-btn" style="padding:10px;font-size:16px;">0</button>
-            <button onclick="resTierPinDelete()" class="pin-btn" style="padding:10px;font-size:16px;background:var(--light);color:var(--muted);">⌫</button>
-          </div>
-          <div id="res-tier-pin-error" style="color:var(--danger);font-size:12px;font-weight:600;margin-top:8px;min-height:16px;text-align:center;"></div>
-        </div>
+  <div class="result-box">
+    <div class="result-head">
+      <div class="result-head-label">Quote Summary</div>
+      <div class="result-head-badge" id="res-badge" style="display:none;">Essential — Home</div>
+    </div>
+    <div class="result-grid cols-2">
+      <div class="result-cell">
+        <div class="result-cell-label">Initial Fee</div>
+        <div class="result-cell-type">One-Time</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="res-initial">199</span></div>
+        <div class="result-val-sub">Due at first service</div>
+        <div id="res-addl-charges" style="display:none;margin-top:6px;border-top:1px solid #D8E6F4;padding-top:6px;font-size:11px;color:var(--muted);line-height:1.6;" id="res-addl-charges"></div>
       </div>
-      <!-- Tier pills — hidden until PIN entered -->
-      <div id="res-tier-content" style="display:none;">
-        <div class="pill-row" id="res-tier-pills">
-          <button class="pill active" data-val="essential" onclick="resSelectTier(this)">Essential</button>
-          <button class="pill" data-val="advanced" onclick="resSelectTier(this)">Advanced</button>
-          <button class="pill" data-val="complete" onclick="resSelectTier(this)">Complete</button>
-        </div>
+      <div class="result-cell secondary">
+        <div class="result-cell-label">Recurring</div>
+        <div class="result-cell-type">Monthly</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="res-monthly">48</span></div>
+        <div class="result-val-sub">Per month, auto-billed</div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head"><div class="card-icon">3️⃣</div><div><div class="card-head-label">Additional Initial Charges</div><div class="card-head-sub">Select all that apply</div></div></div>
+    <div class="card-body">
+      <span class="section-label">Military Discount</span>
+      <div class="pill-row" id="res-military-pills" style="margin-bottom:4px;">
+        <button class="pill active" data-val="no" onclick="resSelectMilitary(this)">No</button>
+        <button class="pill" data-val="yes" onclick="resSelectMilitary(this)">Yes — Military ($50/mo)</button>
+      </div>
+      <div class="field-hint" id="res-military-note">Applies to Essential plan only</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">1️⃣</div><div><div class="card-head-label">Additional Initial Charges</div><div class="card-head-sub">Select all that apply</div></div></div>
     <div class="card-body">
 
       <span class="section-label">German Roaches</span>
@@ -279,7 +268,7 @@
   </div>
 
   <div class="card" id="res-sqft-card" style="display:none;">
-    <div class="card-head"><div class="card-icon">4️⃣</div><div><div class="card-head-label">Square Footage</div><div class="card-head-sub">Required for Complete pricing</div></div></div>
+    <div class="card-head"><div class="card-icon">2️⃣</div><div><div class="card-head-label">Square Footage</div><div class="card-head-sub">Required for Complete pricing</div></div></div>
     <div class="card-body">
       <div class="field-wrap">
         <input class="field-input" type="number" id="res-sqft" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2,200" oninput="resCalc()" />
@@ -298,30 +287,6 @@
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="result-box">
-    <div class="result-head">
-      <div class="result-head-label">Quote Summary</div>
-      <div class="result-head-badge" id="res-badge" style="display:none;">Essential — Home</div>
-    </div>
-    <div class="result-grid cols-2">
-      <div class="result-cell">
-        <div class="result-cell-label">Initial Fee</div>
-        <div class="result-cell-type">One-Time</div>
-        <div class="result-val lg"><span class="dollar">$</span><span id="res-initial">199</span></div>
-        <div class="result-val-sub">Due at first service</div>
-        <div id="res-addl-charges" style="display:none;margin-top:6px;border-top:1px solid #D8E6F4;padding-top:6px;font-size:11px;color:var(--muted);line-height:1.6;" id="res-addl-charges"></div>
-      </div>
-      <div class="result-cell secondary">
-        <div class="result-cell-label">Recurring</div>
-        <div class="result-cell-type">Monthly</div>
-        <div class="result-val lg"><span class="dollar">$</span><span id="res-monthly">48</span></div>
-        <div class="result-val-sub">Per month, auto-billed</div>
-      </div>
-    </div>
-  </div>
-
   <div class="card">
     <div class="card-head"><div class="card-icon">📋</div><div><div class="card-head-label">Plan Includes</div></div></div>
     <div class="card-body">
@@ -332,8 +297,7 @@
   <div class="card">
     <div class="card-head"><div class="card-icon">🔧</div><div><div class="card-head-label">One-Time Services</div></div></div>
     <div class="card-body">
-      <div class="info-row"><div class="info-label">One-Time Service — Home</div><div class="info-price">$300</div></div>
-      <div class="info-row"><div class="info-label">One-Time Service — Townhouse / Condo</div><div class="info-price">$285</div></div>
+      <div class="info-row"><div class="info-label">One-Time Service</div><div class="info-price">$300</div></div>
       <div class="info-row"><div class="info-label">One-Time Rodent <small>Includes 3 follow-ups</small></div><div class="info-price">$550</div></div>
       <div class="info-row"><div class="info-label">One-Time German Roaches</div><div class="info-price">$750</div></div>
       <div class="info-row"><div class="info-label">Carpenter Ants — Initial</div><div class="info-price">$350</div></div>
@@ -355,6 +319,75 @@
 
 
   </div><!-- /res-content -->
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     BUNDLING
+══════════════════════════════════ -->
+<div class="tab-panel" id="tab-bundling">
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon">🔒</div><div><div class="card-head-label">Bundling</div><div class="card-head-sub">Residential plan tier — manager access only</div></div></div>
+    <div class="card-body">
+      <!-- Tier PIN screen -->
+      <div id="res-tier-pin-screen">
+        <button onclick="resTierShowPad()" style="display:flex;align-items:center;gap:6px;background:var(--light);border:1px solid #C8D8EC;border-radius:8px;padding:8px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;cursor:pointer;-webkit-appearance:none;">
+          🔒 Locked
+        </button>
+        <!-- Compact PIN pad — hidden until button tapped -->
+        <div id="res-tier-pin-pad" style="display:none;margin-top:10px;background:#f8fafd;border:1px solid #C8D8EC;border-radius:10px;padding:12px;max-width:220px;">
+          <div id="res-tier-pin-display" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--navy);letter-spacing:8px;text-align:center;margin-bottom:10px;">——————</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <button onclick="resTierPinKey('1')" class="pin-btn" style="padding:10px;font-size:16px;">1</button>
+            <button onclick="resTierPinKey('2')" class="pin-btn" style="padding:10px;font-size:16px;">2</button>
+            <button onclick="resTierPinKey('3')" class="pin-btn" style="padding:10px;font-size:16px;">3</button>
+            <button onclick="resTierPinKey('4')" class="pin-btn" style="padding:10px;font-size:16px;">4</button>
+            <button onclick="resTierPinKey('5')" class="pin-btn" style="padding:10px;font-size:16px;">5</button>
+            <button onclick="resTierPinKey('6')" class="pin-btn" style="padding:10px;font-size:16px;">6</button>
+            <button onclick="resTierPinKey('7')" class="pin-btn" style="padding:10px;font-size:16px;">7</button>
+            <button onclick="resTierPinKey('8')" class="pin-btn" style="padding:10px;font-size:16px;">8</button>
+            <button onclick="resTierPinKey('9')" class="pin-btn" style="padding:10px;font-size:16px;">9</button>
+            <button onclick="resTierPinClear()" class="pin-btn" style="padding:10px;font-size:11px;background:var(--light);color:var(--muted);">CLR</button>
+            <button onclick="resTierPinKey('0')" class="pin-btn" style="padding:10px;font-size:16px;">0</button>
+            <button onclick="resTierPinDelete()" class="pin-btn" style="padding:10px;font-size:16px;background:var(--light);color:var(--muted);">⌫</button>
+          </div>
+          <div id="res-tier-pin-error" style="color:var(--danger);font-size:12px;font-weight:600;margin-top:8px;min-height:16px;text-align:center;"></div>
+        </div>
+      </div>
+      <!-- Tier pills — hidden until PIN entered -->
+      <div id="res-tier-content" style="display:none;">
+        <div class="pill-row" id="res-tier-pills">
+          <button class="pill active" data-val="essential" onclick="resSelectTier(this)">Essential</button>
+          <button class="pill" data-val="advanced" onclick="resSelectTier(this)">Advanced</button>
+          <button class="pill" data-val="complete" onclick="resSelectTier(this)">Complete</button>
+        </div>
+        <div class="field-hint" style="margin-top:10px;">Sets the tier used for Residential pricing on the Residential tab.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box">
+    <div class="result-head">
+      <div class="result-head-label">Quote Summary</div>
+      <div class="result-head-badge" id="bund-badge" style="display:none;">Essential</div>
+    </div>
+    <div class="result-grid cols-2">
+      <div class="result-cell">
+        <div class="result-cell-label">Initial Fee</div>
+        <div class="result-cell-type">One-Time</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="bund-initial">199</span></div>
+        <div class="result-val-sub">Due at first service</div>
+      </div>
+      <div class="result-cell secondary">
+        <div class="result-cell-label">Recurring</div>
+        <div class="result-cell-type">Monthly</div>
+        <div class="result-val lg"><span class="dollar">$</span><span id="bund-monthly">52</span></div>
+        <div class="result-val-sub">Per month, auto-billed</div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -1241,6 +1274,9 @@
   </div>
 
 </div>
+
+<!-- ══════════════════════════════════
+     ANCILLARY
 ══════════════════════════════════ -->
 <div class="tab-panel" id="tab-ancillary">
 
@@ -1438,42 +1474,32 @@ let resPinUnlocked = false;
 
 /* ═══ RESIDENTIAL ═══ */
 const resPlan = {
-  home: {
-    essential: { initial: 199, monthly: 48, inclusions: "Quarterly exterior pest treatments, exterior barrier, interior service as needed, web removal, 2 exterior rodent bait stations, free re-service." },
-    advanced:  { initial: 299, monthly: 58, inclusions: "Everything in Essential + 4 termite monitoring stations, quarterly monitoring & reporting, early termite detection, annual documented inspection." },
-    complete:  { monthly: 78, inclusions: "Everything in Advanced + Full Trelona active bait system, active termite elimination, bait replaced as needed, retreatment coverage.", sqft: [[1500,699],[2500,799],[3500,899],[Infinity,999]] }
-  },
-  townhouse: {
-    essential: { initial: 185, monthly: 45, inclusions: "Quarterly pest treatments, exterior protection (front & rear), interior service as needed, 2 exterior rodent stations as layout allows, free re-service." },
-    advanced:  { initial: 229, monthly: 55, inclusions: "Everything in Essential + 4 termite monitoring stations, quarterly monitoring & reporting, early termite detection." },
-    complete:  { initial: 500, monthly: 70, inclusions: "Everything in Advanced + 4-station Trelona active bait system, annual comprehensive termite inspection, bait replaced as needed." }
-  }
+  essential: { initial: 199, monthly: 52, inclusions: "Quarterly exterior pest treatments, exterior barrier, interior service as needed, web removal, 2 exterior rodent bait stations, free re-service." },
+  advanced:  { initial: 299, monthly: 62, inclusions: "Everything in Essential + 4 termite monitoring stations, quarterly monitoring & reporting, early termite detection, annual documented inspection." },
+  complete:  { monthly: 82, inclusions: "Everything in Advanced + Full Trelona active bait system, active termite elimination, bait replaced as needed, retreatment coverage.", sqft: [[1500,699],[2500,799],[3500,899],[Infinity,999]] }
 };
+
+const RES_MILITARY_RATE = 50; // Essential-only military monthly rate
 
 // Rodent pricing logic:
 // Essential: flat $550 (replaces standard initial)
 // Advanced: flat $650
-// Complete: standard complete initial + $351 (the $550-$199 rodent premium)
-// Townhouse follows same structure
-const resRodentScale = 550 / 199;
+// Complete: priced from the sq-ft table below
 const resRodentSqft = [[1500, 1050],[2500, 1150],[3500, 1250],[Infinity, 1350]];
-const resRodentInitials = {
-  home:      { essential: 550, advanced: 650 },
-  townhouse: { essential: 550, advanced: 650, complete: 851 }
-};
+const resRodentInitials = { essential: 550, advanced: 650 };
 
-let resProp = 'home', resTier = 'essential', resRodent = 'no', resCarpBee = 'no', resCarpAnt = 'no', resLadder = 'no', resRoach = 'no';
+let resTier = 'essential', resRodent = 'no', resCarpBee = 'no', resCarpAnt = 'no', resLadder = 'no', resRoach = 'no', resMilitary = 'no';
 
-function resSelectProp(el) {
-  resProp = el.dataset.val;
-  document.querySelectorAll('#res-prop-pills .pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  resRender();
-}
 function resSelectTier(el) {
   resTier = el.dataset.val;
   document.querySelectorAll('#res-tier-pills .pill').forEach(p => { p.classList.remove('active','active-gold'); });
   el.classList.add(resTier === 'complete' ? 'active-gold' : 'active');
+  resRender();
+}
+function resSelectMilitary(el) {
+  resMilitary = el.dataset.val;
+  document.querySelectorAll('#res-military-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
   resRender();
 }
 function resSelectLadder(el) {
@@ -1526,27 +1552,21 @@ function resCalc() {
   resRender();
 }
 function resGetCompleteInitial(v) {
-  const table = resRodent === 'yes' ? resRodentSqft : resPlan.home.complete.sqft;
+  const table = resRodent === 'yes' ? resRodentSqft : resPlan.complete.sqft;
   for (const [max, price] of table) { if (v <= max) return price; }
-  return resRodent === 'yes' ? 2760 : 999;
+  return resRodent === 'yes' ? 1350 : 999;
 }
 function resRender() {
-  const d = resPlan[resProp][resTier];
+  const d = resPlan[resTier];
   let initial;
 
   if (resRodent === 'yes') {
     // Scaled rodent initial
     if (resTier === 'complete') {
-      if (resProp === 'townhouse') {
-        initial = resRodentInitials.townhouse.complete.toLocaleString();
-      } else {
-        const v = parseInt(document.getElementById('res-sqft').value);
-        initial = v > 0 ? resGetCompleteInitial(v).toLocaleString() : '—';
-      }
+      const v = parseInt(document.getElementById('res-sqft').value);
+      initial = v > 0 ? resGetCompleteInitial(v).toLocaleString() : '—';
     } else {
-      initial = (resRodentInitials[resProp][resTier] || '—').toLocaleString
-        ? resRodentInitials[resProp][resTier].toLocaleString()
-        : '—';
+      initial = resRodentInitials[resTier].toLocaleString();
     }
   } else {
     // Standard pricing
@@ -1558,13 +1578,24 @@ function resRender() {
     }
   }
 
+  // Military discount — Essential plan only
+  const isMilitaryEssential = resMilitary === 'yes' && resTier === 'essential';
+  const monthly = isMilitaryEssential ? RES_MILITARY_RATE : d.monthly;
+
   document.getElementById('res-initial').textContent = initial;
-  document.getElementById('res-monthly').textContent = d.monthly.toLocaleString();
+  document.getElementById('res-monthly').textContent = monthly.toLocaleString();
   document.getElementById('res-inclusions').textContent = d.inclusions;
-  const propLabel = resProp === 'home' ? 'Home' : 'Townhouse';
   const tierLabel = resTier.charAt(0).toUpperCase() + resTier.slice(1);
   const rodentTag = resRodent === 'yes' ? ' + Rodent' : '';
-  document.getElementById('res-badge').textContent = tierLabel + ' — ' + propLabel + rodentTag;
+  const militaryTag = isMilitaryEssential ? ' + Military' : '';
+  document.getElementById('res-badge').textContent = tierLabel + rodentTag + militaryTag;
+
+  const militaryNoteEl = document.getElementById('res-military-note');
+  if (militaryNoteEl) {
+    militaryNoteEl.textContent = resTier === 'essential'
+      ? 'Essential monthly drops to $' + RES_MILITARY_RATE
+      : 'Applies to Essential plan only — no effect on ' + tierLabel;
+  }
 
   // Additional initial charges
   let addlTotal = 0;
@@ -1596,7 +1627,15 @@ function resRender() {
   const addlEl = document.getElementById('res-addl-charges');
   addlEl.style.display = 'none';
 
-  document.getElementById('res-sqft-card').style.display = (resTier === 'complete' && resProp === 'home') ? '' : 'none';
+  document.getElementById('res-sqft-card').style.display = (resTier === 'complete') ? '' : 'none';
+
+  // Mirror onto the Bundling tab's own Quote Summary
+  const bundInitialEl = document.getElementById('bund-initial');
+  if (bundInitialEl) {
+    bundInitialEl.textContent = combinedInitial.toLocaleString();
+    document.getElementById('bund-monthly').textContent = monthly.toLocaleString();
+    document.getElementById('bund-badge').textContent = tierLabel + rodentTag + militaryTag;
+  }
 }
 
 /* ═══ COMMERCIAL CALCULATOR ═══ */
