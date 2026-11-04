@@ -1835,8 +1835,10 @@ function commCalc() {
     const extHours = commExteriorIncl === 'yes' ? (parseFloat(document.getElementById('comm-exterior-hours').value) || 0) / 60 : 0;
 
     if (units > 0) {
-      const doorTotal = units * commDoorRate;
-      lines.push({ label: units + ' units × $' + commDoorRate + '/door', val: doorTotal });
+      const APT_MIN = 90;
+      const rawDoorTotal = units * commDoorRate;
+      const doorTotal = Math.max(rawDoorTotal, APT_MIN);
+      lines.push({ label: units + ' units × $' + commDoorRate + '/door' + (rawDoorTotal < APT_MIN ? ' (minimum $' + APT_MIN + ' applied)' : ''), val: doorTotal });
       total += doorTotal;
     }
     if (extHours > 0) {
